@@ -21,24 +21,30 @@ relancer si le code concerne est modifie plus tard.
 
 ## Etat actuel
 
-**Phases 1 a 6 (+ 4 bis) terminees et verifiees** (voir archives
-ci-dessous). Prochaine etape : **Phase 7 - Logique de rencontre/capture**.
+**Phases 1 a 7 (+ 4 bis) terminees et verifiees** (voir archives
+ci-dessous) — toutes les mecaniques de jeu de la spec d'origine sont
+maintenant fonctionnelles de bout en bout (menu -> hub -> tableaux ->
+rencontre/capture -> roster). Prochaine et derniere etape : **Phase 8 -
+Polish et integration finale**.
 
-**Important pour la Phase 7** :
-- Dans `scenes/EcranTableau.tscn`, `ZoneSauvage` affiche un placeholder
-  fixe `"? (Phase 7)"` — a remplacer par la vraie creature sauvage
-  tiree au hasard (section 9.1 de la spec : parmi les non-evoluees
-  jamais vues, `SaveManager.get_creatures_vues()` /
-  `DataManager.get_creatures_non_evoluees()`).
-- Brancher la capture reelle en fin de tableau reussi (>=7/10) dans
-  `scripts/ecran_tableau.gd::_terminer_tableau()` :
-  `SaveManager.capturer_creature()` + `SaveManager.marquer_vue()`.
-  `capturer_creature()` avait un bug (ne sauvegardait jamais) trouve et
-  corrige pendant l'ajout de la "creature principale" — voir
-  [docs/phases/phase_06_scenes_tableau.md](docs/phases/phase_06_scenes_tableau.md).
-- Cote joueur, `EcranTableau` affiche deja la "creature principale"
-  choisie au Roster (`SaveManager.get_creature_principale_id()`), rien
-  a faire de ce cote pour la Phase 7.
+**Important pour la Phase 8** :
+- Transitions fade in/out : le composant `TransitionRadiale`
+  (`scenes/components/TransitionRadiale.tscn`) existe deja et est
+  utilise sur certains ecrans (Menu, Hub, DialogueIntro,
+  SelectionNiveau) mais pas tous (ex. Roster, EcranTableau) —
+  generaliser si Mike le souhaite.
+- Remplacement des placeholders par les vrais assets des que Mike les
+  fournit (`assets/creatures/*.png`, `assets/ui/**/*.png`,
+  `assets/audio/ui/*.ogg`) — tout le mecanisme de repli est deja en
+  place (`SpriteUtil`, `UiIconUtil`, `BerryAssetUtil`, `AudioManager`),
+  aucun code a changer normalement.
+- 79 des 80 fichiers de niveaux (`data/niveaux/*.json`) ont un contenu
+  fonctionnel mais genere via script (voir
+  [docs/phases/phase_06_scenes_tableau.md](docs/phases/phase_06_scenes_tableau.md)) —
+  un peu repetitif par endroits. A affiner manuellement si souhaite,
+  simples fichiers de donnees, aucun impact sur le code.
+- Tests de bout en bout supplementaires si de nouveaux cas limites
+  emergent en playtest reel avec l'enfant.
 
 **Piege GDScript a connaitre avant de coder un nouveau composant
 reutilisable** : ne pas utiliser `@onready var x = %NodeName` pour un
@@ -58,6 +64,15 @@ Phase 4) ET avant d'**afficher** (`str(int(valeur))`, pas `str(valeur)`
 — trouve en Phase 6 sur `widget_pair_impair.gd`/
 `widget_croissant_decroissant.gd`, affichait "4.0" au lieu de "4").
 
+**Reflexe SaveManager** : toute nouvelle methode qui mute `data` doit
+se terminer par `save_game()` — `capturer_creature()` et
+`marquer_vue()` ont toutes les deux ete ecrites en Phase 1 sans cet
+appel, et le bug est reste invisible (silencieux, pas d'erreur) jusqu'a
+ce qu'une phase bien plus tardive les utilise pour de vrai (Phase 6
+pour la premiere, Phase 7 pour la seconde). Avant d'ajouter une methode
+mutative a `SaveManager`, verifier explicitement l'appel a
+`save_game()`.
+
 ## Decoupage en phases
 
 1. **Phase 1 - Fondations** — termine, voir
@@ -70,19 +85,21 @@ Phase 4) ET avant d'**afficher** (`str(int(valeur))`, pas `str(valeur)`
    [docs/phases/phase_04_roster_evolutions.md](docs/phases/phase_04_roster_evolutions.md)
    et [docs/phases/phase_04_bis_berries_feelgood.md](docs/phases/phase_04_bis_berries_feelgood.md)
    (surnom, barre XP animee, animation d'attribution d'XP, systeme de
-   berries avec glisser-depose et sprites "glow").
+   berries avec glisser-depose et sprites "glow", creature principale).
 5. **Phase 5 - Selection de niveau** — termine, voir
    [docs/phases/phase_05_selection_niveau.md](docs/phases/phase_05_selection_niveau.md).
 6. **Phase 6 - Scenes de tableau** — termine, voir
    [docs/phases/phase_06_scenes_tableau.md](docs/phases/phase_06_scenes_tableau.md)
    (8 widgets de reponse reutilisables + orchestrateur commun, 80
-   niveaux de contenu, XP/berries branches pour de vrai).
-7. **Phase 7 - Logique de rencontre/capture** (prochaine) : distribution
-   aleatoire des 80 creatures restantes sans repetition, integree a la
-   sauvegarde.
-8. **Phase 8 - Polish et integration finale** : transitions fade
-   in/out, tests de bout en bout, remplacement des placeholders par
-   vrais assets si disponibles.
+   niveaux de contenu, XP/berries branches pour de vrai, creature
+   principale affichee cote joueur).
+7. **Phase 7 - Logique de rencontre/capture** — termine, voir
+   [docs/phases/phase_07_rencontre_capture.md](docs/phases/phase_07_rencontre_capture.md)
+   (tirage aleatoire sans repetition, association fixe creature/tableau,
+   capture reelle a la reussite).
+8. **Phase 8 - Polish et integration finale** (prochaine, derniere) :
+   transitions fade in/out generalisees, tests de bout en bout,
+   remplacement des placeholders par vrais assets si disponibles.
 
 Une phase = une grande etape ci-dessus (pas de sous-decoupage
 documentaire separe).
@@ -111,19 +128,14 @@ suivent deja ce patron via `scripts/util/sprite_util.gd`
 pas encore — au composant appelant d'afficher un placeholder, voir
 `scripts/components/carte_creature.gd` pour un exemple).
 
-## Prochaine etape : Phase 7 - Logique de rencontre/capture
+## Prochaine etape : Phase 8 - Polish et integration finale
 
-A construire (voir section 9.1 de la spec d'origine) :
-- Distribution aleatoire des 80 creatures non-evoluees restantes (81 -
-  1 starter), sans repetition tant que toutes n'ont pas ete vues :
-  piocher parmi `DataManager.get_creatures_non_evoluees()` moins
-  `SaveManager.get_creatures_vues()` (si cette liste est vide, la
-  reinitialiser implicitement en repiochant parmi toutes).
-- Afficher la creature sauvage tiree dans `ZoneSauvage` de
-  `scenes/EcranTableau.tscn` (actuellement un placeholder fixe) —
-  fixee au debut du tableau (`GameState` ou directement au `_ready()`
-  de `ecran_tableau.gd`), la meme tout au long des 10 questions.
-- A la reussite du tableau (>=7/10) : `SaveManager.capturer_creature()`
-  + `SaveManager.marquer_vue()`. A l'echec : `marquer_vue()` quand meme
-  (vue mais pas capturee, cf. section 9.1 de la spec), pas de capture.
-- Penser a un smoke test headless (`scripts/tests/smoke_test_phase7.gd`).
+Derniere phase du decoupage d'origine. A voir avec Mike ce qu'il
+souhaite prioriser parmi :
+- Generaliser les transitions `TransitionRadiale` aux ecrans qui n'en
+  ont pas encore (Roster, EcranTableau).
+- Integrer les vrais assets au fur et a mesure qu'ils sont fournis.
+- Repasser sur le contenu genere des niveaux si Mike veut plus de
+  variete que ce que le script d'auteur de la Phase 6 a produit.
+- Tests de bout en bout / playtest reel avec l'enfant, corriger les
+  cas limites qui en ressortiraient.

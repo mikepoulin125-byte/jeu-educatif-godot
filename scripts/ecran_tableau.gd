@@ -18,6 +18,14 @@ extends Control
 ## que le joueur n'en choisit pas une autre. Repli si aucun choix
 ## explicite n'a encore ete fait : le starter, sinon la premiere
 ## creature capturee (voir SaveManager.get_creature_principale_id()).
+##
+## Cote sauvage (section 9.1 de la spec, Phase 7) : une creature
+## non-evoluee est tiree au hasard parmi celles jamais encore vues
+## (RencontreUtil.tirer_creature_sauvage()), UNE SEULE FOIS par tableau
+## (SaveManager.get/definir_creature_rencontre() memorise l'association
+## matiere+niveau -> creature, pour qu'un tableau rejoue toujours la
+## meme creature). Vue des l'entree dans le tableau (reussi ou non) ;
+## capturee seulement si le tableau est reussi (>=7/10).
 
 const NB_NIVEAUX := 10
 const SEUIL_REUSSITE := 7
@@ -44,7 +52,10 @@ const WidgetCroissantDecroissant := preload("res://scenes/tableau/WidgetCroissan
 @onready var texture_joueur: TextureRect = %TextureJoueur
 @onready var placeholder_joueur: ColorRect = %PlaceholderJoueur
 @onready var label_nom_joueur: Label = %LabelNomJoueur
+@onready var texture_sauvage: TextureRect = %TextureSauvage
 @onready var placeholder_sauvage: ColorRect = %PlaceholderSauvage
+@onready var label_sauvage: Label = %LabelSauvage
+@onready var label_nom_sauvage: Label = %LabelNomSauvage
 @onready var timer_avance: Timer = %TimerAvance
 
 @onready var panneau_resultats: PanelContainer = %PanneauResultats
@@ -61,6 +72,7 @@ var _score: int = 0
 var _berries_gagnees: int = 0
 var _xp_gagne: int = 0
 var _widget_courant: Control = null
+var _creature_sauvage_id: String = ""
 
 func _ready() -> void:
 	bouton_quitter.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/SelectionNiveau.tscn"))
@@ -81,6 +93,7 @@ func _ready() -> void:
 
 	_actualiser_label_xp()
 	_afficher_creature_joueur()
+	_preparer_rencontre()
 	_instancier_widget()
 	_afficher_question(0)
 
@@ -109,6 +122,45 @@ func _afficher_creature_joueur() -> void:
 		label_nom_joueur.text = surnom
 	else:
 		label_nom_joueur.text = String(names.get("stage%d" % stage, creature_id))
+
+## Tire (ou retrouve) la creature sauvage de CE tableau precis, l'affiche
+## et la marque comme vue. Voir le commentaire d'entete pour le detail.
+func _preparer_rencontre() -> void:
+	var tableau_id := "%s_%s" % [_matiere_id, _niveau_id]
+	_creature_sauvage_id = SaveManager.get_creature_rencontre(tableau_id)
+	if _creature_sauvage_id.is_empty():
+		_creature_sauvage_id = RencontreUtil.tirer_creature_sauvage(
+			DataManager.get_creatures_non_evoluees(),
+			SaveManager.get_creatures_vues()
+		)
+		if not _creature_sauvage_id.is_empty():
+			SaveManager.definir_creature_rencontre(tableau_id, _creature_sauvage_id)
+
+	if _creature_sauvage_id.is_empty():
+		return
+	SaveManager.marquer_vue(_creature_sauvage_id)
+	_afficher_creature_sauvage()
+
+func _afficher_creature_sauvage() -> void:
+	if not DataManager.creatures.has(_creature_sauvage_id):
+		return
+	var creature_data: Dictionary = DataManager.creatures[_creature_sauvage_id]
+	var forms: Dictionary = creature_data.get("forms", {})
+	var names: Dictionary = creature_data.get("names", {})
+	# Une creature sauvage rencontree en tableau est toujours non-evoluee (stage1).
+	var sprite_id: String = String(forms.get("stage1", ""))
+
+	var texture := SpriteUtil.charger_texture(sprite_id)
+	if texture != null:
+		texture_sauvage.texture = texture
+		texture_sauvage.visible = true
+		placeholder_sauvage.visible = false
+	else:
+		texture_sauvage.visible = false
+		placeholder_sauvage.visible = true
+		label_sauvage.text = sprite_id if not sprite_id.is_empty() else "?"
+
+	label_nom_sauvage.text = String(names.get("stage1", _creature_sauvage_id))
 
 func _instancier_widget() -> void:
 	var scenes := {
@@ -170,10 +222,15 @@ func _terminer_tableau() -> void:
 			var niveau_suivant_id := "niveau_%02d" % (numero_actuel + 1)
 			SaveManager.set_progression_niveau(_matiere_id, niveau_suivant_id, false, 0, true)
 
-	_actualiser_label_xp()
-	_afficher_resultats(reussi, bonus)
+	var creature_capturee: bool = false
+	if reussi and not _creature_sauvage_id.is_empty():
+		creature_capturee = not SaveManager.get_creatures_capturees().has(_creature_sauvage_id)
+		SaveManager.capturer_creature(_creature_sauvage_id)
 
-func _afficher_resultats(reussi: bool, bonus: int) -> void:
+	_actualiser_label_xp()
+	_afficher_resultats(reussi, bonus, creature_capturee)
+
+func _afficher_resultats(reussi: bool, bonus: int, creature_capturee: bool) -> void:
 	zone_reponse.visible = false
 	panneau_resultats.visible = true
 
@@ -186,6 +243,9 @@ func _afficher_resultats(reussi: bool, bonus: int) -> void:
 		texte_xp += " (dont %d de bonus)" % bonus
 	lignes.append(texte_xp)
 	if reussi:
+		if creature_capturee:
+			var nom_sauvage: String = label_nom_sauvage.text if not label_nom_sauvage.text.is_empty() else "La creature"
+			lignes.append("%s a rejoint ton roster !" % nom_sauvage)
 		lignes.append("Le niveau suivant est debloque !")
 	else:
 		lignes.append("Il faut au moins %d/10 pour reussir. Retente quand tu veux !" % SEUIL_REUSSITE)

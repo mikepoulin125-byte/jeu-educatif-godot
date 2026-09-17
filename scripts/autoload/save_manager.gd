@@ -74,9 +74,26 @@ func marquer_vue(creature_id: String) -> void:
 	if not vues.has(creature_id):
 		vues.append(creature_id)
 		data["creatures_vues"] = vues
+		save_game()
 
 func get_creatures_vues() -> Array:
 	return data.get("creatures_vues", [])
+
+## --- Rencontres : quelle creature sauvage est associee a chaque tableau ---
+## Le tirage au hasard (section 9.1 de la spec) n'a lieu qu'UNE fois par
+## tableau (matiere+niveau) : une fois tiree, la creature reste associee
+## a ce tableau pour toujours (y compris apres un echec/reessai), pour
+## respecter "le tableau est scripte, la meme creature apparait" — voir
+## docs/phases/phase_07_rencontre_capture.md.
+
+func get_creature_rencontre(tableau_id: String) -> String:
+	return String(data.get("rencontres", {}).get(tableau_id, ""))
+
+func definir_creature_rencontre(tableau_id: String, creature_id: String) -> void:
+	var rencontres: Dictionary = data.get("rencontres", {})
+	rencontres[tableau_id] = creature_id
+	data["rencontres"] = rencontres
+	save_game()
 
 func capturer_creature(creature_id: String) -> void:
 	var capturees: Dictionary = data.get("creatures_capturees", {})
