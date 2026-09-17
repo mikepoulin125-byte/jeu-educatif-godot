@@ -1,0 +1,13 @@
+{
+	"_commentaire": "PLACEHOLDER - les 8 badges/matieres. 'id' est utilise par le code (ne pas renommer sans mettre a jour les fichiers de niveaux qui y referent), 'nom'/'description' sont libres.",
+	"matieres": [
+		{ "id": "pair_impair", "nom": "Pair / impair", "description": "Un nombre est-il pair ou impair ?", "icone": "icone_matiere_01" },
+		{ "id": "approximation", "nom": "Approximation", "description": "Estime une quantite.", "icone": "icone_matiere_02" },
+		{ "id": "terme_manquant", "nom": "Terme manquant", "description": "Trouve le nombre manquant.", "icone": "icone_matiere_03" },
+		{ "id": "plan_cartesien", "nom": "Plan cartesien", "description": "Place une creature sur la grille.", "icone": "icone_matiere_04" },
+		{ "id": "possible_impossible", "nom": "Possible / impossible", "description": "Est-ce possible ou impossible ?", "icone": "icone_matiere_05" },
+		{ "id": "tableau_pictogramme", "nom": "Tableau et pictogrammes", "description": "Lis le graphique.", "icone": "icone_matiere_06" },
+		{ "id": "fractions", "nom": "Fractions", "description": "Identifie ou compare des fractions.", "icone": "icone_matiere_07" },
+		{ "id": "croissant_decroissant", "nom": "Croissant / decroissant", "description": "Ordonne les nombres.", "icone": "icone_matiere_08" }
+	]
+}

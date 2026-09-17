@@ -1,0 +1,29 @@
+{
+	"_commentaire": "PLACEHOLDER - a completer par Mike. 81 lignes de creatures au total (une par 'id'), stages 1 a 3, sprites c1..c151 sans repetition. Exemple ci-dessous avec 3 lignes seulement.",
+	"creatures": [
+		{
+			"id": "creature_01",
+			"stages": 3,
+			"types": ["eau"],
+			"forms": { "stage1": "c1", "stage2": "c2", "stage3": "c3" },
+			"names": { "stage1": "Creature 1", "stage2": "Creature 1 Evo", "stage3": "Creature 1 Evo Finale" },
+			"description": "Description a venir."
+		},
+		{
+			"id": "creature_02",
+			"stages": 2,
+			"types": ["feu"],
+			"forms": { "stage1": "c4", "stage2": "c5" },
+			"names": { "stage1": "Creature 2", "stage2": "Creature 2 Evo" },
+			"description": "Description a venir."
+		},
+		{
+			"id": "creature_03",
+			"stages": 1,
+			"types": ["feuille"],
+			"forms": { "stage1": "c6" },
+			"names": { "stage1": "Creature 3" },
+			"description": "Description a venir."
+		}
+	]
+}

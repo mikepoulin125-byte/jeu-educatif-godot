@@ -1,0 +1,6 @@
+{
+	"_commentaire": "PLACEHOLDER - table des types elementaires, utilisee par la matiere 'possible_impossible'. 'bat' liste les types que ce type peut vaincre.",
+	"eau": { "bat": ["feu"] },
+	"feu": { "bat": ["feuille"] },
+	"feuille": { "bat": ["eau"] }
+}
