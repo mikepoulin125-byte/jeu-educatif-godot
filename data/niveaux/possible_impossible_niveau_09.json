@@ -1,5 +1,16 @@
 {
-	"_commentaire": "PLACEHOLDER - nom thematique defini, 10 questions a scripter en Phase 6 (scenes de tableau, pas encore construites). Le tableau 'questions' est intentionnellement vide pour l'instant.",
+	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
 	"nom": "Foret du Possible 9",
-	"questions": []
+	"questions": [
+		{ "texte": "Une creature de type eau (niveau 9) peut-elle vaincre une creature de type feu (niveau 45) ?", "reponse": "possible" },
+		{ "texte": "Une creature de type feu (niveau 9) peut-elle vaincre une creature de type feuille (niveau 45) ?", "reponse": "possible" },
+		{ "texte": "Une creature de type feuille (niveau 9) peut-elle vaincre une creature de type eau (niveau 45) ?", "reponse": "possible" },
+		{ "texte": "Une creature de type eau (niveau 9) peut-elle vaincre une creature de type feuille (niveau 45) ?", "reponse": "impossible" },
+		{ "texte": "Une creature de type feu (niveau 9) peut-elle vaincre une creature de type eau (niveau 45) ?", "reponse": "impossible" },
+		{ "texte": "Une creature de type feuille (niveau 9) peut-elle vaincre une creature de type feu (niveau 45) ?", "reponse": "impossible" },
+		{ "texte": "Une creature de type eau (niveau 9) peut-elle vaincre une creature de type feuille (niveau 45) ?", "reponse": "impossible" },
+		{ "texte": "Une creature de type feu (niveau 9) peut-elle vaincre une creature de type eau (niveau 45) ?", "reponse": "impossible" },
+		{ "texte": "Une creature de type feuille (niveau 9) peut-elle vaincre une creature de type feu (niveau 45) ?", "reponse": "impossible" },
+		{ "texte": "Une creature de type eau (niveau 9) peut-elle vaincre une creature de type feu (niveau 45) ?", "reponse": "possible" }
+	]
 }

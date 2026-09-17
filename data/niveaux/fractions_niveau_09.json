@@ -1,5 +1,16 @@
 {
-	"_commentaire": "PLACEHOLDER - nom thematique defini, 10 questions a scripter en Phase 6 (scenes de tableau, pas encore construites). Le tableau 'questions' est intentionnellement vide pour l'instant.",
+	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
 	"nom": "Verger des Fractions 9",
-	"questions": []
+	"questions": [
+		{ "texte": "Quelle fraction correspond a 1/2 ?", "choix": ["1/2", "1/3", "1/4"], "reponse_index": 0 },
+		{ "texte": "Quelle fraction correspond a 1/3 ?", "choix": ["1/4", "1/3", "1/5"], "reponse_index": 1 },
+		{ "texte": "Quelle fraction correspond a 1/4 ?", "choix": ["1/5", "1/6", "1/4"], "reponse_index": 2 },
+		{ "texte": "Quelle fraction correspond a 1/5 ?", "choix": ["1/5", "1/6", "1/8"], "reponse_index": 0 },
+		{ "texte": "Quelle fraction correspond a 1/6 ?", "choix": ["1/8", "1/6", "1/2"], "reponse_index": 1 },
+		{ "texte": "Quelle fraction correspond a 1/8 ?", "choix": ["1/2", "1/3", "1/8"], "reponse_index": 2 },
+		{ "texte": "Quelle fraction correspond a 1/2 ?", "choix": ["1/2", "1/3", "1/4"], "reponse_index": 0 },
+		{ "texte": "Quelle fraction correspond a 1/3 ?", "choix": ["1/4", "1/3", "1/5"], "reponse_index": 1 },
+		{ "texte": "Quelle fraction correspond a 1/4 ?", "choix": ["1/5", "1/6", "1/4"], "reponse_index": 2 },
+		{ "texte": "Quelle fraction correspond a 1/5 ?", "choix": ["1/5", "1/6", "1/8"], "reponse_index": 0 }
+	]
 }

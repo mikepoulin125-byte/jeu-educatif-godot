@@ -450,13 +450,3 @@ vertical_scroll_mode = 0
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 14
-
-[node name="BoutonDebugBerry" type="Button" parent="ZoneBerries/MargeBerries/HBoxBerries"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(220, 56)
-layout_mode = 2
-size_flags_vertical = 4
-focus_mode = 0
-theme_override_colors/font_color = Color(1, 1, 1, 0.9)
-theme_override_font_sizes/font_size = 14
-text = "[DEBUG] +1 berry"

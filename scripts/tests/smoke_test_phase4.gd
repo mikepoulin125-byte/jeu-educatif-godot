@@ -121,7 +121,7 @@ func _initialize() -> void:
 		"%LabelXp", "%BoutonRetour", "%GrilleCreatures",
 		"%TextureDetail", "%PlaceholderDetail", "%LineEditSurnom",
 		"%LabelStadeDetail", "%BarreXp", "%BarreAffection",
-		"%BoutonAttribuerXp", "%LabelStatut", "%ListeBerries", "%BoutonDebugBerry"
+		"%BoutonAttribuerXp", "%LabelStatut", "%ListeBerries"
 	]
 	for chemin in noeuds_attendus:
 		if not _verifier(roster.get_node_or_null(chemin) != null, "noeud manquant dans Roster.tscn: " + chemin):

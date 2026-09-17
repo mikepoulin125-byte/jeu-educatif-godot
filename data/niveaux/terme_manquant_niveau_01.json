@@ -1,5 +1,16 @@
 {
-	"_commentaire": "PLACEHOLDER - nom thematique defini, 10 questions a scripter en Phase 6 (scenes de tableau, pas encore construites). Le tableau 'questions' est intentionnellement vide pour l'instant.",
+	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
 	"nom": "Grotte du Chiffre Cache 1",
-	"questions": []
+	"questions": [
+		{ "texte": "7 + ? = 9", "reponse": 2 },
+		{ "texte": "12 - ? = 8", "reponse": 4 },
+		{ "texte": "8 + ? = 10", "reponse": 2 },
+		{ "texte": "10 - ? = 2", "reponse": 8 },
+		{ "texte": "9 + ? = 11", "reponse": 2 },
+		{ "texte": "13 - ? = 1", "reponse": 12 },
+		{ "texte": "5 + ? = 7", "reponse": 2 },
+		{ "texte": "11 - ? = 5", "reponse": 6 },
+		{ "texte": "6 + ? = 8", "reponse": 2 },
+		{ "texte": "14 - ? = 7", "reponse": 7 }
+	]
 }

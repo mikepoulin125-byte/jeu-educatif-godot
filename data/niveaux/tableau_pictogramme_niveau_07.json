@@ -1,5 +1,25 @@
 {
-	"_commentaire": "PLACEHOLDER - nom thematique defini, 10 questions a scripter en Phase 6 (scenes de tableau, pas encore construites). Le tableau 'questions' est intentionnellement vide pour l'instant.",
+	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
 	"nom": "Rivage des Pictogrammes 7",
-	"questions": []
+	"graphique": {
+		"titre": "Fruits du panier",
+		"barres": [
+			{ "categorie": "Pommes", "valeur": 11 },
+			{ "categorie": "Bananes", "valeur": 3 },
+			{ "categorie": "Oranges", "valeur": 7 },
+			{ "categorie": "Raisins", "valeur": 11 }
+		]
+	},
+	"questions": [
+		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 11 },
+		{ "texte": "Combien de Oranges de plus que de Bananes ?", "reponse": 4 },
+		{ "texte": "Combien y a-t-il de Oranges ?", "reponse": 7 },
+		{ "texte": "Combien de Raisins de plus que de Pommes ?", "reponse": 0 },
+		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 11 },
+		{ "texte": "Combien de Oranges de plus que de Bananes ?", "reponse": 4 },
+		{ "texte": "Combien y a-t-il de Oranges ?", "reponse": 7 },
+		{ "texte": "Combien de Raisins de plus que de Pommes ?", "reponse": 0 },
+		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 11 },
+		{ "texte": "Combien de Oranges de plus que de Bananes ?", "reponse": 4 }
+	]
 }

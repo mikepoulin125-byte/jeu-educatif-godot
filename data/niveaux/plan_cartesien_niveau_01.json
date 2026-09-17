@@ -1,5 +1,16 @@
 {
-	"_commentaire": "PLACEHOLDER - nom thematique defini, 10 questions a scripter en Phase 6 (scenes de tableau, pas encore construites). Le tableau 'questions' est intentionnellement vide pour l'instant.",
+	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
 	"nom": "Plateau des Coordonnees 1",
-	"questions": []
+	"questions": [
+		{ "x": 1, "y": 2, "taille_grille": 5 },
+		{ "x": 4, "y": 2, "taille_grille": 5 },
+		{ "x": 2, "y": 2, "taille_grille": 5 },
+		{ "x": 0, "y": 2, "taille_grille": 5 },
+		{ "x": 3, "y": 2, "taille_grille": 5 },
+		{ "x": 1, "y": 2, "taille_grille": 5 },
+		{ "x": 4, "y": 2, "taille_grille": 5 },
+		{ "x": 2, "y": 2, "taille_grille": 5 },
+		{ "x": 0, "y": 2, "taille_grille": 5 },
+		{ "x": 3, "y": 2, "taille_grille": 5 }
+	]
 }

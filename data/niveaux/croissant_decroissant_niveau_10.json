@@ -1,5 +1,16 @@
 {
-	"_commentaire": "PLACEHOLDER - nom thematique defini, 10 questions a scripter en Phase 6 (scenes de tableau, pas encore construites). Le tableau 'questions' est intentionnellement vide pour l'instant.",
+	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
 	"nom": "Colline Croissante 10",
-	"questions": []
+	"questions": [
+		{ "suite": [2, 5, 8, 11, 14, 17], "reponse": "croissant" },
+		{ "suite": [25, 21, 17, 13, 9, 5], "reponse": "decroissant" },
+		{ "suite": [8, 13, 18, 23, 28, 33], "reponse": "croissant" },
+		{ "suite": [26, 23, 20, 17, 14, 11], "reponse": "decroissant" },
+		{ "suite": [14, 18, 22, 26, 30, 34], "reponse": "croissant" },
+		{ "suite": [42, 37, 32, 27, 22, 17], "reponse": "decroissant" },
+		{ "suite": [20, 23, 26, 29, 32, 35], "reponse": "croissant" },
+		{ "suite": [23, 19, 15, 11, 7, 3], "reponse": "decroissant" },
+		{ "suite": [6, 11, 16, 21, 26, 31], "reponse": "croissant" },
+		{ "suite": [24, 21, 18, 15, 12, 9], "reponse": "decroissant" }
+	]
 }

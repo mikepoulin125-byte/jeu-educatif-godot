@@ -1,0 +1,178 @@
+extends Control
+## Ecran de tableau reel (section 9 de la spec), remplace
+## EcranTableauPlaceholder.tscn. Pose les 10 questions scriptees du
+## niveau courant (GameState.matiere_courante_id / niveau_courant_id),
+## en delegant l'affichage/la saisie de chaque question a un "widget de
+## reponse" reutilisable (scripts/tableau/, un par matiere) qui respecte
+## un contrat commun :
+##   func configurer(question: Dictionary, contexte: Dictionary) -> void
+##   signal reponse_donnee(correcte: bool)
+## Cette classe gere tout ce qui est commun aux 8 matieres : progression
+## dans les questions, score, XP (+10/bonne reponse, +50 bonus si >=8/10),
+## distribution de berries (+1/bonne reponse, skin aleatoire), et l'ecran
+## de resultats + deblocage du niveau suivant en fin de tableau.
+
+const NB_NIVEAUX := 10
+const SEUIL_REUSSITE := 7
+const SEUIL_BONUS := 8
+const BONUS_XP := 50
+const XP_PAR_BONNE_REPONSE := 10
+const DUREE_FEEDBACK := 1.1
+
+const WidgetPairImpair := preload("res://scenes/tableau/WidgetPairImpair.tscn")
+const WidgetApproximation := preload("res://scenes/tableau/WidgetApproximation.tscn")
+const WidgetTermeManquant := preload("res://scenes/tableau/WidgetTermeManquant.tscn")
+const WidgetPlanCartesien := preload("res://scenes/tableau/WidgetPlanCartesien.tscn")
+const WidgetPossibleImpossible := preload("res://scenes/tableau/WidgetPossibleImpossible.tscn")
+const WidgetTableauPictogramme := preload("res://scenes/tableau/WidgetTableauPictogramme.tscn")
+const WidgetFractions := preload("res://scenes/tableau/WidgetFractions.tscn")
+const WidgetCroissantDecroissant := preload("res://scenes/tableau/WidgetCroissantDecroissant.tscn")
+
+@onready var label_xp: Label = %LabelXp
+@onready var bouton_quitter: Button = %BoutonQuitter
+@onready var label_titre: Label = %LabelTitre
+@onready var label_question: Label = %LabelQuestion
+@onready var label_feedback: Label = %LabelFeedback
+@onready var zone_reponse: Control = %ZoneReponse
+@onready var texture_joueur: TextureRect = %TextureJoueur
+@onready var placeholder_joueur: ColorRect = %PlaceholderJoueur
+@onready var placeholder_sauvage: ColorRect = %PlaceholderSauvage
+@onready var timer_avance: Timer = %TimerAvance
+
+@onready var panneau_resultats: PanelContainer = %PanneauResultats
+@onready var label_resultats_titre: Label = %LabelResultatsTitre
+@onready var label_resultats_details: Label = %LabelResultatsDetails
+@onready var bouton_continuer: Button = %BoutonContinuer
+
+var _matiere_id: String = ""
+var _niveau_id: String = ""
+var _questions: Array = []
+var _contexte: Dictionary = {}
+var _index_question: int = 0
+var _score: int = 0
+var _berries_gagnees: int = 0
+var _xp_gagne: int = 0
+var _widget_courant: Control = null
+
+func _ready() -> void:
+	bouton_quitter.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/SelectionNiveau.tscn"))
+	bouton_continuer.pressed.connect(_on_continuer_presse)
+	timer_avance.one_shot = true
+	timer_avance.wait_time = DUREE_FEEDBACK
+	timer_avance.timeout.connect(_question_suivante)
+
+	_matiere_id = GameState.matiere_courante_id
+	_niveau_id = GameState.niveau_courant_id
+
+	var niveau_data := DataManager.load_niveau("%s_%s" % [_matiere_id, _niveau_id])
+	_questions = niveau_data.get("questions", [])
+	_contexte = {"graphique": niveau_data.get("graphique", {})}
+
+	var matiere := DataManager.get_matiere_by_id(_matiere_id)
+	label_titre.text = "%s - %s" % [String(matiere.get("nom", _matiere_id)), String(niveau_data.get("nom", _niveau_id))]
+
+	_actualiser_label_xp()
+	_afficher_creature_joueur()
+	_instancier_widget()
+	_afficher_question(0)
+
+func _actualiser_label_xp() -> void:
+	label_xp.text = "XP : %d" % SaveManager.get_xp_total()
+
+func _afficher_creature_joueur() -> void:
+	var starter_id: String = String(SaveManager.data.get("starter_id", ""))
+	if starter_id.is_empty() or not DataManager.creatures.has(starter_id):
+		return
+	var creature_data: Dictionary = DataManager.creatures[starter_id]
+	var stage := SaveManager.get_stage_creature(starter_id)
+	var forms: Dictionary = creature_data.get("forms", {})
+	var sprite_id: String = String(forms.get("stage%d" % stage, ""))
+	var texture := SpriteUtil.charger_texture(sprite_id)
+	if texture != null:
+		texture_joueur.texture = texture
+		texture_joueur.visible = true
+		placeholder_joueur.visible = false
+
+func _instancier_widget() -> void:
+	var scenes := {
+		"pair_impair": WidgetPairImpair,
+		"approximation": WidgetApproximation,
+		"terme_manquant": WidgetTermeManquant,
+		"plan_cartesien": WidgetPlanCartesien,
+		"possible_impossible": WidgetPossibleImpossible,
+		"tableau_pictogramme": WidgetTableauPictogramme,
+		"fractions": WidgetFractions,
+		"croissant_decroissant": WidgetCroissantDecroissant,
+	}
+	var scene: PackedScene = scenes.get(_matiere_id)
+	if scene == null:
+		return
+	_widget_courant = scene.instantiate()
+	zone_reponse.add_child(_widget_courant)
+	_widget_courant.reponse_donnee.connect(_on_reponse_donnee)
+
+func _afficher_question(index: int) -> void:
+	if index >= _questions.size():
+		_terminer_tableau()
+		return
+	_index_question = index
+	label_question.text = "Question %d / %d" % [index + 1, _questions.size()]
+	label_feedback.text = ""
+	_widget_courant.configurer(_questions[index], _contexte)
+
+func _on_reponse_donnee(correcte: bool) -> void:
+	if correcte:
+		_score += 1
+		SaveManager.add_xp(XP_PAR_BONNE_REPONSE)
+		SaveManager.ajouter_berry()
+		_berries_gagnees += 1
+		_xp_gagne += XP_PAR_BONNE_REPONSE
+		label_feedback.text = "Bonne reponse ! +%d XP, +1 berry" % XP_PAR_BONNE_REPONSE
+		label_feedback.modulate = Color(0.4, 0.9, 0.5, 1)
+	else:
+		label_feedback.text = "Pas tout a fait..."
+		label_feedback.modulate = Color(0.95, 0.5, 0.4, 1)
+	_actualiser_label_xp()
+	timer_avance.start()
+
+func _question_suivante() -> void:
+	_afficher_question(_index_question + 1)
+
+func _terminer_tableau() -> void:
+	var reussi: bool = _score >= SEUIL_REUSSITE
+	var bonus := 0
+	if _score >= SEUIL_BONUS:
+		bonus = BONUS_XP
+		SaveManager.add_xp(BONUS_XP)
+		_xp_gagne += BONUS_XP
+
+	SaveManager.set_progression_niveau(_matiere_id, _niveau_id, reussi, _score, true)
+	if reussi:
+		var numero_actuel: int = int(_niveau_id.replace("niveau_", ""))
+		if numero_actuel < NB_NIVEAUX:
+			var niveau_suivant_id := "niveau_%02d" % (numero_actuel + 1)
+			SaveManager.set_progression_niveau(_matiere_id, niveau_suivant_id, false, 0, true)
+
+	_actualiser_label_xp()
+	_afficher_resultats(reussi, bonus)
+
+func _afficher_resultats(reussi: bool, bonus: int) -> void:
+	zone_reponse.visible = false
+	panneau_resultats.visible = true
+
+	label_resultats_titre.text = "Niveau reussi !" if reussi else "Pas encore reussi..."
+	var lignes := []
+	lignes.append("Score : %d / %d" % [_score, _questions.size()])
+	lignes.append("Berries gagnees : %d" % _berries_gagnees)
+	var texte_xp := "XP gagne : %d" % _xp_gagne
+	if bonus > 0:
+		texte_xp += " (dont %d de bonus)" % bonus
+	lignes.append(texte_xp)
+	if reussi:
+		lignes.append("Le niveau suivant est debloque !")
+	else:
+		lignes.append("Il faut au moins %d/10 pour reussir. Retente quand tu veux !" % SEUIL_REUSSITE)
+	label_resultats_details.text = "\n".join(lignes)
+
+func _on_continuer_presse() -> void:
+	get_tree().change_scene_to_file("res://scenes/SelectionNiveau.tscn")

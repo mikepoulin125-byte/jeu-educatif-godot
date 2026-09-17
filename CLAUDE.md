@@ -21,33 +21,37 @@ relancer si le code concerne est modifie plus tard.
 
 ## Etat actuel
 
-**Phases 1 a 5 (+ 4 bis) terminees et verifiees** (voir archives
-ci-dessous). Prochaine etape : **Phase 6 - Scenes de tableau**.
+**Phases 1 a 6 (+ 4 bis) terminees et verifiees** (voir archives
+ci-dessous). Prochaine etape : **Phase 7 - Logique de rencontre/capture**.
 
-**Important pour la Phase 6** :
-- Remplacer `scenes/EcranTableauPlaceholder.tscn` par les 8 vraies
-  mecaniques d'interaction (section 9 de la spec), en reprenant la
-  logique de fin de tableau qu'il contient deja (marquer reussi/echoue
-  via `SaveManager.set_progression_niveau()`, debloquer le niveau
-  suivant seulement si reussi >= 7/10) — voir
-  [docs/phases/phase_05_selection_niveau.md](docs/phases/phase_05_selection_niveau.md).
-- Remplir les `"questions": []` des 79 fichiers de niveaux restants
-  (`data/niveaux/*.json`) au fur et a mesure ; un seul exemple complet
-  existe pour l'instant (`pair_impair_niveau_01.json`, 10 questions).
-- Brancher `SaveManager.ajouter_berry()` a chaque bonne reponse (1 par
-  bonne reponse, jusqu'a 10 par tableau) — l'infrastructure du systeme
-  de berries est prete depuis la Phase 4 bis mais pas encore branchee.
-  Retirer/masquer le bouton de debug `%BoutonDebugBerry` du Roster
-  (`scripts/roster.gd`) une fois la vraie distribution fonctionnelle.
+**Important pour la Phase 7** :
+- Dans `scenes/EcranTableau.tscn`, `ZoneSauvage` affiche un placeholder
+  fixe `"? (Phase 7)"` — a remplacer par la vraie creature sauvage
+  tiree au hasard (section 9.1 de la spec : parmi les non-evoluees
+  jamais vues, `SaveManager.get_creatures_vues()` /
+  `DataManager.get_creatures_non_evoluees()`).
+- Brancher la capture reelle en fin de tableau reussi (>=7/10) dans
+  `scripts/ecran_tableau.gd::_terminer_tableau()` :
+  `SaveManager.capturer_creature()` (existe depuis la Phase 1, jamais
+  encore appele en dehors du starter) + `SaveManager.marquer_vue()`.
 
 **Piege GDScript a connaitre avant de coder un nouveau composant
 reutilisable** : ne pas utiliser `@onready var x = %NodeName` pour un
 composant configure juste apres `instantiate()`/`add_child()` — resoudre
 `%NodeName` a la demande dans la fonction de configuration a la place
 (voir [docs/phases/phase_03_hub_principal.md](docs/phases/phase_03_hub_principal.md)
-pour le detail du bug). Et ne jamais utiliser `assert()` dans un script
-de test headless (bloque indefiniment sans debugger attache) — utiliser
-un helper `_verifier(condition, message)` qui `print()` + `quit(1)`.
+pour le detail du bug — retrouve en Phase 6 sur les 8 widgets de
+`scripts/tableau/`, meme cause). Et ne jamais utiliser `assert()` dans
+un script de test headless (bloque indefiniment sans debugger attache)
+— utiliser un helper `_verifier(condition, message)` qui `print()` +
+`quit(1)`.
+
+**Autre piege a connaitre** : un nombre entier lu depuis un fichier
+JSON revient en `float` (JSON ne distingue pas int/float). Toujours
+passer par `int(...)` avant de **comparer** (`get_stage_creature` etc.,
+Phase 4) ET avant d'**afficher** (`str(int(valeur))`, pas `str(valeur)`
+— trouve en Phase 6 sur `widget_pair_impair.gd`/
+`widget_croissant_decroissant.gd`, affichait "4.0" au lieu de "4").
 
 ## Decoupage en phases
 
@@ -64,12 +68,13 @@ un helper `_verifier(condition, message)` qui `print()` + `quit(1)`.
    berries avec glisser-depose et sprites "glow").
 5. **Phase 5 - Selection de niveau** — termine, voir
    [docs/phases/phase_05_selection_niveau.md](docs/phases/phase_05_selection_niveau.md).
-6. **Phase 6 - Scenes de tableau** (prochaine) : les 8 mecaniques
-   d'interaction (pair/impair, approximation, terme manquant, plan
-   cartesien, possible/impossible, tableau/pictogramme, fractions,
-   croissant/decroissant), scoring, XP, distribution des berries.
-7. **Phase 7 - Logique de rencontre/capture** : distribution aleatoire des
-   80 creatures restantes sans repetition, integree a la sauvegarde.
+6. **Phase 6 - Scenes de tableau** — termine, voir
+   [docs/phases/phase_06_scenes_tableau.md](docs/phases/phase_06_scenes_tableau.md)
+   (8 widgets de reponse reutilisables + orchestrateur commun, 80
+   niveaux de contenu, XP/berries branches pour de vrai).
+7. **Phase 7 - Logique de rencontre/capture** (prochaine) : distribution
+   aleatoire des 80 creatures restantes sans repetition, integree a la
+   sauvegarde.
 8. **Phase 8 - Polish et integration finale** : transitions fade
    in/out, tests de bout en bout, remplacement des placeholders par
    vrais assets si disponibles.
@@ -101,19 +106,19 @@ suivent deja ce patron via `scripts/util/sprite_util.gd`
 pas encore — au composant appelant d'afficher un placeholder, voir
 `scripts/components/carte_creature.gd` pour un exemple).
 
-## Prochaine etape : Phase 6 - Scenes de tableau
+## Prochaine etape : Phase 7 - Logique de rencontre/capture
 
-A construire (voir sections 8-9 de la spec d'origine) :
-- 8 scenes de mecanique d'interaction distinctes et reutilisables,
-  parametrees par les donnees du fichier JSON du niveau
-  (`data/niveaux/{matiere_id}_niveau_{NN}.json`, charge via
-  `DataManager.load_niveau()`).
-- Reprendre la logique de fin de tableau deja ecrite dans
-  `scripts/ecran_tableau_placeholder.gd` (a remplacer, pas juste
-  completer) : `SaveManager.set_progression_niveau()` + deblocage du
-  niveau suivant si score >= 7/10.
-- Brancher `SaveManager.ajouter_berry()` a chaque bonne reponse (voir
-  ci-dessus).
-- Remplir les fichiers de niveaux avec leurs 10 vraies questions
-  scriptees au fur et a mesure que chaque mecanique est construite.
-- Penser a un smoke test headless (`scripts/tests/smoke_test_phase6.gd`).
+A construire (voir section 9.1 de la spec d'origine) :
+- Distribution aleatoire des 80 creatures non-evoluees restantes (81 -
+  1 starter), sans repetition tant que toutes n'ont pas ete vues :
+  piocher parmi `DataManager.get_creatures_non_evoluees()` moins
+  `SaveManager.get_creatures_vues()` (si cette liste est vide, la
+  reinitialiser implicitement en repiochant parmi toutes).
+- Afficher la creature sauvage tiree dans `ZoneSauvage` de
+  `scenes/EcranTableau.tscn` (actuellement un placeholder fixe) —
+  fixee au debut du tableau (`GameState` ou directement au `_ready()`
+  de `ecran_tableau.gd`), la meme tout au long des 10 questions.
+- A la reussite du tableau (>=7/10) : `SaveManager.capturer_creature()`
+  + `SaveManager.marquer_vue()`. A l'echec : `marquer_vue()` quand meme
+  (vue mais pas capturee, cf. section 9.1 de la spec), pas de capture.
+- Penser a un smoke test headless (`scripts/tests/smoke_test_phase7.gd`).

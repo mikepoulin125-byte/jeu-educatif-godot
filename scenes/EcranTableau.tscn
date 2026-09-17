@@ -1,0 +1,254 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqf0e0000ectab01"]
+
+[ext_resource type="Script" path="res://scripts/ecran_tableau.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/components/bouton_anime.gd" id="2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pill_blanc"]
+bg_color = Color(1, 1, 1, 0.92)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.8, 0, 0, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[node name="EcranTableau" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Fond" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12, 0.14, 0.22, 1)
+
+[node name="LabelXp" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = 30.0
+offset_top = 20.0
+offset_right = 260.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "XP : 0"
+
+[node name="BoutonQuitter" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -170.0
+offset_top = 16.0
+offset_right = -30.0
+offset_bottom = 62.0
+grow_horizontal = 0
+focus_mode = 0
+theme_override_colors/font_color = Color(0.75, 0.15, 0.08, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_pill_blanc")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pill_blanc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pill_blanc")
+theme_override_styles/focus = SubResource("StyleBoxFlat_pill_blanc")
+text = "Quitter"
+script = ExtResource("2")
+
+[node name="LabelTitre" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 16.0
+offset_bottom = 50.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.9)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+text = "Matiere - Niveau"
+
+[node name="LabelQuestion" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 56.0
+offset_bottom = 86.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+text = "Question 1 / 10"
+
+[node name="LabelFeedback" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 90.0
+offset_bottom = 120.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+text = ""
+
+[node name="ZoneJoueur" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 60.0
+offset_top = -70.0
+offset_right = 200.0
+offset_bottom = 70.0
+grow_vertical = 2
+
+[node name="TextureJoueur" type="TextureRect" parent="ZoneJoueur"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 5
+stretch_mode = 5
+
+[node name="PlaceholderJoueur" type="ColorRect" parent="ZoneJoueur"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.3, 0.5, 0.75, 1)
+
+[node name="LabelJoueur" type="Label" parent="ZoneJoueur"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.6)
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "Toi"
+
+[node name="ZoneSauvage" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -70.0
+offset_right = -60.0
+offset_bottom = 70.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="PlaceholderSauvage" type="ColorRect" parent="ZoneSauvage"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.6, 0.45, 0.3, 1)
+
+[node name="LabelSauvage" type="Label" parent="ZoneSauvage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.6)
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "? (Phase 7)"
+
+[node name="ZoneReponse" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TimerAvance" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[node name="PanneauResultats" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pill_blanc")
+
+[node name="MargeResultats" type="MarginContainer" parent="PanneauResultats"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxResultats" type="VBoxContainer" parent="PanneauResultats/MargeResultats"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 18
+
+[node name="LabelResultatsTitre" type="Label" parent="PanneauResultats/MargeResultats/VBoxResultats"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.16, 0.4, 0.85, 1)
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 1
+text = "Resultats"
+
+[node name="LabelResultatsDetails" type="Label" parent="PanneauResultats/MargeResultats/VBoxResultats"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.24, 1)
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+autowrap_mode = 3
+text = "..."
+
+[node name="BoutonContinuer" type="Button" parent="PanneauResultats/MargeResultats/VBoxResultats"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 20
+text = "Continuer"
+script = ExtResource("2")

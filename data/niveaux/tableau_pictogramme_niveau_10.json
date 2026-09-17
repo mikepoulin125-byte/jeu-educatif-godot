@@ -1,5 +1,26 @@
 {
-	"_commentaire": "PLACEHOLDER - nom thematique defini, 10 questions a scripter en Phase 6 (scenes de tableau, pas encore construites). Le tableau 'questions' est intentionnellement vide pour l'instant.",
+	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
 	"nom": "Rivage des Pictogrammes 10",
-	"questions": []
+	"graphique": {
+		"titre": "Fruits du panier",
+		"barres": [
+			{ "categorie": "Pommes", "valeur": 8 },
+			{ "categorie": "Bananes", "valeur": 12 },
+			{ "categorie": "Oranges", "valeur": 4 },
+			{ "categorie": "Raisins", "valeur": 8 },
+			{ "categorie": "Fraises", "valeur": 12 }
+		]
+	},
+	"questions": [
+		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 8 },
+		{ "texte": "Combien de Bananes de plus que de Oranges ?", "reponse": 8 },
+		{ "texte": "Combien y a-t-il de Oranges ?", "reponse": 4 },
+		{ "texte": "Combien de Fraises de plus que de Raisins ?", "reponse": 4 },
+		{ "texte": "Combien y a-t-il de Fraises ?", "reponse": 12 },
+		{ "texte": "Combien de Bananes de plus que de Pommes ?", "reponse": 4 },
+		{ "texte": "Combien y a-t-il de Bananes ?", "reponse": 12 },
+		{ "texte": "Combien de Raisins de plus que de Oranges ?", "reponse": 4 },
+		{ "texte": "Combien y a-t-il de Raisins ?", "reponse": 8 },
+		{ "texte": "Combien de Fraises de plus que de Pommes ?", "reponse": 4 }
+	]
 }

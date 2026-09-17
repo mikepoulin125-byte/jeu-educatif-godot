@@ -97,9 +97,10 @@ func _initialize() -> void:
 		carte.free()
 	print("OK: CarteNiveau se configure correctement pour les 3 etats")
 
-	# 8. Structure de SelectionNiveau.tscn et EcranTableauPlaceholder.tscn
-	# (les scripts racines ne compilent pas sous --script, meme limite
-	# documentee depuis la Phase 2 - la structure des noeuds reste verifiable).
+	# 8. Structure de SelectionNiveau.tscn (le script racine ne compile pas
+	# sous --script, meme limite documentee depuis la Phase 2 - la
+	# structure des noeuds reste verifiable). EcranTableau.tscn (Phase 6)
+	# a son propre smoke test dedie (smoke_test_phase6.gd).
 	var SelectionNiveauScene := preload("res://scenes/SelectionNiveau.tscn")
 	var ecran_selection = SelectionNiveauScene.instantiate()
 	root.add_child(ecran_selection)
@@ -108,16 +109,7 @@ func _initialize() -> void:
 			return
 	root.remove_child(ecran_selection)
 	ecran_selection.free()
-
-	var TableauPlaceholderScene := preload("res://scenes/EcranTableauPlaceholder.tscn")
-	var ecran_tableau = TableauPlaceholderScene.instantiate()
-	root.add_child(ecran_tableau)
-	for chemin in ["%LabelInfo", "%LabelStatut", "%BoutonReussir", "%BoutonEchouer", "%BoutonRetour"]:
-		if not _verifier(ecran_tableau.get_node_or_null(chemin) != null, "noeud manquant dans EcranTableauPlaceholder.tscn: " + chemin):
-			return
-	root.remove_child(ecran_tableau)
-	ecran_tableau.free()
-	print("OK: structure de SelectionNiveau.tscn et EcranTableauPlaceholder.tscn completes")
+	print("OK: structure de SelectionNiveau.tscn complete")
 
 	DataManager.free()
 	SaveManager.free()

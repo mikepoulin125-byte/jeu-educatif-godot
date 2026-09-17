@@ -33,7 +33,6 @@ const DUREE_HALO_DESCENTE := 0.7
 @onready var particules_xp: CPUParticles2D = %ParticulesXp
 
 @onready var liste_berries: HBoxContainer = %ListeBerries
-@onready var bouton_debug_berry: Button = %BoutonDebugBerry
 
 var _cartes_par_id: Dictionary = {}
 var _creature_selectionnee_id: String = ""
@@ -44,7 +43,6 @@ func _ready() -> void:
 	line_edit_surnom.text_submitted.connect(func(_texte): _sauvegarder_surnom())
 	line_edit_surnom.focus_exited.connect(_sauvegarder_surnom)
 	zone_sprite.berry_deposee.connect(_on_berry_deposee)
-	bouton_debug_berry.pressed.connect(_on_debug_berry_presse)
 
 	zone_sprite.pivot_offset = zone_sprite.size / 2.0
 	particules_xp.position = zone_sprite.size / 2.0
@@ -218,10 +216,6 @@ func _peupler_berries() -> void:
 		var item := BerryItemScene.instantiate()
 		liste_berries.add_child(item)
 		item.configurer(i, int(inventaire[i]))
-
-func _on_debug_berry_presse() -> void:
-	SaveManager.ajouter_berry()
-	_peupler_berries()
 
 func _on_berry_deposee(donnees: Dictionary) -> void:
 	if _creature_selectionnee_id.is_empty():

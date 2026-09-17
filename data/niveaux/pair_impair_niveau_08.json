@@ -1,5 +1,16 @@
 {
-	"_commentaire": "PLACEHOLDER - nom thematique defini, 10 questions a scripter en Phase 6 (scenes de tableau, pas encore construites). Le tableau 'questions' est intentionnellement vide pour l'instant.",
+	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
 	"nom": "Sentier Pair-Impair 8",
-	"questions": []
+	"questions": [
+		{ "nombre": 25, "reponse": "impair" },
+		{ "nombre": 32, "reponse": "pair" },
+		{ "nombre": 39, "reponse": "impair" },
+		{ "nombre": 46, "reponse": "pair" },
+		{ "nombre": 53, "reponse": "impair" },
+		{ "nombre": 60, "reponse": "pair" },
+		{ "nombre": 67, "reponse": "impair" },
+		{ "nombre": 74, "reponse": "pair" },
+		{ "nombre": 1, "reponse": "impair" },
+		{ "nombre": 8, "reponse": "pair" }
+	]
 }

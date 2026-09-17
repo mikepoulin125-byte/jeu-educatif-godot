@@ -57,4 +57,4 @@ func _peupler_niveaux() -> void:
 
 func _on_niveau_choisi(numero: int) -> void:
 	GameState.niveau_courant_id = "niveau_%02d" % numero
-	get_tree().change_scene_to_file("res://scenes/EcranTableauPlaceholder.tscn")
+	get_tree().change_scene_to_file("res://scenes/EcranTableau.tscn")

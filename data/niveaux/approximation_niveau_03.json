@@ -1,5 +1,16 @@
 {
-	"_commentaire": "PLACEHOLDER - nom thematique defini, 10 questions a scripter en Phase 6 (scenes de tableau, pas encore construites). Le tableau 'questions' est intentionnellement vide pour l'instant.",
+	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
 	"nom": "Vallee des Estimations 3",
-	"questions": []
+	"questions": [
+		{ "texte": "Il y a environ 28 objets dans le groupe. Ecris un nombre proche (a 5 pres).", "min": 23, "max": 33 },
+		{ "texte": "Il y a environ 31 objets dans le groupe. Ecris un nombre proche (a 5 pres).", "min": 26, "max": 36 },
+		{ "texte": "Il y a environ 34 objets dans le groupe. Ecris un nombre proche (a 5 pres).", "min": 29, "max": 39 },
+		{ "texte": "Il y a environ 37 objets dans le groupe. Ecris un nombre proche (a 5 pres).", "min": 32, "max": 42 },
+		{ "texte": "Il y a environ 40 objets dans le groupe. Ecris un nombre proche (a 5 pres).", "min": 35, "max": 45 },
+		{ "texte": "Il y a environ 43 objets dans le groupe. Ecris un nombre proche (a 5 pres).", "min": 38, "max": 48 },
+		{ "texte": "Il y a environ 46 objets dans le groupe. Ecris un nombre proche (a 5 pres).", "min": 41, "max": 51 },
+		{ "texte": "Il y a environ 49 objets dans le groupe. Ecris un nombre proche (a 5 pres).", "min": 44, "max": 54 },
+		{ "texte": "Il y a environ 52 objets dans le groupe. Ecris un nombre proche (a 5 pres).", "min": 47, "max": 57 },
+		{ "texte": "Il y a environ 55 objets dans le groupe. Ecris un nombre proche (a 5 pres).", "min": 50, "max": 60 }
+	]
 }
