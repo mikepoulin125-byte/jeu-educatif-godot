@@ -2,6 +2,16 @@ extends SceneTree
 ## Test de fumee headless pour la Phase 2 (pas execute en jeu normal).
 ## Lance avec : godot --headless --script res://scripts/tests/smoke_test_phase2.gd
 ## Simule le parcours Menu -> Intro -> Choix starter -> Sauvegarde, sans GUI reelle.
+##
+## N'utilise jamais assert() : un assert() qui echoue declenche une pause du
+## debugger de script, ce qui bloque indefiniment un run --headless sans
+## debugger attache. On verifie et on quitte explicitement a la place.
+
+func _verifier(condition: bool, message: String) -> bool:
+	if not condition:
+		print("ECHEC: " + message)
+		quit(1)
+	return condition
 
 func _initialize() -> void:
 	print("=== Smoke test Phase 2 ===")
@@ -16,18 +26,21 @@ func _initialize() -> void:
 
 	# 1. Verifie que les lignes d'intro se chargent.
 	var lignes := DataManager.get_lignes_intro()
-	assert(lignes.size() == 4, "attendu 4 lignes d'intro, obtenu %d" % lignes.size())
+	if not _verifier(lignes.size() == 4, "attendu 4 lignes d'intro, obtenu %d" % lignes.size()):
+		return
 	print("OK: intro.json charge (%d lignes)" % lignes.size())
 
 	# 1b. Verifie que le texte d'indice vient aussi de intro.json (rien de
 	# code en dur dans dialogue_intro.gd / DialogueIntro.tscn).
 	var indice := DataManager.get_texte_indice_intro()
-	assert(not indice.is_empty(), "texte_indice absent de intro.json")
+	if not _verifier(not indice.is_empty(), "texte_indice absent de intro.json"):
+		return
 	print("OK: texte_indice charge depuis intro.json: '%s'" % indice)
 
 	# 2. Verifie les starters.
 	var starters := DataManager.get_creatures_starters()
-	assert(starters.size() == 3, "attendu 3 starters, obtenu %d" % starters.size())
+	if not _verifier(starters.size() == 3, "attendu 3 starters, obtenu %d" % starters.size()):
+		return
 	print("OK: %d creatures starter trouvees: %s" % [starters.size(), str(starters)])
 
 	# 3. Instancie une carte pour chaque starter (verifie configurer() ne crashe pas).
@@ -35,7 +48,11 @@ func _initialize() -> void:
 		var carte = CarteCreatureScene.instantiate()
 		root.add_child(carte)
 		carte.configurer(id, DataManager.creatures[id])
-		assert(carte.get_node("%LabelNom").text != "", "nom vide pour " + id)
+		var noms: Dictionary = DataManager.creatures[id].get("names", {})
+		var nom_attendu: String = String(noms.get("stage1", id))
+		var nom_obtenu: String = carte.get_node("%LabelNom").text
+		if not _verifier(nom_obtenu == nom_attendu, "nom mal applique pour %s : attendu '%s', obtenu '%s'" % [id, nom_attendu, nom_obtenu]):
+			return
 		root.remove_child(carte)
 		carte.free()
 	print("OK: cartes de starter configurees sans erreur")
@@ -44,16 +61,21 @@ func _initialize() -> void:
 	SaveManager.delete_save()
 	var choix: String = starters[0]
 	SaveManager.new_game(choix)
-	assert(SaveManager.data.get("starter_id") == choix, "starter_id non enregistre")
-	assert(SaveManager.get_creatures_vues().has(choix), "starter pas dans creatures_vues")
-	assert(SaveManager.get_creatures_capturees().has(choix), "starter pas dans creatures_capturees")
+	if not _verifier(SaveManager.data.get("starter_id") == choix, "starter_id non enregistre"):
+		return
+	if not _verifier(SaveManager.get_creatures_vues().has(choix), "starter pas dans creatures_vues"):
+		return
+	if not _verifier(SaveManager.get_creatures_capturees().has(choix), "starter pas dans creatures_capturees"):
+		return
 	print("OK: SaveManager.new_game('%s') -> sauvegarde correcte" % choix)
 
 	# 5. Verifie que la sauvegarde survit a un reload depuis le disque.
 	SaveManager.data = {}
 	var charge := SaveManager.load_game()
-	assert(charge, "echec du rechargement de la sauvegarde")
-	assert(SaveManager.data.get("starter_id") == choix, "starter_id perdu apres reload")
+	if not _verifier(charge, "echec du rechargement de la sauvegarde"):
+		return
+	if not _verifier(SaveManager.data.get("starter_id") == choix, "starter_id perdu apres reload"):
+		return
 	print("OK: sauvegarde rechargee depuis le disque")
 
 	SaveManager.delete_save()

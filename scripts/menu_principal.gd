@@ -15,7 +15,7 @@ func _on_nouvelle_partie() -> void:
 
 func _on_continuer() -> void:
 	SaveManager.load_game()
-	get_tree().change_scene_to_file("res://scenes/DebugEtatSauvegarde.tscn")
+	get_tree().change_scene_to_file("res://scenes/Hub.tscn")
 
 func _on_quitter() -> void:
 	get_tree().quit()

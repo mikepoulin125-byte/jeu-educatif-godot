@@ -2,41 +2,32 @@ extends PanelContainer
 ## Carte reutilisable affichant une creature (sprite reel ou placeholder,
 ## nom, description) avec un bouton de selection.
 ##
-## configurer() peut etre appelee juste apres instantiate()+add_child(),
-## avant que _ready() (et donc les @onready) ne soit passe : on met la
-## donnee en attente et on l'applique des que le noeud est pret.
+## configurer() peut etre appelee juste apres instantiate(), avant meme
+## add_child() : on resout les noeuds enfants via %Nom a chaque appel
+## plutot que de les mettre en cache dans des @onready, car @onready
+## n'est peuple qu'au moment ou _ready() se declenche - qui peut etre
+## differe (par ex. dans un contexte headless sans boucle de frame),
+## alors que la resolution %Nom fonctionne des l'instanciation.
 
 signal choisie(creature_id: String)
 
-@onready var texture_rect: TextureRect = %TextureSprite
-@onready var placeholder: ColorRect = %PlaceholderSprite
-@onready var label_placeholder: Label = %LabelPlaceholder
-@onready var label_nom: Label = %LabelNom
-@onready var label_description: Label = %LabelDescription
-@onready var bouton_choisir: Button = %BoutonChoisir
-
 var _creature_id: String = ""
-var _donnee_en_attente: Dictionary = {}
-var _a_une_donnee_en_attente: bool = false
+var _pressed_connecte: bool = false
 
 func _ready() -> void:
-	bouton_choisir.pressed.connect(func(): choisie.emit(_creature_id))
-	if _a_une_donnee_en_attente:
-		_appliquer(_donnee_en_attente)
-		_a_une_donnee_en_attente = false
+	_connecter_bouton()
 
 func configurer(creature_id: String, creature_data: Dictionary) -> void:
 	_creature_id = creature_id
-	if is_node_ready():
-		_appliquer(creature_data)
-	else:
-		_donnee_en_attente = creature_data
-		_a_une_donnee_en_attente = true
+	_connecter_bouton()
 
-func _appliquer(creature_data: Dictionary) -> void:
 	var forms: Dictionary = creature_data.get("forms", {})
 	var names: Dictionary = creature_data.get("names", {})
 	var sprite_id: String = forms.get("stage1", "")
+
+	var texture_rect: TextureRect = %TextureSprite
+	var placeholder: ColorRect = %PlaceholderSprite
+	var label_placeholder: Label = %LabelPlaceholder
 
 	var texture := SpriteUtil.charger_texture(sprite_id)
 	if texture != null:
@@ -48,5 +39,14 @@ func _appliquer(creature_data: Dictionary) -> void:
 		placeholder.visible = true
 		label_placeholder.text = sprite_id if not sprite_id.is_empty() else "?"
 
+	var label_nom: Label = %LabelNom
+	var label_description: Label = %LabelDescription
 	label_nom.text = String(names.get("stage1", _creature_id))
 	label_description.text = String(creature_data.get("description", ""))
+
+func _connecter_bouton() -> void:
+	if _pressed_connecte:
+		return
+	var bouton_choisir: Button = %BoutonChoisir
+	bouton_choisir.pressed.connect(func(): choisie.emit(_creature_id))
+	_pressed_connecte = true

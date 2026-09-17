@@ -20,5 +20,4 @@ func _ready() -> void:
 
 func _on_creature_choisie(creature_id: String) -> void:
 	SaveManager.new_game(creature_id)
-	# Phase 3 (hub) n'est pas encore construite : ecran de debug temporaire.
-	get_tree().change_scene_to_file("res://scenes/DebugEtatSauvegarde.tscn")
+	get_tree().change_scene_to_file("res://scenes/Hub.tscn")

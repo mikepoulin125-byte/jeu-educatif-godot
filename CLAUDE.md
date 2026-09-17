@@ -21,9 +21,18 @@ relancer si le code concerne est modifie plus tard.
 
 ## Etat actuel
 
-**Phase 1 et Phase 2 terminees et verifiees** (voir archives ci-dessous).
-Prochaine etape : **Phase 3 - Hub principal**, voir section correspondante
-plus bas.
+**Phases 1, 2 et 3 terminees et verifiees** (voir archives ci-dessous).
+Prochaine etape : **Phase 4 - Roster et evolutions**, voir section
+correspondante plus bas.
+
+**Piege GDScript a connaitre avant de coder un nouveau composant
+reutilisable** : ne pas utiliser `@onready var x = %NodeName` pour un
+composant configure juste apres `instantiate()`/`add_child()` — resoudre
+`%NodeName` a la demande dans la fonction de configuration a la place
+(voir [docs/phases/phase_03_hub_principal.md](docs/phases/phase_03_hub_principal.md)
+pour le detail du bug). Et ne jamais utiliser `assert()` dans un script
+de test headless (bloque indefiniment sans debugger attache) — utiliser
+un helper `_verifier(condition, message)` qui `print()` + `quit(1)`.
 
 ## Decoupage en phases
 
@@ -31,9 +40,9 @@ plus bas.
    [docs/phases/phase_01_fondations.md](docs/phases/phase_01_fondations.md).
 2. **Phase 2 - Intro et starter** — termine, voir
    [docs/phases/phase_02_intro_starter.md](docs/phases/phase_02_intro_starter.md).
-3. **Phase 3 - Hub principal** (prochaine) : menu des 8 badges/matieres,
-   affichage XP, bouton Roster.
-4. **Phase 4 - Roster et evolutions** : gestion des creatures, attribution
+3. **Phase 3 - Hub principal** — termine, voir
+   [docs/phases/phase_03_hub_principal.md](docs/phases/phase_03_hub_principal.md).
+4. **Phase 4 - Roster et evolutions** (prochaine) : gestion des creatures, attribution
    d'XP, evolution (300/500 XP).
 5. **Phase 5 - Selection de niveau** : 10 tableaux par matiere,
    progression lineaire (deblocage sequentiel, seuil 7/10).
@@ -74,19 +83,22 @@ suivent deja ce patron via `scripts/util/sprite_util.gd`
 pas encore — au composant appelant d'afficher un placeholder, voir
 `scripts/components/carte_creature.gd` pour un exemple).
 
-## Prochaine etape : Phase 3 - Hub principal
+## Prochaine etape : Phase 4 - Roster et evolutions
 
-A construire (voir section 6 de la spec d'origine) :
-- `scenes/Hub.tscn` : 8 boutons/badges (un par matiere de
-  `data/matieres.json`), affichage permanent du XP total
-  (`SaveManager.get_xp_total()`) en haut a gauche, bouton Roster
-  permanent (menant a un ecran Roster pas encore construit — Phase 4,
-  laisser un placeholder qui ne fait rien ou log un message pour
-  l'instant).
-- Remplacer les deux endroits qui redirigent actuellement vers
-  `scenes/DebugEtatSauvegarde.tscn` (`scripts/menu_principal.gd` pour
-  "Continuer", `scripts/selection_starter.gd` apres le choix du
-  starter) par une redirection vers `scenes/Hub.tscn`.
-- Clic sur un badge de matiere : fade out/in vers l'ecran de selection de
-  niveau (Phase 5, pas encore construit) — pour l'instant, un
-  placeholder minimal suffit tant que la Phase 5 n'est pas faite.
+A construire (voir section 7 de la spec d'origine) :
+- `scenes/Roster.tscn` : remplacer le placeholder actuel
+  (`scripts/roster_placeholder.gd`) par le vrai ecran. Grille/liste des
+  creatures capturees (`SaveManager.get_creatures_capturees()`),
+  selection d'une creature -> affichage stats/stade/XP investi, bouton
+  "Attribuer XP" (cout 300 XP pour stage2, 500 XP pour stage3, gere
+  via `creatures.json` champ `stages`). Le composant `CarteCreature`
+  (Phase 2, `scenes/components/CarteCreature.tscn`) peut probablement
+  etre reutilise ou adapte pour lister les creatures capturees.
+- Logique d'evolution : deduire `SaveManager.get_xp_total()`,
+  incrementer `xp_investi` de la creature dans
+  `creatures_capturees[id]`, changer son `stage` affiche (le sprite
+  vient de `creature_data.forms.stageN`, deja gere par
+  `SpriteUtil`/le pattern de `CarteCreature`).
+- Penser a un smoke test headless (`scripts/tests/smoke_test_phase4.gd`)
+  qui verifie le cout d'evolution, le refus si XP insuffisant, et la
+  persistance apres `save_game()`/`load_game()`.
