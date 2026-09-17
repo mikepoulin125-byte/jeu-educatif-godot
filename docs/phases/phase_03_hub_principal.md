@@ -144,3 +144,62 @@ pastille placeholder **duplique** le `StyleBoxFlat` partage
 couleur d'une carte changerait la couleur de TOUTES les cartes qui
 partagent la meme resource `SubResource` de base (piege classique des
 ressources partagees en Godot).
+
+## Style visuel de l'ecran-titre (mise a jour post-Phase 3 ter)
+
+Mike a fourni une deuxieme image de reference, cette fois un
+**ecran-titre reel de Pokemon Violet** (logo protege par copyright/
+marque). **Contrainte legale stricte respectee** : seuls la
+disposition generale (zone logo en coin, zone d'action ailleurs) et le
+principe de police (bold, ronde, lisible) ont ete repris — aucun texte,
+logo, police stylisee ou couleur exacte de la reference n'a ete
+reproduit. Le titre ("Aventure Mathematique"), toutes les couleurs et
+tous les textes sont originaux.
+
+- **Mecanisme d'assets remplacables generalise** (meme principe que
+  `SpriteUtil`/`UiIconUtil`) : `scripts/util/menu_asset_util.gd`
+  (`class_name MenuAssetUtil`) resout `assets/ui/menu/fond_menu.png`
+  (fond plein ecran, 1920x1080) et `assets/ui/menu/logo_menu.png`
+  (logo/titre, 560x280, transparent, affiche en haut-droite). Tant
+  qu'un fichier n'existe pas, `null` est retourne et un placeholder
+  s'affiche a la meme position/taille. Instructions completes pour
+  Mike dans `assets/ui/menu/LISEZ-MOI.txt` (noms de fichiers exacts,
+  format, dimensions, position).
+- `scenes/MenuPrincipal.tscn` refondu : `TextureFond`/`PlaceholderFond`
+  (fond, ColorRect brun chaleureux tant que `fond_menu.png` n'existe
+  pas), `ZoneLogo` en haut-droite (`TextureLogo`/`PlaceholderLogo`,
+  ce dernier etant un cadre `StyleBoxFlat` avec le titre du jeu),
+  `ZoneBoutons` en bas-droite : panneau semi-transparent contenant les
+  3 vrais boutons (Nouvelle partie / Continuer / Quitter), cliquables
+  a la souris (ce sont des `Button` standards Godot, donc deja
+  cliquables/focusables nativement — pas de logique custom necessaire
+  au-dela du style).
+- Style des boutons "fortement inspire" (langage visuel generique
+  uniquement) : pilules blanches arrondies (`corner_radius` = moitie
+  de la hauteur), bordure coloree epaisse, texte bold colore, 4 etats
+  (`normal`/`hover`/`pressed`/`disabled`) via des `StyleBoxFlat`
+  distincts. "Nouvelle partie"/"Continuer" en accent bleu (style
+  "action principale"), "Quitter" en accent gris neutre (style
+  "action secondaire"), "Continuer" grise quand
+  `SaveManager.has_save()` est faux — meme logique qu'avant, juste
+  restylee.
+- `scripts/tests/smoke_test_menu_principal.gd` : verifie que
+  `MenuAssetUtil` retourne `null` tant qu'aucun fichier n'est depose,
+  que les placeholders sont actifs par defaut dans le `.tscn`, et que
+  les 3 boutons existent. **Limite documentee** : ce test ne peut pas
+  executer `_ready()` de `menu_principal.gd` (il reference l'autoload
+  `SaveManager` par son nom global, qui ne compile pas sous
+  `--script`, meme piege que Phase 2/3) — le comportement runtime
+  complet (chargement des assets, etat desactive de "Continuer") est
+  couvert par le boot headless reel (`godot --headless --path
+  <projet>`, sans `--script`) qui charge les autoloads normalement.
+
+### Verification effectuee (ecran-titre)
+
+- `godot --headless --path <projet> --import` : 0 erreur.
+- Boot headless reel (Main -> MenuPrincipal, autoloads charges) : 0
+  erreur stderr.
+- `scripts/tests/smoke_test_menu_principal.gd` : SUCCES.
+- Verification visuelle reelle : jeu lance en fenetre, capture d'ecran
+  native, **puis clic souris simule sur "Nouvelle partie"** (pas
+  seulement clavier) confirmant la transition vers `DialogueIntro.tscn`.

@@ -1,0 +1,35 @@
+Images remplaçables de l'écran-titre (menu principal)
+=======================================================
+
+Dépose tes propres images ici, avec exactement ces noms de fichier.
+Le jeu les charge automatiquement au démarrage — aucune modification de
+code nécessaire. Tant qu'un fichier n'est pas présent, un placeholder
+générique s'affiche à sa place pour que le menu reste testable.
+
+1) FOND D'ÉCRAN
+   Nom de fichier : fond_menu.png
+   Format         : PNG (JPG accepté aussi si tu renommes en fond_menu.jpg,
+                     mais PNG recommandé pour rester cohérent avec le
+                     reste du projet)
+   Dimensions     : 1920 x 1080 px (plein écran, ratio 16:9)
+   Notes          : image d'ambiance/décor en arrière-plan (ex. scène
+                     illustrée). Aucune zone de sécurité particulière à
+                     respecter au centre, mais garde le coin haut-droit
+                     et le coin bas-droit relativement calmes/peu
+                     chargés : c'est là que le logo et les boutons du
+                     menu s'affichent par-dessus.
+
+2) LOGO / TITRE
+   Nom de fichier : logo_menu.png
+   Format         : PNG avec fond TRANSPARENT (obligatoire, sinon le
+                     logo cachera le fond en dessous)
+   Dimensions     : 560 x 280 px (ratio ~2:1)
+   Position       : affiché automatiquement en haut-droite de l'écran,
+                     avec une marge de 40 px depuis le bord droit et le
+                     bord haut.
+   Notes          : c'est le titre du jeu, ta propre creation. Le
+                     placeholder actuel affiche un texte encadre
+                     générique a la meme position/taille.
+
+Rien d'autre à faire : dépose les fichiers dans ce dossier
+(assets/ui/menu/) sous ces noms exacts et relance le jeu.
