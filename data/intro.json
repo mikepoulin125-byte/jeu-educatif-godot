@@ -1,9 +1,10 @@
 {
-	"_commentaire": "PLACEHOLDER - texte de l'intro narrative (Phase 2), librement modifiable par Mike.",
+	"_commentaire": "PLACEHOLDER - texte de l'intro narrative (Phase 2), librement modifiable par Mike. Tout le texte affiche a l'ecran de dialogue vient de ce fichier, rien n'est code en dur dans le GDScript ou la scene.",
 	"lignes": [
 		"Bienvenue, jeune explorateur !",
 		"Ce monde est rempli de creatures curieuses, cachees derriere des enigmes de nombres.",
 		"Pour les rencontrer et les apprivoiser, tu devras resoudre des problemes de mathematiques.",
 		"Avant de partir, choisis la creature qui t'accompagnera dans cette aventure."
-	]
+	],
+	"texte_indice": "(clique ou appuie sur Espace pour continuer)"
 }

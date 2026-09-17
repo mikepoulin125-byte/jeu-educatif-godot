@@ -59,6 +59,13 @@ func _read_json(path: String):
 func get_lignes_intro() -> Array:
 	return _load_json_array(DATA_DIR + "intro.json", "lignes")
 
+## Retourne le texte d'indice ("clique pour continuer") de l'intro narrative.
+func get_texte_indice_intro() -> String:
+	var parsed = _read_json(DATA_DIR + "intro.json")
+	if parsed is Dictionary and parsed.has("texte_indice"):
+		return String(parsed["texte_indice"])
+	return ""
+
 ## Retourne les creatures marquees "starter": true dans creatures.json.
 func get_creatures_starters() -> Array:
 	var ids := []

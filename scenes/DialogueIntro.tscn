@@ -65,4 +65,4 @@ mouse_filter = 2
 theme_override_font_sizes/font_size = 18
 horizontal_alignment = 2
 modulate = Color(1, 1, 1, 0.6)
-text = "(clique ou appuie sur Espace pour continuer)"
+text = ""

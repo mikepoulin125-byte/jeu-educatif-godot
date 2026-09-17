@@ -16,6 +16,7 @@ var _en_cours_de_revelation: bool = false
 
 func _ready() -> void:
 	_lignes = DataManager.get_lignes_intro()
+	label_indice.text = DataManager.get_texte_indice_intro()
 	if _lignes.is_empty():
 		_aller_vers_selection_starter()
 		return

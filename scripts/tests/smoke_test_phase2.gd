@@ -19,6 +19,12 @@ func _initialize() -> void:
 	assert(lignes.size() == 4, "attendu 4 lignes d'intro, obtenu %d" % lignes.size())
 	print("OK: intro.json charge (%d lignes)" % lignes.size())
 
+	# 1b. Verifie que le texte d'indice vient aussi de intro.json (rien de
+	# code en dur dans dialogue_intro.gd / DialogueIntro.tscn).
+	var indice := DataManager.get_texte_indice_intro()
+	assert(not indice.is_empty(), "texte_indice absent de intro.json")
+	print("OK: texte_indice charge depuis intro.json: '%s'" % indice)
+
 	# 2. Verifie les starters.
 	var starters := DataManager.get_creatures_starters()
 	assert(starters.size() == 3, "attendu 3 starters, obtenu %d" % starters.size())
