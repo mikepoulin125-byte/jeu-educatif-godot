@@ -3,12 +3,19 @@ extends Control
 ## permanent en haut-gauche, bouton Roster permanent.
 
 const CarteMatiereScene := preload("res://scenes/components/CarteMatiere.tscn")
+const DUREE_FONDU_ENTREE := 0.45
 
 @onready var label_xp: Label = %LabelXp
 @onready var grille_matieres: GridContainer = %GrilleMatieres
 @onready var bouton_roster: Button = %BoutonRoster
+@onready var voile_entree: TransitionRadiale = %VoileEntree
 
 func _ready() -> void:
+	# Fondu radial depuis le blanc (centre en premier), notamment a
+	# l'arrivee depuis l'ecran de chargement — voir
+	# shaders/transition_radiale_blanc.gdshader.
+	voile_entree.animer(1.0, 0.0, DUREE_FONDU_ENTREE)
+
 	_actualiser_xp()
 	bouton_roster.pressed.connect(_on_roster_presse)
 	_peupler_matieres()

@@ -12,7 +12,7 @@ extends Control
 @onready var bouton_nouvelle_partie: Button = %BoutonNouvellePartie
 @onready var bouton_continuer: Button = %BoutonContinuer
 @onready var bouton_quitter: Button = %BoutonQuitter
-@onready var fade_blanc: ColorRect = %FadeBlanc
+@onready var fade_blanc: TransitionRadiale = %FadeBlanc
 
 const DUREE_FADE_BLANC := 0.45
 
@@ -55,9 +55,9 @@ func _on_continuer() -> void:
 func _on_quitter() -> void:
 	get_tree().quit()
 
-## Fondu au blanc puis passage par EcranChargement.tscn (faux temps de
-## chargement de 5s, voir section 4 de la demande de Mike) avant
-## d'arriver sur scene_cible.
+## Fondu radial au blanc (bords en premier, centre en dernier) puis
+## passage par EcranChargement.tscn (faux temps de chargement de 5s,
+## voir section 4 de la demande de Mike) avant d'arriver sur scene_cible.
 func _lancer_avec_ecran_de_chargement(scene_cible: String) -> void:
 	bouton_nouvelle_partie.disabled = true
 	bouton_continuer.disabled = true
@@ -65,8 +65,5 @@ func _lancer_avec_ecran_de_chargement(scene_cible: String) -> void:
 
 	GameState.scene_suivante = scene_cible
 
-	var tween := create_tween()
-	tween.tween_property(fade_blanc, "color:a", 1.0, DUREE_FADE_BLANC)
-	tween.finished.connect(func():
-		get_tree().change_scene_to_file("res://scenes/EcranChargement.tscn")
-	)
+	await fade_blanc.animer(0.0, 1.0, DUREE_FADE_BLANC)
+	get_tree().change_scene_to_file("res://scenes/EcranChargement.tscn")

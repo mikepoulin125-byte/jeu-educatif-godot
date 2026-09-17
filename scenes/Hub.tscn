@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bqf0e0000hub00001"]
+[gd_scene load_steps=7 format=3 uid="uid://bqf0e0000hub00001"]
 
 [ext_resource type="Script" path="res://scripts/hub.gd" id="1"]
 [ext_resource type="Shader" path="res://shaders/fond_bandes_diagonales.gdshader" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/components/TransitionRadiale.tscn" id="3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fond"]
 shader = ExtResource("2")
@@ -120,3 +121,6 @@ theme_override_font_sizes/font_size = 16
 horizontal_alignment = 1
 vertical_alignment = 1
 text = "Clique sur une matiere pour commencer"
+
+[node name="VoileEntree" parent="." instance=ExtResource("3")]
+unique_name_in_owner = true

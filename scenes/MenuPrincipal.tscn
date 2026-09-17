@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://bqf0e0000menu01"]
+[gd_scene load_steps=13 format=3 uid="uid://bqf0e0000menu01"]
 
 [ext_resource type="Script" path="res://scripts/menu_principal.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/components/bouton_anime.gd" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/components/TransitionRadiale.tscn" id="3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cadre_logo"]
 bg_color = Color(0.1, 0.1, 0.14, 0.55)
@@ -267,14 +268,6 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_secondaire_normal")
 text = "Quitter"
 script = ExtResource("2")
 
-[node name="FadeBlanc" type="ColorRect" parent="."]
+[node name="FadeBlanc" parent="." instance=ExtResource("3")]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(1, 1, 1, 0)
 

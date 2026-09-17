@@ -80,10 +80,15 @@ func _initialize() -> void:
 			return
 	print("OK: les 3 boutons ont la bordure #CC0000")
 
-	var fade_blanc: ColorRect = menu.get_node("%FadeBlanc")
-	if not _verifier(fade_blanc.color.a < TOLERANCE, "FadeBlanc devrait demarrer invisible (alpha 0)"):
+	# FadeBlanc est maintenant une instance de TransitionRadiale (shader) :
+	# sa visibilite est pilotee par le parametre "progression" du shader,
+	# pas par la propriete "color" du ColorRect (le shader ecrase COLOR
+	# entierement). Valeur par defaut attendue : 0.0 (invisible).
+	var fade_blanc = menu.get_node("%FadeBlanc")
+	var progression_initiale: float = fade_blanc.material.get_shader_parameter("progression")
+	if not _verifier(is_equal_approx(progression_initiale, 0.0), "FadeBlanc devrait demarrer avec progression=0.0 (invisible), obtenu %f" % progression_initiale):
 		return
-	print("OK: FadeBlanc demarre invisible")
+	print("OK: FadeBlanc demarre invisible (progression=0.0)")
 
 	root.remove_child(menu)
 	menu.free()

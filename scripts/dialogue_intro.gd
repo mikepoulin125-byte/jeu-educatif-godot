@@ -4,9 +4,11 @@ extends Control
 ## Un clic/Espace/Entree complete la ligne courante, ou passe a la suivante.
 
 const VITESSE_CARACTERES_PAR_SEC := 40.0
+const DUREE_FONDU_ENTREE := 0.45
 
 @onready var label_dialogue: Label = %LabelDialogue
 @onready var label_indice: Label = %LabelIndice
+@onready var voile_entree: TransitionRadiale = %VoileEntree
 
 var _lignes: Array = []
 var _index_ligne: int = 0
@@ -15,6 +17,10 @@ var _caracteres_affiches: float = 0.0
 var _en_cours_de_revelation: bool = false
 
 func _ready() -> void:
+	# Fondu radial depuis le blanc (centre en premier) a l'arrivee depuis
+	# l'ecran de chargement — voir shaders/transition_radiale_blanc.gdshader.
+	voile_entree.animer(1.0, 0.0, DUREE_FONDU_ENTREE)
+
 	_lignes = DataManager.get_lignes_intro()
 	label_indice.text = DataManager.get_texte_indice_intro()
 	if _lignes.is_empty():

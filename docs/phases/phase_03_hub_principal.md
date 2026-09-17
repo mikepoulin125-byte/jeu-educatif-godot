@@ -272,6 +272,78 @@ correctement en jeu reel. Verifie a la place par le boot headless reel
 (`godot --headless --path <projet>`, sans `--script`), qui charge les
 autoloads normalement et est reste a 0 erreur apres cet ajout.
 
+## Transition radiale blanche (bords en premier / centre en premier)
+
+Precision de Mike : le fondu au blanc ne devait pas etre un alpha
+uniforme, mais un degrade radial anime — un effet vignette. Confirme
+faisable avec un shader canvas_item avant implementation (une seule
+formule, reutilisee pour les deux sens en inversant juste le point de
+depart/arrivee) :
+
+- `shaders/transition_radiale_blanc.gdshader` : `COLOR = vec4(1,1,1,alpha)`
+  ou `alpha` vient d'un `smoothstep()` sur la distance normalisee au
+  centre (`dist`, 0 au centre, 1 au coin le plus loin), compare a un
+  seuil `1.0 - progression`. A `progression=0` -> rien de blanc ; a
+  `progression=1` -> tout blanc ; entre les deux, le blanc gagne des
+  bords vers le centre. **Le meme shader gere le sens inverse** (le
+  blanc se retire du centre vers les bords) simplement en animant
+  `progression` de 1.0 vers 0.0 au lieu de 0.0 vers 1.0 — pas besoin
+  d'un deuxieme shader, la formule est symetrique.
+- `scenes/components/TransitionRadiale.tscn` +
+  `scripts/components/transition_radiale.gd` (`class_name
+  TransitionRadiale`, `extends ColorRect`) : composant reutilisable.
+  `definir_progression(valeur)` ecrit directement le parametre shader
+  (fonctionne des l'instanciation, pas besoin d'attendre `_ready()` —
+  meme reflexe que les autres composants de ce projet). `animer(depart,
+  arrivee, duree) -> void` (fonction `await`-able) tween le parametre
+  `shader_parameter/progression` du `ShaderMaterial`.
+- **Les deux fondus demandes par Mike, exactement** ("applique-le aux
+  deux fondus : celui du menu vers l'ecran de chargement, et celui de
+  l'ecran de chargement vers le jeu") :
+  1. `MenuPrincipal.tscn` (`%FadeBlanc`) : `animer(0.0, 1.0, 0.45)` au
+     clic sur "Nouvelle partie"/"Continuer", **avant** de changer de
+     scene vers `EcranChargement.tscn` (bords blancs en premier).
+  2. `DialogueIntro.tscn` et `Hub.tscn` (`%VoileEntree` dans chacune) :
+     `animer(1.0, 0.0, 0.45)` appele au tout debut de leur `_ready()`
+     (centre revele en premier). Ces deux scenes sont les deux
+     destinations possibles apres `EcranChargement` (Nouvelle partie ->
+     DialogueIntro, Continuer -> Hub), donc les deux sont couvertes.
+     `EcranChargement.tscn` lui-meme n'a pas besoin de logique de fondu
+     supplementaire : son fond est deja blanc en permanence, donc la
+     transition est deja visuellement continue avec la fin du fondu du
+     menu (pas de "pop") ; c'est la scene de destination qui se revele
+     depuis le blanc.
+- **Effet de bord** : `Hub.tscn` est aussi atteinte directement depuis
+  `SelectionStarter.tscn` (fin du choix du starter, hors ecran de
+  chargement) ; le fondu d'entree du Hub joue donc aussi a ce moment-la.
+  Considere comme un bonus esthetique inoffensif plutot qu'un probleme
+  (le Hub se revele proprement dans les deux cas), pas de logique
+  supplementaire ajoutee pour le distinguer.
+
+### Verification effectuee (transition radiale)
+
+- `godot --headless --path <projet> --import` : 0 erreur (shader
+  compile correctement).
+- Boot headless reel (autoloads charges) : 0 erreur stderr.
+- `scripts/tests/smoke_test_transition_radiale.gd` : SUCCES — confirme
+  entre autres qu'un `await voile.animer(...)` **fonctionne
+  correctement en mode `--script`** (le tween s'exécute et la fonction
+  reprend a la bonne valeur finale), contrairement au probleme de
+  `_ready()` non-synchrone documente plus haut : la boucle de frame
+  tourne bien pendant un `await`, seule la notification `_ready()`
+  post-`add_child()` immediat pose probleme dans ce mode.
+- `scripts/tests/smoke_test_raffinements_menu.gd` : mis a jour (l'ancien
+  test lisait `fade_blanc.color.a`, qui n'a plus de sens depuis que
+  `FadeBlanc` est une `TransitionRadiale` a shader — le shader ecrase
+  `COLOR` entierement, la propriete `color` du noeud n'est plus lue).
+  Lit maintenant `material.get_shader_parameter("progression")`.
+- Verification visuelle reelle complete : jeu lance en fenetre, clic
+  souris simule sur "Nouvelle partie", captures a t+0.22s (vignette
+  radiale bien visible, bords blancs/coins envahis, centre encore
+  visible), t+~1.1s (ecran de chargement affiche), et juste apres la
+  fin du `Timer` de 5s (fondu radial inverse visible : `DialogueIntro`
+  deja lisible au centre, residu blanc encore present dans les coins).
+
 ### Verification effectuee (raffinements)
 
 - `godot --headless --path <projet> --import` : 0 erreur.

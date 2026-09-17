@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqf0e0000transr1"]
+
+[ext_resource type="Script" path="res://scripts/components/transition_radiale.gd" id="1"]
+[ext_resource type="Shader" path="res://shaders/transition_radiale_blanc.gdshader" id="2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_transition"]
+shader = ExtResource("2")
+shader_parameter/progression = 0.0
+shader_parameter/largeur_degrade = 0.35
+shader_parameter/taille_ecran = Vector2(1920, 1080)
+
+[node name="TransitionRadiale" type="ColorRect"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+material = SubResource("ShaderMaterial_transition")
+color = Color(1, 1, 1, 1)
+script = ExtResource("1")
