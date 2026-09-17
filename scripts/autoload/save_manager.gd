@@ -83,6 +83,55 @@ func capturer_creature(creature_id: String) -> void:
 func get_creatures_capturees() -> Dictionary:
 	return data.get("creatures_capturees", {})
 
+func get_stage_creature(creature_id: String) -> int:
+	var capturees: Dictionary = data.get("creatures_capturees", {})
+	return int(capturees.get(creature_id, {}).get("stage", 1))
+
+func get_xp_investi_creature(creature_id: String) -> int:
+	var capturees: Dictionary = data.get("creatures_capturees", {})
+	return int(capturees.get(creature_id, {}).get("xp_investi", 0))
+
+## --- Evolution (section 7 de la spec) ---
+## Cout fixe : 300 XP pour atteindre le stade 2, 500 XP pour le stade 3.
+## Le stade maximal d'une creature (champ "stages" de creatures.json)
+## n'est PAS connu de SaveManager (separation des responsabilites :
+## SaveManager gere la persistance, DataManager le contenu) — c'est a
+## l'appelant (l'ecran Roster) de ne pas proposer d'evolution au-dela du
+## stade maximal avant d'appeler faire_evoluer_creature().
+
+const COUT_EVOLUTION_STAGE_2 := 300
+const COUT_EVOLUTION_STAGE_3 := 500
+
+## Cout pour atteindre "stage_cible" (2 ou 3) depuis le stade precedent.
+## Retourne -1 pour toute autre valeur (pas de cout defini).
+func cout_evolution_vers(stage_cible: int) -> int:
+	match stage_cible:
+		2:
+			return COUT_EVOLUTION_STAGE_2
+		3:
+			return COUT_EVOLUTION_STAGE_3
+		_:
+			return -1
+
+## Fait passer la creature au stade suivant si le joueur a assez de XP.
+## Retourne true si l'evolution a eu lieu (et sauvegarde), false sinon
+## (creature non capturee, cout invalide, ou XP insuffisant).
+func faire_evoluer_creature(creature_id: String) -> bool:
+	var capturees: Dictionary = data.get("creatures_capturees", {})
+	if not capturees.has(creature_id):
+		return false
+	var stage_actuel: int = int(capturees[creature_id].get("stage", 1))
+	var stage_cible: int = stage_actuel + 1
+	var cout: int = cout_evolution_vers(stage_cible)
+	if cout < 0 or get_xp_total() < cout:
+		return false
+	capturees[creature_id]["stage"] = stage_cible
+	capturees[creature_id]["xp_investi"] = int(capturees[creature_id].get("xp_investi", 0)) + cout
+	data["creatures_capturees"] = capturees
+	data["xp_total"] = get_xp_total() - cout
+	save_game()
+	return true
+
 ## --- Progression par matiere ---
 
 func get_progression_matiere(matiere_id: String) -> Dictionary:

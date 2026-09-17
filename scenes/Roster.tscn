@@ -1,6 +1,66 @@
-[gd_scene load_steps=2 format=3 uid="uid://bqf0e0000roster01"]
+[gd_scene load_steps=10 format=3 uid="uid://bqf0e0000roster01"]
 
-[ext_resource type="Script" path="res://scripts/roster_placeholder.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/roster.gd" id="1"]
+[ext_resource type="Shader" path="res://shaders/fond_bandes_diagonales.gdshader" id="2"]
+[ext_resource type="Script" path="res://scripts/components/bouton_anime.gd" id="3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fond"]
+shader = ExtResource("2")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pill_blanc"]
+bg_color = Color(1, 1, 1, 0.92)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.8, 0, 0, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panneau"]
+bg_color = Color(0.06, 0.07, 0.1, 0.55)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_action_normal"]
+bg_color = Color(0.98, 0.98, 1, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.8, 0, 0, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_action_hover"]
+bg_color = Color(0.87, 0.92, 1, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.8, 0, 0, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_action_disabled"]
+bg_color = Color(0.6, 0.6, 0.6, 0.6)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.4, 0.4, 0.4, 0.6)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
 
 [node name="Roster" type="Control"]
 layout_mode = 3
@@ -18,32 +78,198 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.1, 0.12, 0.2, 1)
+material = SubResource("ShaderMaterial_fond")
+color = Color(1, 1, 1, 1)
 
-[node name="Centre" type="VBoxContainer" parent="."]
+[node name="LabelXp" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = 30.0
+offset_top = 24.0
+offset_right = 260.0
+offset_bottom = 60.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.35)
+theme_override_font_sizes/font_size = 26
+text = "XP : 0"
+
+[node name="BoutonRetour" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -220.0
+offset_top = 20.0
+offset_right = -30.0
+offset_bottom = 76.0
+grow_horizontal = 0
+focus_mode = 0
+theme_override_colors/font_color = Color(0.75, 0.15, 0.08, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_pill_blanc")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pill_blanc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pill_blanc")
+theme_override_styles/focus = SubResource("StyleBoxFlat_pill_blanc")
+text = "Retour au hub"
+script = ExtResource("3")
+
+[node name="LabelTitre" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 20.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.35)
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+text = "Roster"
+
+[node name="ZonePrincipale" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = 110.0
+offset_right = -60.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+
+[node name="ScrollListe" type="ScrollContainer" parent="ZonePrincipale"]
+custom_minimum_size = Vector2(760, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GrilleCreatures" type="GridContainer" parent="ZonePrincipale/ScrollListe"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 26
+theme_override_constants/v_separation = 26
+columns = 4
+
+[node name="PanneauDetail" type="PanelContainer" parent="ZonePrincipale"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_panneau")
+
+[node name="MargeDetail" type="MarginContainer" parent="ZonePrincipale/PanneauDetail"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxDetail" type="VBoxContainer" parent="ZonePrincipale/PanneauDetail/MargeDetail"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 16
+
+[node name="ZoneSprite" type="Control" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail"]
+custom_minimum_size = Vector2(0, 220)
+layout_mode = 2
+
+[node name="TextureDetail" type="TextureRect" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail/ZoneSprite"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -300.0
+offset_left = -100.0
 offset_top = -100.0
-offset_right = 300.0
+offset_right = 100.0
 offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 24
+expand_mode = 5
+stretch_mode = 5
 
-[node name="LabelInfo" type="Label" parent="Centre"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
+[node name="PlaceholderDetail" type="ColorRect" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail/ZoneSprite"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -90.0
+offset_right = 90.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.45, 0.47, 0.55, 1)
+
+[node name="LabelPlaceholderDetail" type="Label" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail/ZoneSprite/PlaceholderDetail"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 28
 horizontal_alignment = 1
-autowrap_mode = 3
-text = "Roster (ecran a construire en Phase 4)"
+vertical_alignment = 1
+text = "?"
 
-[node name="BoutonRetour" type="Button" parent="Centre"]
+[node name="LabelNomDetail" type="Label" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail"]
 unique_name_in_owner = true
 layout_mode = 2
-custom_minimum_size = Vector2(200, 50)
-text = "Retour au hub"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 1
+text = "Nom"
+
+[node name="LabelStadeDetail" type="Label" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.85)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+text = "Stade 1 / 1"
+
+[node name="LabelXpInvestiDetail" type="Label" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.85)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+text = "XP investi : 0"
+
+[node name="BoutonAttribuerXp" type="Button" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.16, 0.4, 0.85, 1)
+theme_override_colors/font_disabled_color = Color(0.4, 0.4, 0.4, 1)
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_action_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_action_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_action_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_action_normal")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_action_disabled")
+text = "Attribuer XP"
+script = ExtResource("3")
+
+[node name="LabelStatut" type="Label" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+autowrap_mode = 3
+text = ""

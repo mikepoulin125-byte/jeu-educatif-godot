@@ -21,9 +21,12 @@ relancer si le code concerne est modifie plus tard.
 
 ## Etat actuel
 
-**Phases 1, 2 et 3 terminees et verifiees** (voir archives ci-dessous).
-Prochaine etape : **Phase 4 - Roster et evolutions**, voir section
-correspondante plus bas.
+**Phases 1 a 4 terminees et verifiees** (voir archives ci-dessous).
+Prochaine etape : **Phase 5 - Selection de niveau**.
+
+Mike reflechit separement a des mecaniques "feel good" additionnelles
+pour l'ecran Roster (sans toucher aux sprites) — pas encore decidees,
+ne rien anticiper tant qu'il n'est pas revenu avec une demande precise.
 
 **Piege GDScript a connaitre avant de coder un nouveau composant
 reutilisable** : ne pas utiliser `@onready var x = %NodeName` pour un
@@ -42,9 +45,9 @@ un helper `_verifier(condition, message)` qui `print()` + `quit(1)`.
    [docs/phases/phase_02_intro_starter.md](docs/phases/phase_02_intro_starter.md).
 3. **Phase 3 - Hub principal** — termine, voir
    [docs/phases/phase_03_hub_principal.md](docs/phases/phase_03_hub_principal.md).
-4. **Phase 4 - Roster et evolutions** (prochaine) : gestion des creatures, attribution
-   d'XP, evolution (300/500 XP).
-5. **Phase 5 - Selection de niveau** : 10 tableaux par matiere,
+4. **Phase 4 - Roster et evolutions** — termine, voir
+   [docs/phases/phase_04_roster_evolutions.md](docs/phases/phase_04_roster_evolutions.md).
+5. **Phase 5 - Selection de niveau** (prochaine) : 10 tableaux par matiere,
    progression lineaire (deblocage sequentiel, seuil 7/10).
 6. **Phase 6 - Scenes de tableau** : les 8 mecaniques d'interaction
    (pair/impair, approximation, terme manquant, plan cartesien,
@@ -83,22 +86,20 @@ suivent deja ce patron via `scripts/util/sprite_util.gd`
 pas encore — au composant appelant d'afficher un placeholder, voir
 `scripts/components/carte_creature.gd` pour un exemple).
 
-## Prochaine etape : Phase 4 - Roster et evolutions
+## Prochaine etape : Phase 5 - Selection de niveau
 
-A construire (voir section 7 de la spec d'origine) :
-- `scenes/Roster.tscn` : remplacer le placeholder actuel
-  (`scripts/roster_placeholder.gd`) par le vrai ecran. Grille/liste des
-  creatures capturees (`SaveManager.get_creatures_capturees()`),
-  selection d'une creature -> affichage stats/stade/XP investi, bouton
-  "Attribuer XP" (cout 300 XP pour stage2, 500 XP pour stage3, gere
-  via `creatures.json` champ `stages`). Le composant `CarteCreature`
-  (Phase 2, `scenes/components/CarteCreature.tscn`) peut probablement
-  etre reutilise ou adapte pour lister les creatures capturees.
-- Logique d'evolution : deduire `SaveManager.get_xp_total()`,
-  incrementer `xp_investi` de la creature dans
-  `creatures_capturees[id]`, changer son `stage` affiche (le sprite
-  vient de `creature_data.forms.stageN`, deja gere par
-  `SpriteUtil`/le pattern de `CarteCreature`).
-- Penser a un smoke test headless (`scripts/tests/smoke_test_phase4.gd`)
-  qui verifie le cout d'evolution, le refus si XP insuffisant, et la
-  persistance apres `save_game()`/`load_game()`.
+A construire (voir section 8 de la spec d'origine) :
+- Remplacer le placeholder actuel (`scripts/selection_niveau_placeholder.gd`,
+  `scenes/SelectionNiveau.tscn`) par le vrai ecran : 10 boutons de
+  niveau pour la matiere choisie (`GameState.matiere_courante_id`),
+  noms thematiques a definir, progression strictement lineaire (niveau
+  *n+1* debloque seulement si niveau *n* reussi, seuil 7/10 — logique
+  deja disponible dans `SaveManager.est_niveau_debloque()` /
+  `set_progression_niveau()`, cf. Phase 1).
+- Fichiers de niveaux attendus dans `data/niveaux/matiere_XX_niveau_YY.json`
+  (actuellement vide) : a creer au moins un exemple pour tester le flux
+  de bout en bout avant la Phase 6 (scenes de tableau).
+- Fade in/out entre le Hub et cet ecran : voir le composant
+  `TransitionRadiale` (Phase 3/raffinements) si Mike souhaite la meme
+  coherence visuelle qu'ailleurs.
+- Penser a un smoke test headless (`scripts/tests/smoke_test_phase5.gd`).
