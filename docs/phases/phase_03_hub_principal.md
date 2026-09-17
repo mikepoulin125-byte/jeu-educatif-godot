@@ -344,6 +344,38 @@ depart/arrivee) :
   fin du `Timer` de 5s (fondu radial inverse visible : `DialogueIntro`
   deja lisible au centre, residu blanc encore present dans les coins).
 
+## Coherence visuelle Hub <-> menu (bordure/animation/son)
+
+Une fois le style du menu principal valide par Mike (bordure `#CC0000`,
+animation `BoutonAnime`, son de clic), les 8 badges de matiere et le
+bouton Roster du hub ne l'avaient pas encore — rattrape ici pour que le
+hub reprenne exactement le meme langage visuel :
+
+- `scenes/components/CarteMatiere.tscn` : bordure `#CC0000` (5px) ajoutee
+  aux 3 etats (`normal`/`hover`/`pressed`) du `StyleBoxFlat` du bouton
+  circulaire, et script `BoutonAnime` attache a `%BoutonCercle` (en plus
+  du script `carte_matiere.gd` sur la racine `VBoxContainer`, qui gere
+  la configuration/l'icone — les deux scripts coexistent sans conflit,
+  chacun connecte son propre listener au signal `pressed` du bouton).
+- `scenes/Hub.tscn` : meme traitement sur `%BoutonRoster` (bordure
+  `#CC0000` sur `StyleBoxFlat_pill_blanc`, script `BoutonAnime`).
+- `scripts/tests/smoke_test_hub_style.gd` : verifie la bordure exacte
+  sur `CarteMatiere` (3 etats) et `BoutonRoster`, plus la presence de
+  `LabelXp`/`BoutonRoster`/`GrilleMatieres`.
+
+### Verification effectuee (coherence visuelle hub/menu)
+
+- `godot --headless --path <projet> --import` : 0 erreur.
+- Boot headless reel (autoloads charges) : 0 erreur stderr.
+- Suite complete des smoke tests (phase2, phase3, menu_principal,
+  raffinements_menu, transition_radiale, hub_style) : tous SUCCES.
+- Verification visuelle reelle : `run/main_scene` bascule temporairement
+  sur `Hub.tscn`, jeu lance en fenetre. Capture confirmant la bordure
+  rouge sur les 8 badges et le bouton Roster ; deuxieme capture avec le
+  curseur survolant le premier badge confirmant l'agrandissement +
+  changement de teinte de `BoutonAnime` (meme comportement que les
+  boutons du menu). `run/main_scene` remis sur `Main.tscn` ensuite.
+
 ### Verification effectuee (raffinements)
 
 - `godot --headless --path <projet> --import` : 0 erreur.

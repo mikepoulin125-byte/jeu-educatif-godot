@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bqf0e0000hub00001"]
+[gd_scene load_steps=8 format=3 uid="uid://bqf0e0000hub00001"]
 
 [ext_resource type="Script" path="res://scripts/hub.gd" id="1"]
 [ext_resource type="Shader" path="res://shaders/fond_bandes_diagonales.gdshader" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/components/TransitionRadiale.tscn" id="3"]
+[ext_resource type="Script" path="res://scripts/components/bouton_anime.gd" id="4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fond"]
 shader = ExtResource("2")
@@ -12,6 +13,11 @@ bg_color = Color(0.05, 0.05, 0.08, 0.55)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pill_blanc"]
 bg_color = Color(1, 1, 1, 0.92)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.8, 0, 0, 1)
 corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
@@ -68,6 +74,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_pill_blanc")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pill_blanc")
 theme_override_styles/focus = SubResource("StyleBoxFlat_pill_blanc")
 text = "Roster"
+script = ExtResource("4")
 
 [node name="LabelTitre" type="Label" parent="."]
 layout_mode = 1
