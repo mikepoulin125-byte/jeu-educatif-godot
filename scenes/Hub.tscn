@@ -1,6 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://bqf0e0000hub00001"]
+[gd_scene load_steps=6 format=3 uid="uid://bqf0e0000hub00001"]
 
 [ext_resource type="Script" path="res://scripts/hub.gd" id="1"]
+[ext_resource type="Shader" path="res://shaders/fond_bandes_diagonales.gdshader" id="2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fond"]
+shader = ExtResource("2")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_barre_info"]
+bg_color = Color(0.05, 0.05, 0.08, 0.55)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pill_blanc"]
+bg_color = Color(1, 1, 1, 0.92)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
 
 [node name="Hub" type="Control"]
 layout_mode = 3
@@ -18,7 +32,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.13, 0.15, 0.24, 1)
+material = SubResource("ShaderMaterial_fond")
+color = Color(1, 1, 1, 1)
 
 [node name="LabelXp" type="Label" parent="."]
 unique_name_in_owner = true
@@ -27,6 +42,9 @@ offset_left = 30.0
 offset_top = 24.0
 offset_right = 260.0
 offset_bottom = 60.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.35)
 theme_override_font_sizes/font_size = 26
 text = "XP : 0"
 
@@ -37,11 +55,17 @@ anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -220.0
-offset_top = 24.0
+offset_top = 20.0
 offset_right = -30.0
-offset_bottom = 74.0
+offset_bottom = 76.0
 grow_horizontal = 0
+focus_mode = 0
+theme_override_colors/font_color = Color(0.75, 0.15, 0.08, 1)
 theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_pill_blanc")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pill_blanc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pill_blanc")
+theme_override_styles/focus = SubResource("StyleBoxFlat_pill_blanc")
 text = "Roster"
 
 [node name="LabelTitre" type="Label" parent="."]
@@ -51,6 +75,9 @@ anchor_right = 1.0
 offset_top = 90.0
 offset_bottom = 140.0
 grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.35)
 theme_override_font_sizes/font_size = 30
 horizontal_alignment = 1
 text = "Choisis une matiere"
@@ -63,7 +90,7 @@ anchor_bottom = 1.0
 offset_left = 80.0
 offset_top = 160.0
 offset_right = -80.0
-offset_bottom = -60.0
+offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -74,3 +101,22 @@ size_flags_horizontal = 3
 theme_override_constants/h_separation = 30
 theme_override_constants/v_separation = 30
 columns = 4
+
+[node name="BarreInfo" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -60.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_barre_info")
+
+[node name="LabelInfoBarre" type="Label" parent="BarreInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.85)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "Clique sur une matiere pour commencer"

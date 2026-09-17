@@ -1,62 +1,77 @@
-[gd_scene load_steps=2 format=3 uid="uid://bqf0e0000cartmat1"]
+[gd_scene load_steps=6 format=3 uid="uid://bqf0e0000cartmat1"]
 
 [ext_resource type="Script" path="res://scripts/components/carte_matiere.gd" id="1"]
 
-[node name="CarteMatiere" type="Button"]
-custom_minimum_size = Vector2(420, 170)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_normal"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 70
+corner_radius_top_right = 70
+corner_radius_bottom_right = 70
+corner_radius_bottom_left = 70
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hover"]
+bg_color = Color(0.93, 0.93, 0.95, 1)
+corner_radius_top_left = 70
+corner_radius_top_right = 70
+corner_radius_bottom_right = 70
+corner_radius_bottom_left = 70
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pressed"]
+bg_color = Color(0.85, 0.85, 0.88, 1)
+corner_radius_top_left = 70
+corner_radius_top_right = 70
+corner_radius_bottom_right = 70
+corner_radius_bottom_left = 70
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_icone_fond"]
+bg_color = Color(0.5, 0.5, 0.5, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[node name="CarteMatiere" type="VBoxContainer"]
+custom_minimum_size = Vector2(170, 210)
 layout_mode = 2
-text = ""
+theme_override_constants/separation = 12
 script = ExtResource("1")
 
-[node name="Marge" type="MarginContainer" parent="."]
-mouse_filter = 2
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="HBox" type="HBoxContainer" parent="Marge"]
-mouse_filter = 2
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="IconeZone" type="Control" parent="Marge/HBox"]
-mouse_filter = 2
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="TextureIcone" type="TextureRect" parent="Marge/HBox/IconeZone"]
+[node name="BoutonCercle" type="Button" parent="."]
 unique_name_in_owner = true
-mouse_filter = 2
+custom_minimum_size = Vector2(140, 140)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_normal")
+text = ""
+
+[node name="TextureIcone" type="TextureRect" parent="BoutonCercle"]
+unique_name_in_owner = true
 visible = false
+mouse_filter = 2
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -45.0
+offset_right = 45.0
+offset_bottom = 45.0
 grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 5
 stretch_mode = 5
 
-[node name="PlaceholderIcone" type="ColorRect" parent="Marge/HBox/IconeZone"]
-unique_name_in_owner = true
-mouse_filter = 2
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.4, 0.45, 0.6, 1)
-
-[node name="LabelPlaceholderIcone" type="Label" parent="Marge/HBox/IconeZone/PlaceholderIcone"]
+[node name="PlaceholderIcone" type="Panel" parent="BoutonCercle"]
 unique_name_in_owner = true
 mouse_filter = 2
 layout_mode = 1
@@ -65,33 +80,37 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 16
+theme_override_styles/panel = SubResource("StyleBoxFlat_icone_fond")
+
+[node name="LabelSymbole" type="Label" parent="BoutonCercle/PlaceholderIcone"]
+unique_name_in_owner = true
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 34
 horizontal_alignment = 1
 vertical_alignment = 1
 text = "?"
 
-[node name="VBox" type="VBoxContainer" parent="Marge/HBox"]
-mouse_filter = 2
+[node name="LabelNom" type="Label" parent="."]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_override_constants/separation = 8
-
-[node name="LabelNom" type="Label" parent="Marge/HBox/VBox"]
-unique_name_in_owner = true
-mouse_filter = 2
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.35)
+theme_override_font_sizes/font_size = 19
+horizontal_alignment = 1
 autowrap_mode = 3
 text = "Nom"
-
-[node name="LabelDescription" type="Label" parent="Marge/HBox/VBox"]
-unique_name_in_owner = true
-mouse_filter = 2
-layout_mode = 2
-theme_override_font_sizes/font_size = 15
-autowrap_mode = 3
-modulate = Color(1, 1, 1, 0.85)
-text = "Description"

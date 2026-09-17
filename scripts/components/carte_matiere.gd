@@ -1,12 +1,14 @@
-extends Button
-## Carte/bouton reutilisable pour un badge de matiere du hub (icone reelle
-## ou placeholder, nom, description). Toute la carte est cliquable
-## (le noeud racine est lui-meme un Button, texte vide, le visuel est
-## gere par les enfants).
+extends VBoxContainer
+## Carte reutilisable pour un badge de matiere du hub : cercle blanc avec
+## icone reelle (assets/ui/) ou placeholder colore (couleur+symbole de
+## matieres.json), libelle blanc en dessous. Style inspire du langage
+## visuel generique envoye par Mike (bouton rond blanc + icone centree +
+## libelle dessous, sur fond a bandes diagonales) — aucun asset externe
+## reproduit, tout est genere ou fourni par les donnees du projet.
 ##
-## Meme principe que CarteCreature : configurer() resout les noeuds
-## enfants via %Nom a chaque appel (fonctionne des instantiate(), pas
-## besoin d'attendre _ready()).
+## Comme les autres cartes : configurer() resout les noeuds enfants via
+## %Nom a chaque appel (fonctionne des instantiate(), pas besoin
+## d'attendre _ready()).
 
 signal choisie(matiere_id: String)
 
@@ -22,8 +24,8 @@ func configurer(matiere_data: Dictionary) -> void:
 
 	var icone_id: String = String(matiere_data.get("icone", ""))
 	var texture_icone: TextureRect = %TextureIcone
-	var placeholder_icone: ColorRect = %PlaceholderIcone
-	var label_placeholder: Label = %LabelPlaceholderIcone
+	var placeholder_icone: Panel = %PlaceholderIcone
+	var label_symbole: Label = %LabelSymbole
 
 	var texture := UiIconUtil.charger_texture(icone_id)
 	if texture != null:
@@ -33,15 +35,21 @@ func configurer(matiere_data: Dictionary) -> void:
 	else:
 		texture_icone.visible = false
 		placeholder_icone.visible = true
-		label_placeholder.text = icone_id if not icone_id.is_empty() else "?"
+		var couleur_hex: String = String(matiere_data.get("couleur", "#808080"))
+		var style: StyleBoxFlat = placeholder_icone.get_theme_stylebox("panel").duplicate()
+		style.bg_color = Color(couleur_hex)
+		placeholder_icone.add_theme_stylebox_override("panel", style)
+		label_symbole.text = String(matiere_data.get("symbole", "?"))
 
 	var label_nom: Label = %LabelNom
-	var label_description: Label = %LabelDescription
 	label_nom.text = String(matiere_data.get("nom", _matiere_id))
-	label_description.text = String(matiere_data.get("description", ""))
+
+	var bouton: Button = %BoutonCercle
+	bouton.tooltip_text = String(matiere_data.get("description", ""))
 
 func _connecter_bouton() -> void:
 	if _pressed_connecte:
 		return
-	pressed.connect(func(): choisie.emit(_matiere_id))
+	var bouton: Button = %BoutonCercle
+	bouton.pressed.connect(func(): choisie.emit(_matiere_id))
 	_pressed_connecte = true

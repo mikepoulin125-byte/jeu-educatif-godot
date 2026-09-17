@@ -1,13 +1,13 @@
 {
-	"_commentaire": "PLACEHOLDER - les 8 badges/matieres. 'id' est utilise par le code (ne pas renommer sans mettre a jour les fichiers de niveaux qui y referent), 'nom'/'description' sont libres.",
+	"_commentaire": "PLACEHOLDER - les 8 badges/matieres. 'id' est utilise par le code (ne pas renommer sans mettre a jour les fichiers de niveaux qui y referent), 'nom'/'description' sont libres. 'icone' = nom de fichier attendu dans assets/ui/ (PNG, fourni plus tard par Mike). 'couleur' et 'symbole' pilotent le placeholder colore affiche tant que l'icone reelle n'existe pas (voir carte_matiere.gd) : 'couleur' = hex, 'symbole' = 1-2 caracteres.",
 	"matieres": [
-		{ "id": "pair_impair", "nom": "Pair / impair", "description": "Un nombre est-il pair ou impair ?", "icone": "icone_matiere_01" },
-		{ "id": "approximation", "nom": "Approximation", "description": "Estime une quantite.", "icone": "icone_matiere_02" },
-		{ "id": "terme_manquant", "nom": "Terme manquant", "description": "Trouve le nombre manquant.", "icone": "icone_matiere_03" },
-		{ "id": "plan_cartesien", "nom": "Plan cartesien", "description": "Place une creature sur la grille.", "icone": "icone_matiere_04" },
-		{ "id": "possible_impossible", "nom": "Possible / impossible", "description": "Est-ce possible ou impossible ?", "icone": "icone_matiere_05" },
-		{ "id": "tableau_pictogramme", "nom": "Tableau et pictogrammes", "description": "Lis le graphique.", "icone": "icone_matiere_06" },
-		{ "id": "fractions", "nom": "Fractions", "description": "Identifie ou compare des fractions.", "icone": "icone_matiere_07" },
-		{ "id": "croissant_decroissant", "nom": "Croissant / decroissant", "description": "Ordonne les nombres.", "icone": "icone_matiere_08" }
+		{ "id": "pair_impair", "nom": "Pair / impair", "description": "Un nombre est-il pair ou impair ?", "icone": "icone_matiere_01", "couleur": "#3b82f6", "symbole": "±" },
+		{ "id": "approximation", "nom": "Approximation", "description": "Estime une quantite.", "icone": "icone_matiere_02", "couleur": "#f59e0b", "symbole": "≈" },
+		{ "id": "terme_manquant", "nom": "Terme manquant", "description": "Trouve le nombre manquant.", "icone": "icone_matiere_03", "couleur": "#8b5cf6", "symbole": "?" },
+		{ "id": "plan_cartesien", "nom": "Plan cartesien", "description": "Place une creature sur la grille.", "icone": "icone_matiere_04", "couleur": "#10b981", "symbole": "+" },
+		{ "id": "possible_impossible", "nom": "Possible / impossible", "description": "Est-ce possible ou impossible ?", "icone": "icone_matiere_05", "couleur": "#ef4444", "symbole": "!" },
+		{ "id": "tableau_pictogramme", "nom": "Tableau et pictogrammes", "description": "Lis le graphique.", "icone": "icone_matiere_06", "couleur": "#06b6d4", "symbole": "▦" },
+		{ "id": "fractions", "nom": "Fractions", "description": "Identifie ou compare des fractions.", "icone": "icone_matiere_07", "couleur": "#ec4899", "symbole": "½" },
+		{ "id": "croissant_decroissant", "nom": "Croissant / decroissant", "description": "Ordonne les nombres.", "icone": "icone_matiere_08", "couleur": "#84cc16", "symbole": "↕" }
 	]
 }

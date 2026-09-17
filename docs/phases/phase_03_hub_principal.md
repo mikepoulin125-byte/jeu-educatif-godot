@@ -91,3 +91,56 @@ utiliser `assert()` dans un script de test headless de ce projet.**
 - Execution headless du boot (Main -> MenuPrincipal) : 0 erreur stderr.
 - `scripts/tests/smoke_test_phase2.gd` (durci) : SUCCES.
 - `scripts/tests/smoke_test_phase3.gd` : SUCCES.
+- Verification visuelle reelle : `run/main_scene` bascule temporairement
+  sur `Hub.tscn`, jeu lance en fenetre (pas headless), capture d'ecran
+  native (Win32 `CopyFromScreen` via PowerShell, pas besoin d'outil
+  d'automatisation) pour confirmer le rendu du style (voir section
+  suivante), puis `run/main_scene` remis sur `Main.tscn`.
+
+## Style visuel (mise a jour post-Phase 3, a la demande de Mike)
+
+Mike a fourni une image de reference (hub d'un jeu de capture de
+creatures) decrivant : fond a bandes diagonales bicolores + triangle
+clair en coin, boutons ronds blancs avec icone coloree simple au centre
+et libelle blanc en dessous, disposition en grille alignee a gauche,
+barre d'info sombre semi-transparente en bas. **Contrainte stricte
+respectee : aucun asset/logo/icone specifique reproduit — seul le
+langage visuel generique (grille de boutons ronds, fond a bandes,
+palette vive, flat design) a ete reutilise, avec une palette et des
+icones entierement originales.**
+
+- `shaders/fond_bandes_diagonales.gdshader` : shader canvas_item
+  parametrable (uniforms `couleur_fond`, `couleur_bande`,
+  `couleur_triangle`, `largeur_bande`, `position_bande`,
+  `taille_triangle`) qui dessine le fond a bandes diagonales + triangle
+  clair. Applique via `ShaderMaterial` sur le `ColorRect` "Fond" de
+  `Hub.tscn`. Facilement modifiable (changer les uniforms dans
+  l'inspecteur Godot) sans toucher au code.
+- `data/matieres.json` : ajout des champs `couleur` (hex) et `symbole`
+  (1-2 caracteres) par matiere, utilises pour le placeholder colore
+  de l'icone tant que `assets/ui/icone_matiere_NN.png` n'existe pas.
+  Purement des donnees, aucun graphisme en dur dans le code.
+- `scenes/components/CarteMatiere.tscn` refondu : racine
+  `VBoxContainer`, bouton circulaire blanc (`StyleBoxFlat` avec
+  `corner_radius` = moitie de la taille, states normal/hover/pressed),
+  icone reelle ou pastille coloree + symbole au centre, libelle blanc
+  (avec contour sombre pour la lisibilite sur fond colore) en dessous
+  du cercle — pas cliquable lui-meme, seul le cercle l'est.
+  `scripts/components/carte_matiere.gd` mis a jour en consequence
+  (lit `couleur`/`symbole`, duplique le `StyleBoxFlat` de la pastille
+  pour ne pas modifier la resource partagee entre instances).
+- `Hub.tscn` : XP et titre en blanc avec contour sombre (lisibilite sur
+  fond colore), bouton Roster restyle en pilule blanche (meme famille
+  visuelle que les cartes de matiere), ajout d'une barre d'info sombre
+  semi-transparente en bas d'ecran (texte generique "Clique sur une
+  matiere pour commencer" — pas de fonctionnalite de badge "NEW"
+  ajoutee, l'idee est notee pour une phase future si Mike la demande).
+
+### Piege technique evite
+
+`add_theme_stylebox_override("panel", style)` sur le `Panel` de la
+pastille placeholder **duplique** le `StyleBoxFlat` partage
+(`style.duplicate()`) avant de changer `bg_color` — sinon, changer la
+couleur d'une carte changerait la couleur de TOUTES les cartes qui
+partagent la meme resource `SubResource` de base (piege classique des
+ressources partagees en Godot).
