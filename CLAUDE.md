@@ -32,8 +32,13 @@ ci-dessous). Prochaine etape : **Phase 7 - Logique de rencontre/capture**.
   `DataManager.get_creatures_non_evoluees()`).
 - Brancher la capture reelle en fin de tableau reussi (>=7/10) dans
   `scripts/ecran_tableau.gd::_terminer_tableau()` :
-  `SaveManager.capturer_creature()` (existe depuis la Phase 1, jamais
-  encore appele en dehors du starter) + `SaveManager.marquer_vue()`.
+  `SaveManager.capturer_creature()` + `SaveManager.marquer_vue()`.
+  `capturer_creature()` avait un bug (ne sauvegardait jamais) trouve et
+  corrige pendant l'ajout de la "creature principale" — voir
+  [docs/phases/phase_06_scenes_tableau.md](docs/phases/phase_06_scenes_tableau.md).
+- Cote joueur, `EcranTableau` affiche deja la "creature principale"
+  choisie au Roster (`SaveManager.get_creature_principale_id()`), rien
+  a faire de ce cote pour la Phase 7.
 
 **Piege GDScript a connaitre avant de coder un nouveau composant
 reutilisable** : ne pas utiliser `@onready var x = %NodeName` pour un

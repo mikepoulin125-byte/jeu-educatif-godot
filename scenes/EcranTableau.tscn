@@ -149,6 +149,23 @@ horizontal_alignment = 1
 vertical_alignment = 1
 text = "Toi"
 
+[node name="LabelNomJoueur" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 40.0
+offset_top = 76.0
+offset_right = 220.0
+offset_bottom = 100.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.9)
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+autowrap_mode = 3
+text = ""
+
 [node name="ZoneSauvage" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 6

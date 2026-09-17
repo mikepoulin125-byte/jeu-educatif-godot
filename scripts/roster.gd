@@ -2,8 +2,10 @@ extends Control
 ## Ecran Roster (section 7 de la spec + mecaniques "feel good" validees
 ## par Mike) : liste des creatures capturees, selection -> stats/stade/
 ## XP/affection, surnom personnalisable, evolution par attribution d'XP,
-## et systeme de berries (glisser-deposer depuis l'inventaire pour faire
-## monter l'affection jusqu'au deblocage du sprite "glow").
+## systeme de berries (glisser-deposer depuis l'inventaire pour faire
+## monter l'affection jusqu'au deblocage du sprite "glow"), et choix de
+## la "creature principale" (bouton "Accompagne-moi !") qui accompagne
+## le joueur dans les scenes de tableau (voir ecran_tableau.gd).
 
 const CarteCreatureRosterScene := preload("res://scenes/components/CarteCreatureRoster.tscn")
 const BerryItemScene := preload("res://scenes/components/BerryItem.tscn")
@@ -29,6 +31,7 @@ const DUREE_HALO_DESCENTE := 0.7
 @onready var barre_affection: ProgressBar = %BarreAffection
 @onready var label_barre_affection_texte: Label = %LabelBarreAffectionTexte
 @onready var bouton_attribuer_xp: Button = %BoutonAttribuerXp
+@onready var bouton_principale: Button = %BoutonPrincipale
 @onready var label_statut: Label = %LabelStatut
 @onready var particules_xp: CPUParticles2D = %ParticulesXp
 
@@ -40,6 +43,7 @@ var _creature_selectionnee_id: String = ""
 func _ready() -> void:
 	bouton_retour.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/Hub.tscn"))
 	bouton_attribuer_xp.pressed.connect(_on_attribuer_xp_presse)
+	bouton_principale.pressed.connect(_on_definir_principale_presse)
 	line_edit_surnom.text_submitted.connect(func(_texte): _sauvegarder_surnom())
 	line_edit_surnom.focus_exited.connect(_sauvegarder_surnom)
 	zone_sprite.berry_deposee.connect(_on_berry_deposee)
@@ -74,11 +78,21 @@ func _peupler_liste() -> void:
 		carte.selectionnee.connect(_selectionner_creature)
 		_cartes_par_id[creature_id] = carte
 
+	_actualiser_badges_principale()
+
 	if not premier_id.is_empty():
 		_selectionner_creature(premier_id)
 	else:
 		label_statut.text = "Aucune creature capturee."
 		bouton_attribuer_xp.disabled = true
+		bouton_principale.disabled = true
+
+## Met a jour le badge "★" sur la carte de la creature principale
+## actuelle (et l'enleve de toutes les autres).
+func _actualiser_badges_principale() -> void:
+	var principale_id := SaveManager.get_creature_principale_id()
+	for creature_id in _cartes_par_id.keys():
+		_cartes_par_id[creature_id].definir_principale(creature_id == principale_id)
 
 func _configurer_carte_liste(carte, creature_id: String) -> void:
 	var stage := SaveManager.get_stage_creature(creature_id)
@@ -133,6 +147,15 @@ func _actualiser_details() -> void:
 	_actualiser_barre_xp(stage_actuel, stage_max)
 	_actualiser_barre_affection()
 	_actualiser_bouton_attribuer(stage_actuel, stage_max)
+	_actualiser_bouton_principale()
+
+func _actualiser_bouton_principale() -> void:
+	if _creature_selectionnee_id == SaveManager.get_creature_principale_id():
+		bouton_principale.disabled = true
+		bouton_principale.text = "Creature principale actuelle"
+	else:
+		bouton_principale.disabled = false
+		bouton_principale.text = "Accompagne-moi !"
 
 func _actualiser_barre_xp(stage_actuel: int, stage_max: int) -> void:
 	if stage_actuel >= stage_max:
@@ -180,6 +203,12 @@ func _sauvegarder_surnom() -> void:
 		if nom_affiche.is_empty():
 			nom_affiche = line_edit_surnom.placeholder_text
 		_cartes_par_id[_creature_selectionnee_id].get_node("%LabelNom").text = nom_affiche
+
+func _on_definir_principale_presse() -> void:
+	SaveManager.definir_creature_principale(_creature_selectionnee_id)
+	label_statut.text = "Elle t'accompagnera dans les tableaux !"
+	_actualiser_badges_principale()
+	_actualiser_bouton_principale()
 
 ## --- Attribution d'XP (evolution) : pulsation + particules ---
 

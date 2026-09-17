@@ -188,6 +188,77 @@ jeu ne change pas.
   `EcranTableau.tscn` par la vraie creature sauvage tiree au hasard
   parmi les non-evoluees jamais vues (section 9.1 de la spec).
 - Integrer la capture (reussite du tableau >= 7/10) avec
-  `SaveManager.capturer_creature()` (deja existant depuis la Phase 1,
-  jamais encore appele en dehors du starter) et
+  `SaveManager.capturer_creature()` (existe depuis la Phase 1) et
   `SaveManager.marquer_vue()`.
+
+## Ajout : "creature principale" (demande pendant la Phase 6)
+
+Mike a demande, pendant la construction de l'ecran de tableau, un
+systeme de creature "principale"/active choisie par le joueur depuis le
+Roster, qui est celle affichee cote joueur dans les tableaux — integre
+nativement plutot qu'en retrofit puisque `EcranTableau.tscn` etait deja
+en chantier.
+
+- **`SaveManager`** : `data["creature_principale_id"]`.
+  `get_creature_principale_id()` / `definir_creature_principale(id)`.
+  **Decision documentee sur le repli par defaut** (aucun choix explicite
+  n'a encore ete fait) : le starter, sinon la premiere creature
+  capturee (ordre du dictionnaire de sauvegarde) — garantit qu'une
+  creature principale existe toujours des qu'au moins une creature est
+  capturee (le starter l'est toujours des la creation de la partie).
+  `definir_creature_principale()` refuse silencieusement une creature
+  non capturee (pas de crash, pas d'etat invalide).
+- **Roster** (`scenes/Roster.tscn` + `scripts/roster.gd`) : nouveau
+  bouton `%BoutonPrincipale` ("Accompagne-moi !") dans le panneau de
+  details, sous "Stade X/Y". Se desactive et affiche "Creature
+  principale actuelle" quand la creature selectionnee est deja la
+  principale. Badge "★" (`%LabelBadgePrincipale` sur
+  `CarteCreatureRoster`, `definir_principale(bool)`) affiche sur la
+  carte de la creature principale dans la liste, mis a jour a chaque
+  changement (`_actualiser_badges_principale()`).
+- **`EcranTableau`** (`scripts/ecran_tableau.gd::_afficher_creature_joueur()`) :
+  affiche desormais `SaveManager.get_creature_principale_id()` (sprite
+  au stade actuel, avec sprite "glow" si debloque comme au Roster) au
+  lieu du starter fixe. Nouveau `%LabelNomJoueur` sous la zone du
+  joueur affiche son nom (surnom si defini, sinon nom d'espece) — reste
+  la meme creature tant que le joueur n'en choisit pas une autre depuis
+  le Roster (persiste en sauvegarde, pas dans `GameState`).
+
+### Bug trouve (par la verification visuelle, pas par les smoke tests)
+
+`SaveManager.capturer_creature()` **ne sauvegardait jamais** —
+mutait `data` en memoire sans appeler `save_game()`, contrairement a
+toutes les autres methodes mutatives du fichier. Cree en Phase 1,
+jamais exerce en dehors du chemin `new_game()` (qui construit le
+dictionnaire directement sans passer par cette fonction) jusqu'a ce que
+la verification visuelle de cette fonctionnalite l'utilise pour de
+vrai (capturer une 2e creature pour tester le choix entre plusieurs
+principales) — la 2e creature disparaissait silencieusement au
+redemarrage. Corrige (`save_game()` ajoute), et desormais couvert par
+un test de non-regression explicite. **Important pour la Phase 7** :
+cette fonction sera abondamment utilisee pour la vraie capture, le bug
+aurait ete bien plus difficile a diagnostiquer une fois noye dans la
+logique de rencontre.
+
+### Verification effectuee (creature principale)
+
+- `godot --headless --path <projet> --import` : 0 erreur.
+- Boot headless reel (autoloads charges) : 0 erreur stderr.
+- Nouveau `scripts/tests/smoke_test_creature_principale.gd` : repli par
+  defaut sur le starter, changement de creature principale, refus
+  silencieux pour une creature non capturee, persistance apres reload,
+  repli propre si la principale enregistree n'est plus valide, bascule
+  du badge sur `CarteCreatureRoster`, structure des deux scenes — plus
+  la verification explicite que `capturer_creature()` persiste bien
+  (le bug ci-dessus). Suite complete des 11 smoke tests : tous SUCCES,
+  aucune regression.
+- Verification visuelle reelle complete : sauvegarde de test avec 2
+  creatures capturees (starter + une seconde via `capturer_creature()`,
+  ce qui a revele le bug de sauvegarde manquante ci-dessus — corrige
+  puis la sauvegarde regeneree). Jeu lance en fenetre : capture du
+  Roster confirmant le badge ★ sur le starter par defaut, **clic reel**
+  sur la 2e creature puis sur "Accompagne-moi !" -> capture confirmant
+  le badge deplace, le message "Elle t'accompagnera dans les
+  tableaux !" et le bouton desactive. Navigation reelle Hub -> matiere
+  -> niveau 1 -> capture confirmant que **la 2e creature (pas le
+  starter) s'affiche bien cote joueur**, avec son nom sous "Toi".

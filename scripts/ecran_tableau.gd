@@ -11,6 +11,13 @@ extends Control
 ## dans les questions, score, XP (+10/bonne reponse, +50 bonus si >=8/10),
 ## distribution de berries (+1/bonne reponse, skin aleatoire), et l'ecran
 ## de resultats + deblocage du niveau suivant en fin de tableau.
+##
+## Cote joueur, la creature affichee est la "creature principale" choisie
+## depuis le Roster (bouton "Accompagne-moi !",
+## SaveManager.get_creature_principale_id()) — elle reste la meme tant
+## que le joueur n'en choisit pas une autre. Repli si aucun choix
+## explicite n'a encore ete fait : le starter, sinon la premiere
+## creature capturee (voir SaveManager.get_creature_principale_id()).
 
 const NB_NIVEAUX := 10
 const SEUIL_REUSSITE := 7
@@ -36,6 +43,7 @@ const WidgetCroissantDecroissant := preload("res://scenes/tableau/WidgetCroissan
 @onready var zone_reponse: Control = %ZoneReponse
 @onready var texture_joueur: TextureRect = %TextureJoueur
 @onready var placeholder_joueur: ColorRect = %PlaceholderJoueur
+@onready var label_nom_joueur: Label = %LabelNomJoueur
 @onready var placeholder_sauvage: ColorRect = %PlaceholderSauvage
 @onready var timer_avance: Timer = %TimerAvance
 
@@ -80,18 +88,27 @@ func _actualiser_label_xp() -> void:
 	label_xp.text = "XP : %d" % SaveManager.get_xp_total()
 
 func _afficher_creature_joueur() -> void:
-	var starter_id: String = String(SaveManager.data.get("starter_id", ""))
-	if starter_id.is_empty() or not DataManager.creatures.has(starter_id):
+	var creature_id: String = SaveManager.get_creature_principale_id()
+	if creature_id.is_empty() or not DataManager.creatures.has(creature_id):
 		return
-	var creature_data: Dictionary = DataManager.creatures[starter_id]
-	var stage := SaveManager.get_stage_creature(starter_id)
+	var creature_data: Dictionary = DataManager.creatures[creature_id]
+	var stage := SaveManager.get_stage_creature(creature_id)
 	var forms: Dictionary = creature_data.get("forms", {})
+	var names: Dictionary = creature_data.get("names", {})
 	var sprite_id: String = String(forms.get("stage%d" % stage, ""))
-	var texture := SpriteUtil.charger_texture(sprite_id)
+	var est_glow := SaveManager.est_glow_creature(creature_id)
+
+	var texture := SpriteUtil.charger_texture_avec_glow(sprite_id, est_glow)
 	if texture != null:
 		texture_joueur.texture = texture
 		texture_joueur.visible = true
 		placeholder_joueur.visible = false
+
+	var surnom := SaveManager.get_surnom_creature(creature_id)
+	if not surnom.is_empty():
+		label_nom_joueur.text = surnom
+	else:
+		label_nom_joueur.text = String(names.get("stage%d" % stage, creature_id))
 
 func _instancier_widget() -> void:
 	var scenes := {

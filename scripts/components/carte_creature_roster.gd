@@ -43,6 +43,12 @@ func configurer(creature_id: String, creature_data: Dictionary, stage_actuel: in
 	var label_nom: Label = %LabelNom
 	label_nom.text = String(names.get("stage%d" % stage_actuel, creature_id))
 
+## Affiche/masque le badge "★" (creature principale, celle qui
+## accompagne le joueur dans les tableaux).
+func definir_principale(valeur: bool) -> void:
+	var badge: Label = %LabelBadgePrincipale
+	badge.visible = valeur
+
 func definir_selectionnee(valeur: bool) -> void:
 	var bouton: Button = %BoutonCercle
 	if valeur:

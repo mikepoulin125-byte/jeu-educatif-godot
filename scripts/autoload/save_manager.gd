@@ -83,6 +83,7 @@ func capturer_creature(creature_id: String) -> void:
 	if not capturees.has(creature_id):
 		capturees[creature_id] = _nouvelle_entree_creature()
 	data["creatures_capturees"] = capturees
+	save_game()
 
 func get_creatures_capturees() -> Dictionary:
 	return data.get("creatures_capturees", {})
@@ -94,6 +95,33 @@ func get_stage_creature(creature_id: String) -> int:
 func get_xp_investi_creature(creature_id: String) -> int:
 	var capturees: Dictionary = data.get("creatures_capturees", {})
 	return int(capturees.get(creature_id, {}).get("xp_investi", 0))
+
+## --- Creature principale (celle qui accompagne le joueur dans les tableaux) ---
+## Choisie explicitement depuis le Roster ("Accompagne-moi !"). Tant que le
+## joueur n'a rien choisi, repli par defaut : le starter, sinon la
+## premiere creature capturee (ordre du dictionnaire de sauvegarde) —
+## decision documentee dans docs/phases/phase_06_scenes_tableau.md, pour
+## qu'une creature "principale" existe toujours des qu'au moins une
+## creature est capturee (le starter l'est toujours).
+
+func get_creature_principale_id() -> String:
+	var choisie: String = String(data.get("creature_principale_id", ""))
+	var capturees := get_creatures_capturees()
+	if not choisie.is_empty() and capturees.has(choisie):
+		return choisie
+	var starter: String = String(data.get("starter_id", ""))
+	if not starter.is_empty() and capturees.has(starter):
+		return starter
+	var ids := capturees.keys()
+	return String(ids[0]) if ids.size() > 0 else ""
+
+## Ne fait rien si "creature_id" n'est pas une creature capturee (evite
+## de definir une creature principale invalide).
+func definir_creature_principale(creature_id: String) -> void:
+	if not get_creatures_capturees().has(creature_id):
+		return
+	data["creature_principale_id"] = creature_id
+	save_game()
 
 ## --- Evolution (section 7 de la spec) ---
 ## Cout fixe : 300 XP pour atteindre le stade 2, 500 XP pour le stade 3.
