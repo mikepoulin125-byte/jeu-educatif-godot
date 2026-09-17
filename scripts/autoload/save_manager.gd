@@ -18,13 +18,17 @@ func new_game(starter_id: String) -> void:
 	data = {
 		"starter_id": starter_id,
 		"creatures_capturees": {
-			starter_id: {"stage": 1, "xp_investi": 0}
+			starter_id: _nouvelle_entree_creature()
 		},
 		"creatures_vues": [starter_id],
 		"xp_total": 0,
-		"progression": {}
+		"progression": {},
+		"berries_inventaire": []
 	}
 	save_game()
+
+func _nouvelle_entree_creature() -> Dictionary:
+	return {"stage": 1, "xp_investi": 0, "surnom": "", "berries_recues": 0}
 
 func save_game() -> void:
 	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
@@ -77,7 +81,7 @@ func get_creatures_vues() -> Array:
 func capturer_creature(creature_id: String) -> void:
 	var capturees: Dictionary = data.get("creatures_capturees", {})
 	if not capturees.has(creature_id):
-		capturees[creature_id] = {"stage": 1, "xp_investi": 0}
+		capturees[creature_id] = _nouvelle_entree_creature()
 	data["creatures_capturees"] = capturees
 
 func get_creatures_capturees() -> Dictionary:
@@ -131,6 +135,87 @@ func faire_evoluer_creature(creature_id: String) -> bool:
 	data["xp_total"] = get_xp_total() - cout
 	save_game()
 	return true
+
+## --- Surnom (personnalisation, distinct du nom d'espece) ---
+
+func get_surnom_creature(creature_id: String) -> String:
+	var capturees: Dictionary = data.get("creatures_capturees", {})
+	return String(capturees.get(creature_id, {}).get("surnom", ""))
+
+func definir_surnom_creature(creature_id: String, surnom: String) -> void:
+	var capturees: Dictionary = data.get("creatures_capturees", {})
+	if not capturees.has(creature_id):
+		return
+	capturees[creature_id]["surnom"] = surnom.strip_edges()
+	data["creatures_capturees"] = capturees
+	save_game()
+
+## --- Berries (baies) : inventaire du joueur ---
+## Chaque berry possedee est representee par son seul "skin" (1 a 10,
+## purement cosmetique - voir BerryAssetUtil). L'inventaire est un
+## simple Array[int], un element par berry possedee.
+
+## Retourne l'inventaire sous forme d'Array[int]. Normalise chaque
+## element via int() : apres un aller-retour JSON (sauvegarde/rechargement),
+## les nombres reviennent en float (JSON ne distingue pas int/float), ce
+## qui casserait une comparaison stricte comme `[9] == [9.0]` (fausse en
+## GDScript pour le contenu d'un Array, contrairement a `9 == 9.0` qui
+## est vraie) — meme piege que celui deja evite ailleurs dans ce fichier
+## via int(...) sur "stage"/"xp_investi"/"berries_recues".
+func get_berries_inventaire() -> Array:
+	var brut: Array = data.get("berries_inventaire", [])
+	var normalise: Array = []
+	for skin in brut:
+		normalise.append(int(skin))
+	return normalise
+
+## Ajoute une berry au skin donne (utilise par la distribution de fin de
+## tableau, Phase 6 - pas encore branchee) ou un skin aleatoire si omis
+## (utilise par le bouton de debug de l'ecran Roster en attendant).
+func ajouter_berry(skin: int = -1) -> int:
+	var skin_final: int = skin if skin > 0 else BerryAssetUtil.skin_aleatoire()
+	var inventaire: Array = get_berries_inventaire()
+	inventaire.append(skin_final)
+	data["berries_inventaire"] = inventaire
+	save_game()
+	return skin_final
+
+## Retire la berry a "index_inventaire" (ordre de get_berries_inventaire()).
+## Retourne false si l'index est invalide (rien de retire, rien de sauve).
+func consommer_berry(index_inventaire: int) -> bool:
+	var inventaire: Array = get_berries_inventaire()
+	if index_inventaire < 0 or index_inventaire >= inventaire.size():
+		return false
+	inventaire.remove_at(index_inventaire)
+	data["berries_inventaire"] = inventaire
+	save_game()
+	return true
+
+## --- Affection par creature (berries donnees) et deblocage "glow" ---
+## Une creature devient "glow" a partir de SEUIL_GLOW berries recues
+## (nouveau palier visuel, independant/au-dela des stades d'evolution).
+
+const SEUIL_GLOW := 20
+
+func get_affection_creature(creature_id: String) -> int:
+	var capturees: Dictionary = data.get("creatures_capturees", {})
+	return int(capturees.get(creature_id, {}).get("berries_recues", 0))
+
+func est_glow_creature(creature_id: String) -> bool:
+	return get_affection_creature(creature_id) >= SEUIL_GLOW
+
+## Donne une berry (deja retiree de l'inventaire via consommer_berry) a
+## une creature : incremente son affection et sauvegarde. Retourne la
+## nouvelle affection totale.
+func donner_berry_a_creature(creature_id: String) -> int:
+	var capturees: Dictionary = data.get("creatures_capturees", {})
+	if not capturees.has(creature_id):
+		return 0
+	var nouvelle_affection: int = int(capturees[creature_id].get("berries_recues", 0)) + 1
+	capturees[creature_id]["berries_recues"] = nouvelle_affection
+	data["creatures_capturees"] = capturees
+	save_game()
+	return nouvelle_affection
 
 ## --- Progression par matiere ---
 

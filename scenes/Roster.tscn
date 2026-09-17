@@ -1,11 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://bqf0e0000roster01"]
+[gd_scene load_steps=15 format=3 uid="uid://bqf0e0000roster01"]
 
 [ext_resource type="Script" path="res://scripts/roster.gd" id="1"]
 [ext_resource type="Shader" path="res://shaders/fond_bandes_diagonales.gdshader" id="2"]
 [ext_resource type="Script" path="res://scripts/components/bouton_anime.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/components/zone_drop_creature.gd" id="4"]
+[ext_resource type="Shader" path="res://shaders/halo_lumineux.gdshader" id="5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fond"]
 shader = ExtResource("2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_halo"]
+shader = ExtResource("5")
+shader_parameter/intensite = 0.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pill_blanc"]
 bg_color = Color(1, 1, 1, 0.92)
@@ -61,6 +67,27 @@ corner_radius_top_left = 30
 corner_radius_top_right = 30
 corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_barre_fond"]
+bg_color = Color(0, 0, 0, 0.35)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_barre_xp_remplissage"]
+bg_color = Color(0.23, 0.51, 0.96, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_barre_affection_remplissage"]
+bg_color = Color(0.95, 0.35, 0.55, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [node name="Roster" type="Control"]
 layout_mode = 3
@@ -137,7 +164,7 @@ anchor_bottom = 1.0
 offset_left = 60.0
 offset_top = 110.0
 offset_right = -60.0
-offset_bottom = -40.0
+offset_bottom = -190.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 40
@@ -164,22 +191,42 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_panneau")
 [node name="MargeDetail" type="MarginContainer" parent="ZonePrincipale/PanneauDetail"]
 layout_mode = 2
 theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 30
+theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 30
-theme_override_constants/margin_bottom = 30
+theme_override_constants/margin_bottom = 24
 
 [node name="VBoxDetail" type="VBoxContainer" parent="ZonePrincipale/PanneauDetail/MargeDetail"]
 layout_mode = 2
 alignment = 1
-theme_override_constants/separation = 16
+theme_override_constants/separation = 12
 
 [node name="ZoneSprite" type="Control" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 220)
 layout_mode = 2
+script = ExtResource("4")
+
+[node name="Halo" type="TextureRect" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail/ZoneSprite"]
+unique_name_in_owner = true
+mouse_filter = 2
+material = SubResource("ShaderMaterial_halo")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -140.0
+offset_right = 140.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TextureDetail" type="TextureRect" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail/ZoneSprite"]
 unique_name_in_owner = true
 visible = false
+mouse_filter = 2
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -197,6 +244,7 @@ stretch_mode = 5
 
 [node name="PlaceholderDetail" type="ColorRect" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail/ZoneSprite"]
 unique_name_in_owner = true
+mouse_filter = 2
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -213,6 +261,7 @@ color = Color(0.45, 0.47, 0.55, 1)
 
 [node name="LabelPlaceholderDetail" type="Label" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail/ZoneSprite/PlaceholderDetail"]
 unique_name_in_owner = true
+mouse_filter = 2
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -220,18 +269,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 text = "?"
 
-[node name="LabelNomDetail" type="Label" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail"]
+[node name="LineEditSurnom" type="LineEdit" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 28
+theme_override_colors/font_placeholder_color = Color(1, 1, 1, 0.55)
+theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
-text = "Nom"
+placeholder_text = "Nom"
+max_length = 24
 
 [node name="LabelStadeDetail" type="Label" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail"]
 unique_name_in_owner = true
@@ -241,22 +294,84 @@ theme_override_font_sizes/font_size = 20
 horizontal_alignment = 1
 text = "Stade 1 / 1"
 
-[node name="LabelXpInvestiDetail" type="Label" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail"]
-unique_name_in_owner = true
+[node name="ZoneBarreXp" type="Control" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail"]
+custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 0.85)
-theme_override_font_sizes/font_size = 20
+
+[node name="BarreXp" type="ProgressBar" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail/ZoneBarreXp"]
+unique_name_in_owner = true
+show_percentage = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_barre_fond")
+theme_override_styles/fill = SubResource("StyleBoxFlat_barre_xp_remplissage")
+max_value = 300.0
+value = 0.0
+
+[node name="LabelBarreXpTexte" type="Label" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail/ZoneBarreXp"]
+unique_name_in_owner = true
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 3
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.5)
+theme_override_font_sizes/font_size = 14
 horizontal_alignment = 1
-text = "XP investi : 0"
+vertical_alignment = 1
+text = "0 / 300 XP"
+
+[node name="ZoneBarreAffection" type="Control" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+
+[node name="BarreAffection" type="ProgressBar" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail/ZoneBarreAffection"]
+unique_name_in_owner = true
+show_percentage = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_barre_fond")
+theme_override_styles/fill = SubResource("StyleBoxFlat_barre_affection_remplissage")
+max_value = 20.0
+value = 0.0
+
+[node name="LabelBarreAffectionTexte" type="Label" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail/ZoneBarreAffection"]
+unique_name_in_owner = true
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 3
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.5)
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "♥ 0 / 20"
 
 [node name="BoutonAttribuerXp" type="Button" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 focus_mode = 0
 theme_override_colors/font_color = Color(0.16, 0.4, 0.85, 1)
 theme_override_colors/font_disabled_color = Color(0.4, 0.4, 0.4, 1)
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_action_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_action_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_action_hover")
@@ -273,3 +388,75 @@ theme_override_font_sizes/font_size = 16
 horizontal_alignment = 1
 autowrap_mode = 3
 text = ""
+
+[node name="ParticulesXp" type="CPUParticles2D" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail/ZoneSprite"]
+unique_name_in_owner = true
+emitting = false
+amount = 18
+lifetime = 0.6
+one_shot = true
+explosiveness = 0.9
+direction = Vector2(0, -1)
+spread = 60.0
+gravity = Vector2(0, 220)
+initial_velocity_min = 120.0
+initial_velocity_max = 220.0
+scale_amount_min = 3.0
+scale_amount_max = 6.0
+color = Color(1, 0.85, 0.2, 1)
+
+[node name="ZoneBerries" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = -170.0
+offset_right = -60.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panneau")
+
+[node name="MargeBerries" type="MarginContainer" parent="ZoneBerries"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 12
+
+[node name="HBoxBerries" type="HBoxContainer" parent="ZoneBerries/MargeBerries"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="VBoxListeBerries" type="VBoxContainer" parent="ZoneBerries/MargeBerries/HBoxBerries"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="LabelInventaire" type="Label" parent="ZoneBerries/MargeBerries/HBoxBerries/VBoxListeBerries"]
+theme_override_colors/font_color = Color(1, 1, 1, 0.85)
+theme_override_font_sizes/font_size = 16
+text = "Tes berries (glisse-depose sur la creature) :"
+
+[node name="ScrollBerries" type="ScrollContainer" parent="ZoneBerries/MargeBerries/HBoxBerries/VBoxListeBerries"]
+custom_minimum_size = Vector2(0, 76)
+layout_mode = 2
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 0
+
+[node name="ListeBerries" type="HBoxContainer" parent="ZoneBerries/MargeBerries/HBoxBerries/VBoxListeBerries/ScrollBerries"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="BoutonDebugBerry" type="Button" parent="ZoneBerries/MargeBerries/HBoxBerries"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 56)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 0.9)
+theme_override_font_sizes/font_size = 14
+text = "[DEBUG] +1 berry"

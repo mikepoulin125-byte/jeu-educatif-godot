@@ -21,12 +21,17 @@ relancer si le code concerne est modifie plus tard.
 
 ## Etat actuel
 
-**Phases 1 a 4 terminees et verifiees** (voir archives ci-dessous).
-Prochaine etape : **Phase 5 - Selection de niveau**.
+**Phases 1 a 4 (+ 4 bis) terminees et verifiees** (voir archives
+ci-dessous). Prochaine etape : **Phase 5 - Selection de niveau**.
 
-Mike reflechit separement a des mecaniques "feel good" additionnelles
-pour l'ecran Roster (sans toucher aux sprites) — pas encore decidees,
-ne rien anticiper tant qu'il n'est pas revenu avec une demande precise.
+**Important pour la Phase 6 (scenes de tableau) a venir** : le systeme
+de berries (Phase 4 bis) a son infrastructure prete
+(`SaveManager.ajouter_berry()`) mais la distribution reelle
+("1 berry par bonne reponse, jusqu'a 10 par tableau") n'est PAS encore
+branchee — brancher `SaveManager.ajouter_berry()` a chaque bonne
+reponse en Phase 6, et retirer/masquer le bouton de debug
+`%BoutonDebugBerry` du Roster (`scripts/roster.gd`) une fois que la
+vraie distribution fonctionne.
 
 **Piege GDScript a connaitre avant de coder un nouveau composant
 reutilisable** : ne pas utiliser `@onready var x = %NodeName` pour un
@@ -46,7 +51,10 @@ un helper `_verifier(condition, message)` qui `print()` + `quit(1)`.
 3. **Phase 3 - Hub principal** — termine, voir
    [docs/phases/phase_03_hub_principal.md](docs/phases/phase_03_hub_principal.md).
 4. **Phase 4 - Roster et evolutions** — termine, voir
-   [docs/phases/phase_04_roster_evolutions.md](docs/phases/phase_04_roster_evolutions.md).
+   [docs/phases/phase_04_roster_evolutions.md](docs/phases/phase_04_roster_evolutions.md)
+   et [docs/phases/phase_04_bis_berries_feelgood.md](docs/phases/phase_04_bis_berries_feelgood.md)
+   (surnom, barre XP animee, animation d'attribution d'XP, systeme de
+   berries avec glisser-depose et sprites "glow").
 5. **Phase 5 - Selection de niveau** (prochaine) : 10 tableaux par matiere,
    progression lineaire (deblocage sequentiel, seuil 7/10).
 6. **Phase 6 - Scenes de tableau** : les 8 mecaniques d'interaction

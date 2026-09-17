@@ -1,0 +1,21 @@
+Skins des berries (baies) - systeme de collection cosmetique
+================================================================
+
+10 skins visuels differents de berry existent dans le jeu. Le skin
+gagne par le joueur est tire au hasard a chaque berry recue (purement
+cosmetique — aucune berry n'est "meilleure" qu'une autre, juste plus ou
+moins rare a obtenir visuellement).
+
+Depose tes propres images ici, avec exactement ces noms de fichier :
+
+   Noms de fichiers : berry1.png a berry10.png (10 fichiers)
+   Format           : PNG avec fond transparent
+   Dimensions       : 96 x 96 px (carre)
+
+Tant qu'un fichier n'existe pas, un placeholder generique (rond colore,
+une teinte differente par skin pour rester distinguables) s'affiche a
+sa place — le jeu reste jouable et testable sans attendre les 10
+images.
+
+Dépose les fichiers dans ce dossier (assets/ui/berries/) et relance le
+jeu.
