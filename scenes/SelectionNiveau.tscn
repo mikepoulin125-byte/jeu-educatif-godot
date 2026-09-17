@@ -1,6 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://bqf0e0000selniv01"]
+[gd_scene load_steps=7 format=3 uid="uid://bqf0e0000selniv01"]
 
-[ext_resource type="Script" path="res://scripts/selection_niveau_placeholder.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/selection_niveau.gd" id="1"]
+[ext_resource type="Shader" path="res://shaders/fond_bandes_diagonales.gdshader" id="2"]
+[ext_resource type="Script" path="res://scripts/components/bouton_anime.gd" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/components/TransitionRadiale.tscn" id="4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fond"]
+shader = ExtResource("2")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pill_blanc"]
+bg_color = Color(1, 1, 1, 0.92)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.8, 0, 0, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
 
 [node name="SelectionNiveau" type="Control"]
 layout_mode = 3
@@ -18,33 +36,82 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.1, 0.12, 0.2, 1)
+material = SubResource("ShaderMaterial_fond")
+color = Color(1, 1, 1, 1)
 
-[node name="Centre" type="VBoxContainer" parent="."]
+[node name="LabelXp" type="Label" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = -100.0
-offset_right = 300.0
-offset_bottom = 100.0
+offset_left = 30.0
+offset_top = 24.0
+offset_right = 260.0
+offset_bottom = 60.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.35)
+theme_override_font_sizes/font_size = 26
+text = "XP : 0"
+
+[node name="BoutonRetour" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -220.0
+offset_top = 20.0
+offset_right = -30.0
+offset_bottom = 76.0
+grow_horizontal = 0
+focus_mode = 0
+theme_override_colors/font_color = Color(0.75, 0.15, 0.08, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_pill_blanc")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pill_blanc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pill_blanc")
+theme_override_styles/focus = SubResource("StyleBoxFlat_pill_blanc")
+text = "Retour au hub"
+script = ExtResource("3")
+
+[node name="LabelTitre" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 20.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.35)
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+text = "Matiere"
+
+[node name="ScrollNiveaux" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 80.0
+offset_top = 110.0
+offset_right = -80.0
+offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 24
 
-[node name="LabelInfo" type="Label" parent="Centre"]
+[node name="MargeNiveaux" type="MarginContainer" parent="ScrollNiveaux"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 20
+
+[node name="GrilleNiveaux" type="GridContainer" parent="ScrollNiveaux/MargeNiveaux"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-horizontal_alignment = 1
-autowrap_mode = 3
-text = "..."
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 30
+columns = 5
 
-[node name="BoutonRetour" type="Button" parent="Centre"]
+[node name="VoileEntree" parent="." instance=ExtResource("4")]
 unique_name_in_owner = true
-layout_mode = 2
-custom_minimum_size = Vector2(200, 50)
-text = "Retour au hub"

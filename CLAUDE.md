@@ -21,17 +21,24 @@ relancer si le code concerne est modifie plus tard.
 
 ## Etat actuel
 
-**Phases 1 a 4 (+ 4 bis) terminees et verifiees** (voir archives
-ci-dessous). Prochaine etape : **Phase 5 - Selection de niveau**.
+**Phases 1 a 5 (+ 4 bis) terminees et verifiees** (voir archives
+ci-dessous). Prochaine etape : **Phase 6 - Scenes de tableau**.
 
-**Important pour la Phase 6 (scenes de tableau) a venir** : le systeme
-de berries (Phase 4 bis) a son infrastructure prete
-(`SaveManager.ajouter_berry()`) mais la distribution reelle
-("1 berry par bonne reponse, jusqu'a 10 par tableau") n'est PAS encore
-branchee — brancher `SaveManager.ajouter_berry()` a chaque bonne
-reponse en Phase 6, et retirer/masquer le bouton de debug
-`%BoutonDebugBerry` du Roster (`scripts/roster.gd`) une fois que la
-vraie distribution fonctionne.
+**Important pour la Phase 6** :
+- Remplacer `scenes/EcranTableauPlaceholder.tscn` par les 8 vraies
+  mecaniques d'interaction (section 9 de la spec), en reprenant la
+  logique de fin de tableau qu'il contient deja (marquer reussi/echoue
+  via `SaveManager.set_progression_niveau()`, debloquer le niveau
+  suivant seulement si reussi >= 7/10) — voir
+  [docs/phases/phase_05_selection_niveau.md](docs/phases/phase_05_selection_niveau.md).
+- Remplir les `"questions": []` des 79 fichiers de niveaux restants
+  (`data/niveaux/*.json`) au fur et a mesure ; un seul exemple complet
+  existe pour l'instant (`pair_impair_niveau_01.json`, 10 questions).
+- Brancher `SaveManager.ajouter_berry()` a chaque bonne reponse (1 par
+  bonne reponse, jusqu'a 10 par tableau) — l'infrastructure du systeme
+  de berries est prete depuis la Phase 4 bis mais pas encore branchee.
+  Retirer/masquer le bouton de debug `%BoutonDebugBerry` du Roster
+  (`scripts/roster.gd`) une fois la vraie distribution fonctionnelle.
 
 **Piege GDScript a connaitre avant de coder un nouveau composant
 reutilisable** : ne pas utiliser `@onready var x = %NodeName` pour un
@@ -55,12 +62,12 @@ un helper `_verifier(condition, message)` qui `print()` + `quit(1)`.
    et [docs/phases/phase_04_bis_berries_feelgood.md](docs/phases/phase_04_bis_berries_feelgood.md)
    (surnom, barre XP animee, animation d'attribution d'XP, systeme de
    berries avec glisser-depose et sprites "glow").
-5. **Phase 5 - Selection de niveau** (prochaine) : 10 tableaux par matiere,
-   progression lineaire (deblocage sequentiel, seuil 7/10).
-6. **Phase 6 - Scenes de tableau** : les 8 mecaniques d'interaction
-   (pair/impair, approximation, terme manquant, plan cartesien,
-   possible/impossible, tableau/pictogramme, fractions,
-   croissant/decroissant), scoring, XP.
+5. **Phase 5 - Selection de niveau** — termine, voir
+   [docs/phases/phase_05_selection_niveau.md](docs/phases/phase_05_selection_niveau.md).
+6. **Phase 6 - Scenes de tableau** (prochaine) : les 8 mecaniques
+   d'interaction (pair/impair, approximation, terme manquant, plan
+   cartesien, possible/impossible, tableau/pictogramme, fractions,
+   croissant/decroissant), scoring, XP, distribution des berries.
 7. **Phase 7 - Logique de rencontre/capture** : distribution aleatoire des
    80 creatures restantes sans repetition, integree a la sauvegarde.
 8. **Phase 8 - Polish et integration finale** : transitions fade
@@ -94,20 +101,19 @@ suivent deja ce patron via `scripts/util/sprite_util.gd`
 pas encore — au composant appelant d'afficher un placeholder, voir
 `scripts/components/carte_creature.gd` pour un exemple).
 
-## Prochaine etape : Phase 5 - Selection de niveau
+## Prochaine etape : Phase 6 - Scenes de tableau
 
-A construire (voir section 8 de la spec d'origine) :
-- Remplacer le placeholder actuel (`scripts/selection_niveau_placeholder.gd`,
-  `scenes/SelectionNiveau.tscn`) par le vrai ecran : 10 boutons de
-  niveau pour la matiere choisie (`GameState.matiere_courante_id`),
-  noms thematiques a definir, progression strictement lineaire (niveau
-  *n+1* debloque seulement si niveau *n* reussi, seuil 7/10 — logique
-  deja disponible dans `SaveManager.est_niveau_debloque()` /
-  `set_progression_niveau()`, cf. Phase 1).
-- Fichiers de niveaux attendus dans `data/niveaux/matiere_XX_niveau_YY.json`
-  (actuellement vide) : a creer au moins un exemple pour tester le flux
-  de bout en bout avant la Phase 6 (scenes de tableau).
-- Fade in/out entre le Hub et cet ecran : voir le composant
-  `TransitionRadiale` (Phase 3/raffinements) si Mike souhaite la meme
-  coherence visuelle qu'ailleurs.
-- Penser a un smoke test headless (`scripts/tests/smoke_test_phase5.gd`).
+A construire (voir sections 8-9 de la spec d'origine) :
+- 8 scenes de mecanique d'interaction distinctes et reutilisables,
+  parametrees par les donnees du fichier JSON du niveau
+  (`data/niveaux/{matiere_id}_niveau_{NN}.json`, charge via
+  `DataManager.load_niveau()`).
+- Reprendre la logique de fin de tableau deja ecrite dans
+  `scripts/ecran_tableau_placeholder.gd` (a remplacer, pas juste
+  completer) : `SaveManager.set_progression_niveau()` + deblocage du
+  niveau suivant si score >= 7/10.
+- Brancher `SaveManager.ajouter_berry()` a chaque bonne reponse (voir
+  ci-dessus).
+- Remplir les fichiers de niveaux avec leurs 10 vraies questions
+  scriptees au fur et a mesure que chaque mecanique est construite.
+- Penser a un smoke test headless (`scripts/tests/smoke_test_phase6.gd`).
