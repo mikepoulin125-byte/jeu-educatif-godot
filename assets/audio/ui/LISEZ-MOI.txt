@@ -1,0 +1,18 @@
+Son de clic des boutons du menu principal
+============================================
+
+Dépose ton propre son ici, avec exactement ce nom de fichier. Le jeu le
+charge automatiquement — aucune modification de code nécessaire. Tant
+qu'il n'est pas présent, les boutons restent silencieux (pas de son
+placeholder généré : plus simple, et ça évite un bruit générique agaçant
+en attendant le vrai son).
+
+   Nom de fichier : clic_bouton.ogg
+   Format         : OGG Vorbis (recommandé) — .wav aussi accepté si tu
+                     renommes en clic_bouton.wav (le jeu essaie les deux
+                     extensions, OGG en premier)
+   Durée conseillée : très court, entre 0.05 et 0.3 seconde
+   Notes          : un clic net et discret fonctionne mieux qu'un son
+                     long pour un bouton de menu.
+
+Dépose le fichier dans ce dossier (assets/audio/ui/) et relance le jeu.

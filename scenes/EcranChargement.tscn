@@ -1,0 +1,156 @@
+[gd_scene load_steps=5 format=3 uid="uid://bqf0e0000charg01"]
+
+[ext_resource type="Script" path="res://scripts/ecran_chargement.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cercle_chargement"]
+bg_color = Color(0.8, 0.82, 0.88, 1)
+corner_radius_top_left = 80
+corner_radius_top_right = 80
+corner_radius_bottom_right = 80
+corner_radius_bottom_left = 80
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_marqueur_chargement"]
+bg_color = Color(0.8, 0, 0, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_point_chargement"]
+bg_color = Color(0.25, 0.27, 0.33, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="EcranChargement" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Fond" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 1)
+
+[node name="ZoneRotation" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -140.0
+offset_right = 80.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureIcone" type="TextureRect" parent="ZoneRotation"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 5
+stretch_mode = 5
+
+[node name="PlaceholderIcone" type="Control" parent="ZoneRotation"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CercleFond" type="Panel" parent="ZoneRotation/PlaceholderIcone"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cercle_chargement")
+
+[node name="Marqueur" type="Panel" parent="ZoneRotation/PlaceholderIcone"]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 4.0
+offset_right = 92.0
+offset_bottom = 28.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_marqueur_chargement")
+
+[node name="ZoneTexte" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = 40.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LigneChargement" type="HBoxContainer" parent="ZoneTexte"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 10
+
+[node name="LabelChargement" type="Label" parent="ZoneTexte/LigneChargement"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.25, 0.27, 0.33, 1)
+theme_override_font_sizes/font_size = 28
+text = "Chargement"
+
+[node name="ZonePoints" type="Control" parent="ZoneTexte/LigneChargement"]
+custom_minimum_size = Vector2(80, 30)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Point0" type="Panel" parent="ZoneTexte/LigneChargement/ZonePoints"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 0.0
+offset_top = 10.0
+offset_right = 16.0
+offset_bottom = 26.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_point_chargement")
+
+[node name="Point1" type="Panel" parent="ZoneTexte/LigneChargement/ZonePoints"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 32.0
+offset_top = 10.0
+offset_right = 48.0
+offset_bottom = 26.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_point_chargement")
+
+[node name="Point2" type="Panel" parent="ZoneTexte/LigneChargement/ZonePoints"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 64.0
+offset_top = 10.0
+offset_right = 80.0
+offset_bottom = 26.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_point_chargement")
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true

@@ -4,3 +4,7 @@ extends Node
 
 var matiere_courante_id: String = ""
 var niveau_courant_id: String = ""
+
+## Scene a charger apres l'ecran de chargement (EcranChargement.tscn),
+## fixee juste avant d'y entrer (voir menu_principal.gd).
+var scene_suivante: String = ""

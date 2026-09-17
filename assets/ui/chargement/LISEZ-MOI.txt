@@ -1,0 +1,21 @@
+Image de l'écran de chargement (celle qui tourne sur elle-même)
+==================================================================
+
+Dépose ta propre image ici, avec exactement ce nom de fichier. Le jeu
+la charge automatiquement — aucune modification de code nécessaire.
+Tant qu'elle n'est pas présente, un rond placeholder générique (avec un
+petit repère décalé du centre, pour bien voir la rotation) s'affiche à
+sa place.
+
+   Nom de fichier : icone_chargement.png
+   Format         : PNG avec fond transparent (recommandé)
+   Dimensions     : 200 x 200 px (carré)
+   Notes          : cette image tourne en continu sur elle-même (une
+                     rotation complète toutes les 2 secondes) pendant
+                     tout l'écran de chargement. Un symbole simple et
+                     bien lisible (pas trop de détails fins) fonctionne
+                     mieux une fois en rotation. Le point de rotation
+                     est le centre exact de l'image.
+
+Dépose le fichier dans ce dossier (assets/ui/chargement/) et relance le
+jeu.

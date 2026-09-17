@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://bqf0e0000menu01"]
+[gd_scene load_steps=12 format=3 uid="uid://bqf0e0000menu01"]
 
 [ext_resource type="Script" path="res://scripts/menu_principal.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/components/bouton_anime.gd" id="2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cadre_logo"]
 bg_color = Color(0.1, 0.1, 0.14, 0.55)
@@ -27,7 +28,7 @@ border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.23, 0.51, 0.96, 1)
+border_color = Color(0.8, 0, 0, 1)
 corner_radius_top_left = 37
 corner_radius_top_right = 37
 corner_radius_bottom_right = 37
@@ -39,7 +40,7 @@ border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.23, 0.51, 0.96, 1)
+border_color = Color(0.8, 0, 0, 1)
 corner_radius_top_left = 37
 corner_radius_top_right = 37
 corner_radius_bottom_right = 37
@@ -51,7 +52,7 @@ border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.16, 0.4, 0.85, 1)
+border_color = Color(0.8, 0, 0, 1)
 corner_radius_top_left = 37
 corner_radius_top_right = 37
 corner_radius_bottom_right = 37
@@ -63,7 +64,7 @@ border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.45, 0.47, 0.52, 1)
+border_color = Color(0.8, 0, 0, 1)
 corner_radius_top_left = 37
 corner_radius_top_right = 37
 corner_radius_bottom_right = 37
@@ -75,7 +76,7 @@ border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.45, 0.47, 0.52, 1)
+border_color = Color(0.8, 0, 0, 1)
 corner_radius_top_left = 37
 corner_radius_top_right = 37
 corner_radius_bottom_right = 37
@@ -87,7 +88,7 @@ border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.3, 0.32, 0.36, 1)
+border_color = Color(0.8, 0, 0, 1)
 corner_radius_top_left = 37
 corner_radius_top_right = 37
 corner_radius_bottom_right = 37
@@ -234,6 +235,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_primaire_pressed")
 theme_override_styles/focus = SubResource("StyleBoxFlat_primaire_normal")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_disabled")
 text = "Nouvelle partie"
+script = ExtResource("2")
 
 [node name="BoutonContinuer" type="Button" parent="ZoneBoutons/MargeBoutons/VBoxBoutons"]
 unique_name_in_owner = true
@@ -249,6 +251,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_primaire_pressed")
 theme_override_styles/focus = SubResource("StyleBoxFlat_primaire_normal")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_disabled")
 text = "Continuer"
+script = ExtResource("2")
 
 [node name="BoutonQuitter" type="Button" parent="ZoneBoutons/MargeBoutons/VBoxBoutons"]
 unique_name_in_owner = true
@@ -262,3 +265,16 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_secondaire_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_secondaire_pressed")
 theme_override_styles/focus = SubResource("StyleBoxFlat_secondaire_normal")
 text = "Quitter"
+script = ExtResource("2")
+
+[node name="FadeBlanc" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+

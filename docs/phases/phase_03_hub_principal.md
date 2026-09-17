@@ -203,3 +203,85 @@ tous les textes sont originaux.
 - Verification visuelle reelle : jeu lance en fenetre, capture d'ecran
   native, **puis clic souris simule sur "Nouvelle partie"** (pas
   seulement clavier) confirmant la transition vers `DialogueIntro.tscn`.
+
+## Raffinements de l'ecran-titre (bordure, animations, son, ecran de chargement)
+
+Quatre demandes supplementaires de Mike sur le menu principal :
+
+1. **Bordure des boutons** : couleur exacte `#CC0000` (`Color(0.8, 0, 0,
+   1)`), appliquee aux 3 etats (`normal`/`hover`/`pressed`) des 3
+   boutons dans `scenes/MenuPrincipal.tscn`.
+2. **Animation survol/clic** : `scripts/components/bouton_anime.gd`
+   (`class_name BoutonAnime`, `extends Button`) — reutilisable sur
+   n'importe quel bouton. Leger agrandissement (`scale` 1.0 -> 1.05) au
+   survol, retrecissement (1.05 -> 0.94) a l'enfoncement, via
+   `create_tween()` avec `TRANS_SINE`/`EASE_OUT` (pas de changement
+   instantane). `pivot_offset` recalcule sur `resized` pour que la mise
+   a l'echelle reste centree.
+3. **Son de clic** : `scripts/autoload/audio_manager.gd` (autoload
+   `AudioManager`), cherche `assets/audio/ui/clic_bouton.ogg` puis
+   `.wav`. **Silencieux si absent** (choix delibere plutot qu'un son
+   placeholder genere : plus simple, evite un bruit agacant en
+   attendant le vrai son). `BoutonAnime` appelle
+   `AudioManager.jouer_clic()` sur le signal `pressed`. Instructions
+   dans `assets/audio/ui/LISEZ-MOI.txt`.
+4. **Ecran de chargement factice** (`scenes/EcranChargement.tscn` +
+   `scripts/ecran_chargement.gd`) entre le menu et
+   `DialogueIntro.tscn`/`Hub.tscn` :
+   - `menu_principal.gd` : au clic sur "Nouvelle partie"/"Continuer",
+     desactive les 3 boutons, fixe `GameState.scene_suivante`, fait un
+     fondu **au blanc** (`ColorRect` "FadeBlanc", tween sur `color:a`,
+     0.45s) puis change de scene vers `EcranChargement.tscn`.
+   - `EcranChargement` : `Timer` de 5.0s (`DUREE_CHARGEMENT`, meme si le
+     "vrai" chargement est instantane), a la fin duquel il change de
+     scene vers `GameState.scene_suivante`.
+   - Icone centrale tournante : remplacable via
+     `assets/ui/chargement/icone_chargement.png` (`ChargementAssetUtil`,
+     meme principe que les autres assets remplacables), sinon
+     placeholder (cercle gris + un petit repere colore decale du centre
+     pour que la rotation soit visible). Rotation continue via
+     `_process()`, 1 tour complet toutes les 2 secondes.
+   - Texte "Chargement" + 3 points qui rebondissent en vague (decalage
+     de phase de 100ms entre chaque point), egalement via `_process()`.
+   - **Formules d'animation extraites dans
+     `scripts/util/anim_math_util.gd`** (`class_name AnimMathUtil`,
+     fonctions statiques pures `rotation_apres(temps)` et
+     `decalage_point_chargement(temps, index)`) specifiquement pour
+     pouvoir les tester sans instancier de scene ni faire tourner de
+     moteur de rendu — reflexe a reprendre pour toute future logique
+     d'animation non triviale.
+
+### Nouveaux dossiers d'assets remplacables
+
+- `assets/audio/ui/` (voir `LISEZ-MOI.txt`) : `clic_bouton.ogg` (ou
+  `.wav`).
+- `assets/ui/chargement/` (voir `LISEZ-MOI.txt`) : `icone_chargement.png`,
+  200x200, transparent.
+
+### Limite (re)documentee des smoke tests headless
+
+`scripts/tests/smoke_test_raffinements_menu.gd` confirme que
+`bouton.get_script()` **ne peut pas** etre verifie sous `--script`
+quand ce script reference un autoload (ici `BoutonAnime` ->
+`AudioManager`) : le script echoue a compiler dans ce mode special
+(meme piege documente pour `DataManager`/`SaveManager`/`GameState`
+depuis la Phase 2), et Godot n'attache alors *aucun* script au noeud
+instancie plutot que d'attacher un script casse — donc
+`get_script() == MonScript` echoue meme quand tout fonctionne
+correctement en jeu reel. Verifie a la place par le boot headless reel
+(`godot --headless --path <projet>`, sans `--script`), qui charge les
+autoloads normalement et est reste a 0 erreur apres cet ajout.
+
+### Verification effectuee (raffinements)
+
+- `godot --headless --path <projet> --import` : 0 erreur.
+- Boot headless reel (autoloads charges, MenuPrincipal + BoutonAnime +
+  AudioManager compilent) : 0 erreur stderr.
+- `scripts/tests/smoke_test_raffinements_menu.gd` : SUCCES (formules de
+  rotation/rebond, bordure #CC0000, silence d'`AudioManager`, structure
+  de `EcranChargement.tscn`).
+- Verification visuelle reelle complete : jeu lance en fenetre, clic
+  souris simule sur "Nouvelle partie", captures a t+1.2s et t+2.0s
+  confirmant la rotation du repere (visiblement deplace d'une capture a
+  l'autre) et l'affichage du texte/points, puis capture a t+~7s (apres
+  les 5s de `Timer`) confirmant l'arrivee sur `DialogueIntro.tscn`.
