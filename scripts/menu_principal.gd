@@ -11,10 +11,7 @@ func _ready() -> void:
 	bouton_quitter.pressed.connect(_on_quitter)
 
 func _on_nouvelle_partie() -> void:
-	# Phase 2 remplacera ceci par l'intro narrative + choix du starter.
-	# Pour l'instant : cree une sauvegarde vierge (aucun starter choisi) et va vers l'ecran de debug.
-	SaveManager.new_game("")
-	get_tree().change_scene_to_file("res://scenes/DebugEtatSauvegarde.tscn")
+	get_tree().change_scene_to_file("res://scenes/DialogueIntro.tscn")
 
 func _on_continuer() -> void:
 	SaveManager.load_game()

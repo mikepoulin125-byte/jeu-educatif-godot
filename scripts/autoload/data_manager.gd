@@ -55,6 +55,18 @@ func _read_json(path: String):
 		push_warning("DataManager: JSON invalide: %s" % path)
 	return result
 
+## Retourne les lignes de l'intro narrative (data/intro.json).
+func get_lignes_intro() -> Array:
+	return _load_json_array(DATA_DIR + "intro.json", "lignes")
+
+## Retourne les creatures marquees "starter": true dans creatures.json.
+func get_creatures_starters() -> Array:
+	var ids := []
+	for id in creatures.keys():
+		if bool(creatures[id].get("starter", false)):
+			ids.append(id)
+	return ids
+
 ## Charge un fichier de niveau, ex. "matiere_01_niveau_01".
 func load_niveau(niveau_id: String) -> Dictionary:
 	var path := NIVEAUX_DIR + niveau_id + ".json"
