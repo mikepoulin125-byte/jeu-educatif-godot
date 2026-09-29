@@ -1,16 +1,16 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
+	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime). Phase 8 : soustraction uniquement, terme manquant en DEBUT d'equation (? - b = c), nombres plus grands qu'aux tableaux 3-4.",
 	"nom": "Grotte du Chiffre Cache 7",
 	"questions": [
-		{ "texte": "19 + ? = 27", "reponse": 8 },
-		{ "texte": "35 - ? = 25", "reponse": 10 },
-		{ "texte": "25 + ? = 43", "reponse": 18 },
-		{ "texte": "43 - ? = 29", "reponse": 14 },
-		{ "texte": "31 + ? = 59", "reponse": 28 },
-		{ "texte": "16 - ? = 13", "reponse": 3 },
-		{ "texte": "37 + ? = 40", "reponse": 3 },
-		{ "texte": "24 - ? = 2", "reponse": 22 },
-		{ "texte": "8 + ? = 21", "reponse": 13 },
-		{ "texte": "32 - ? = 6", "reponse": 26 }
+		{ "texte": "? - 18 = 27", "reponse": 45 },
+		{ "texte": "? - 24 = 29", "reponse": 53 },
+		{ "texte": "? - 15 = 23", "reponse": 38 },
+		{ "texte": "? - 22 = 35", "reponse": 57 },
+		{ "texte": "? - 19 = 22", "reponse": 41 },
+		{ "texte": "? - 17 = 32", "reponse": 49 },
+		{ "texte": "? - 11 = 25", "reponse": 36 },
+		{ "texte": "? - 16 = 28", "reponse": 44 },
+		{ "texte": "? - 23 = 16", "reponse": 39 },
+		{ "texte": "? - 25 = 33", "reponse": 58 }
 	]
 }

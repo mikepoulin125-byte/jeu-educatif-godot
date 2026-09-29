@@ -1,16 +1,16 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
+	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime). Phase 8 : soustraction uniquement, terme manquant au MILIEU de l'equation (a - ? = c), memes triplets que le tableau 7.",
 	"nom": "Grotte du Chiffre Cache 8",
 	"questions": [
-		{ "texte": "21 + ? = 30", "reponse": 9 },
-		{ "texte": "38 - ? = 27", "reponse": 11 },
-		{ "texte": "27 + ? = 46", "reponse": 19 },
-		{ "texte": "46 - ? = 31", "reponse": 15 },
-		{ "texte": "33 + ? = 62", "reponse": 29 },
-		{ "texte": "14 - ? = 8", "reponse": 6 },
-		{ "texte": "39 + ? = 78", "reponse": 39 },
-		{ "texte": "22 - ? = 20", "reponse": 2 },
-		{ "texte": "5 + ? = 14", "reponse": 9 },
-		{ "texte": "30 - ? = 3", "reponse": 27 }
+		{ "texte": "45 - ? = 27", "reponse": 18 },
+		{ "texte": "53 - ? = 29", "reponse": 24 },
+		{ "texte": "38 - ? = 23", "reponse": 15 },
+		{ "texte": "57 - ? = 35", "reponse": 22 },
+		{ "texte": "41 - ? = 22", "reponse": 19 },
+		{ "texte": "49 - ? = 32", "reponse": 17 },
+		{ "texte": "36 - ? = 25", "reponse": 11 },
+		{ "texte": "44 - ? = 28", "reponse": 16 },
+		{ "texte": "39 - ? = 16", "reponse": 23 },
+		{ "texte": "58 - ? = 33", "reponse": 25 }
 	]
 }
