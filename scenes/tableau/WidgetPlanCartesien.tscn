@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bqf0e0000wpc00001"]
+[gd_scene load_steps=4 format=3 uid="uid://bqf0e0000wpc00001"]
 
 [ext_resource type="Script" path="res://scripts/tableau/widget_plan_cartesien.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/components/plan_cartesien_view.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/components/texture_rect_anime.gd" id="3"]
 
 [node name="WidgetPlanCartesien" type="Control"]
 layout_mode = 3
@@ -44,12 +45,46 @@ size_flags_horizontal = 4
 mouse_filter = 2
 script = ExtResource("2")
 
-[node name="HBoxSaisie" type="HBoxContainer" parent="VBox"]
+[node name="ZoneCreature" type="Control" parent="VBox/Vue"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(48, 48)
+offset_right = 48.0
+offset_bottom = 48.0
+mouse_filter = 2
+
+[node name="TextureSprite" type="TextureRect" parent="VBox/Vue/ZoneCreature"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 5
+stretch_mode = 5
+script = ExtResource("3")
+
+[node name="PlaceholderSprite" type="ColorRect" parent="VBox/Vue/ZoneCreature"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="ZoneSaisieAxe" type="HBoxContainer" parent="VBox"]
+unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 theme_override_constants/separation = 16
 
-[node name="ChampReponse" type="LineEdit" parent="VBox/HBoxSaisie"]
+[node name="ChampReponse" type="LineEdit" parent="VBox/ZoneSaisieAxe"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 56)
 layout_mode = 2
@@ -57,9 +92,49 @@ theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 max_length = 3
 
-[node name="BoutonValider" type="Button" parent="VBox/HBoxSaisie"]
+[node name="BoutonValider" type="Button" parent="VBox/ZoneSaisieAxe"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Valider"
+
+[node name="ZoneSaisieCoords" type="HBoxContainer" parent="VBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="LabelX" type="Label" parent="VBox/ZoneSaisieCoords"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "X"
+
+[node name="ChampX" type="LineEdit" parent="VBox/ZoneSaisieCoords"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+max_length = 3
+
+[node name="LabelY" type="Label" parent="VBox/ZoneSaisieCoords"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Y"
+
+[node name="ChampY" type="LineEdit" parent="VBox/ZoneSaisieCoords"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+max_length = 3
+
+[node name="BoutonValiderCoords" type="Button" parent="VBox/ZoneSaisieCoords"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 56)
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "Valider"

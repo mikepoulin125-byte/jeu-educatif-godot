@@ -52,21 +52,25 @@ func _initialize() -> void:
 	# 1bis. plan_cartesien : en cours de refonte tableau par tableau (voir
 	# CLAUDE.md badge 4), donc chaque niveau peut avoir un schema
 	# different tant que la refonte n'est pas terminee. Niveaux refaits
-	# (NIVEAUX_PC_REFAITS) : nouveau schema (compter les graduations).
-	# Les autres : ancien schema (x/y/taille_grille, plus utilise par le
+	# (NIVEAUX_PC_CHAMPS) : schema selon leur type de question. Les
+	# autres : ancien schema (x/y/taille_grille, plus utilise par le
 	# widget actuel, en attente de refonte).
-	var niveaux_pc_refaits := [1, 2]
+	var niveaux_pc_champs := {
+		1: ["taille_grille", "increment", "axe_manquant", "position", "reponse"],
+		2: ["taille_grille", "increment", "axe_manquant", "position", "reponse"],
+		3: ["type", "id_creature", "x", "y", "taille_grille"],
+	}
 	for n in range(1, 11):
 		var niveau_id := "niveau_%02d" % n
 		var data := DataManager.load_niveau("plan_cartesien_%s" % niveau_id)
 		var questions: Array = data.get("questions", [])
 		if not _verifier(questions.size() == 10, "plan_cartesien_%s : 10 questions attendues, obtenu %d" % [niveau_id, questions.size()]):
 			return
-		var champs := ["taille_grille", "increment", "axe_manquant", "position", "reponse"] if n in niveaux_pc_refaits else ["x", "y", "taille_grille"]
+		var champs: Array = niveaux_pc_champs.get(n, ["x", "y", "taille_grille"])
 		for champ in champs:
 			if not _verifier(questions[0].has(champ), "plan_cartesien_%s : champ '%s' manquant dans la 1ere question" % [niveau_id, champ]):
 				return
-	print("OK: les 10 fichiers de niveaux plan_cartesien ont le schema attendu (%d refaits, %d en attente)" % [niveaux_pc_refaits.size(), 10 - niveaux_pc_refaits.size()])
+	print("OK: les 10 fichiers de niveaux plan_cartesien ont le schema attendu (%d refaits, %d en attente)" % [niveaux_pc_champs.size(), 10 - niveaux_pc_champs.size()])
 
 	# 2. Widget pair_impair.
 	var scene_pi := preload("res://scenes/tableau/WidgetPairImpair.tscn")
@@ -146,9 +150,29 @@ func _initialize() -> void:
 	w_pc._valider()
 	if not _verifier(resultat_pc["valeur"] == false, "plan_cartesien : reponse fausse (4 au lieu de 1) devrait etre incorrecte"):
 		return
+	# 5bis. Widget plan_cartesien (tableau 3 : lire les coordonnees d'une creature placee).
+	w_pc.configurer({"type": "lire_coordonnees", "taille_grille": 5, "id_creature": 4, "x": 2, "y": 4}, {})
+	if not _verifier(vue.etiquettes_x[0] == "1" and vue.etiquettes_x[4] == "5", "plan_cartesien : lire_coordonnees devrait afficher l'axe X complet"):
+		return
+	if not _verifier(vue.etiquettes_y[0] == "1" and vue.etiquettes_y[4] == "5", "plan_cartesien : lire_coordonnees devrait afficher l'axe Y complet"):
+		return
+	var zone_creature: Control = w_pc.get_node("%ZoneCreature")
+	if not _verifier(zone_creature.visible, "plan_cartesien : lire_coordonnees devrait afficher la creature"):
+		return
+	w_pc.get_node("%ChampX").text = "2"
+	w_pc.get_node("%ChampY").text = "4"
+	w_pc._valider_coordonnees()
+	if not _verifier(resultat_pc["valeur"] == true, "plan_cartesien : coordonnees exactes (2,4) devraient etre correctes"):
+		return
+	w_pc.configurer({"type": "lire_coordonnees", "taille_grille": 5, "id_creature": 4, "x": 2, "y": 4}, {})
+	w_pc.get_node("%ChampX").text = "2"
+	w_pc.get_node("%ChampY").text = "1"
+	w_pc._valider_coordonnees()
+	if not _verifier(resultat_pc["valeur"] == false, "plan_cartesien : coordonnee Y fausse (1 au lieu de 4) devrait etre incorrecte"):
+		return
 	root.remove_child(w_pc)
 	w_pc.free()
-	print("OK: widget plan_cartesien (graduation manquante ecrite, bonne et mauvaise reponse)")
+	print("OK: widget plan_cartesien (graduation manquante ecrite + coordonnees d'une creature lues, bonnes et mauvaises reponses)")
 
 	# 6. Widget possible_impossible.
 	var scene_poss := preload("res://scenes/tableau/WidgetPossibleImpossible.tscn")

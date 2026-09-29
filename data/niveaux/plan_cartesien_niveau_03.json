@@ -1,56 +1,76 @@
 {
-	"_commentaire": "Phase 8 - contenu regenere pour plus de variete (voir CLAUDE.md).",
+	"_commentaire": "Phase 8 - nouveau type de question 'lire_coordonnees' (voir widget_plan_cartesien.gd) : les deux axes sont maintenant complets (1 a 5), une creature (meme sprite/GIF que le roster, id 1 a 151) est placee au point (x, y) et l'enfant ecrit les deux coordonnees dans deux champs separes.",
 	"nom": "Plateau des Coordonnees 3",
 	"questions": [
 		{
+			"type": "lire_coordonnees",
 			"taille_grille": 5,
-			"x": 0,
+			"id_creature": 4,
+			"x": 2,
+			"y": 4
+		},
+		{
+			"type": "lire_coordonnees",
+			"taille_grille": 5,
+			"id_creature": 17,
+			"x": 5,
+			"y": 1
+		},
+		{
+			"type": "lire_coordonnees",
+			"taille_grille": 5,
+			"id_creature": 29,
+			"x": 1,
+			"y": 3
+		},
+		{
+			"type": "lire_coordonnees",
+			"taille_grille": 5,
+			"id_creature": 58,
+			"x": 4,
+			"y": 5
+		},
+		{
+			"type": "lire_coordonnees",
+			"taille_grille": 5,
+			"id_creature": 66,
+			"x": 3,
 			"y": 2
 		},
 		{
+			"type": "lire_coordonnees",
 			"taille_grille": 5,
-			"x": 3,
-			"y": 1
-		},
-		{
-			"taille_grille": 5,
-			"x": 2,
-			"y": 1
-		},
-		{
-			"taille_grille": 5,
+			"id_creature": 77,
 			"x": 1,
 			"y": 1
 		},
 		{
+			"type": "lire_coordonnees",
 			"taille_grille": 5,
-			"x": 3,
-			"y": 3
+			"id_creature": 89,
+			"x": 5,
+			"y": 5
 		},
 		{
+			"type": "lire_coordonnees",
 			"taille_grille": 5,
+			"id_creature": 101,
 			"x": 2,
-			"y": 3
-		},
-		{
-			"taille_grille": 5,
-			"x": 3,
 			"y": 2
 		},
 		{
+			"type": "lire_coordonnees",
 			"taille_grille": 5,
+			"id_creature": 120,
 			"x": 4,
 			"y": 3
 		},
 		{
+			"type": "lire_coordonnees",
 			"taille_grille": 5,
-			"x": 4,
-			"y": 0
-		},
-		{
-			"taille_grille": 5,
-			"x": 1,
-			"y": 3
+			"id_creature": 143,
+			"x": 3,
+			"y": 5
 		}
 	]
 }

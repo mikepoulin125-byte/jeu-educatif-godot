@@ -57,6 +57,12 @@ func _point_grille(gx: float, gy: float) -> Vector2:
 	var pas := _pas()
 	return _origine() + Vector2(gx * pas, -gy * pas)
 
+## Version publique de _point_grille() : permet a un appelant (ex. le
+## widget qui place une creature sur le plan) de positionner un noeud
+## enfant a une coordonnee (x, y) exacte, sans dupliquer le calcul.
+func point_vers_pixel(gx: float, gy: float) -> Vector2:
+	return _point_grille(gx, gy)
+
 func _draw() -> void:
 	var pas := _pas()
 	var origine := _origine()
