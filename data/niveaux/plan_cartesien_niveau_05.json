@@ -1,56 +1,166 @@
 {
-	"_commentaire": "Phase 8 - contenu regenere pour plus de variete (voir CLAUDE.md).",
+	"_commentaire": "Phase 8 - meme mecanique que le tableau 4 (widget_plan_cartesien.gd, type 'placer_point') mais avec DEUX creatures a placer sur le MEME plan (question['creatures'] a 2 entrees) : l'enfant clique une creature pour la SELECTIONNER (elle grossit legerement) puis la deplace (glisser-depose ou clic sur l'intersection), ou la glisse directement. Le bouton Confirmer ne s'active qu'une fois les DEUX creatures placees au moins une fois. Grille 6x6, coordonnees toujours entre 0 et taille_grille.",
 	"nom": "Plateau des Coordonnees 5",
 	"questions": [
 		{
+			"type": "placer_point",
 			"taille_grille": 6,
-			"x": 4,
-			"y": 4
+			"creatures": [
+				{
+					"id_creature": 3,
+					"x": 5,
+					"y": 0
+				},
+				{
+					"id_creature": 11,
+					"x": 0,
+					"y": 5
+				}
+			]
 		},
 		{
+			"type": "placer_point",
 			"taille_grille": 6,
-			"x": 4,
-			"y": 0
+			"creatures": [
+				{
+					"id_creature": 19,
+					"x": 2,
+					"y": 1
+				},
+				{
+					"id_creature": 27,
+					"x": 1,
+					"y": 1
+				}
+			]
 		},
 		{
+			"type": "placer_point",
 			"taille_grille": 6,
-			"x": 5,
-			"y": 0
+			"creatures": [
+				{
+					"id_creature": 33,
+					"x": 5,
+					"y": 0
+				},
+				{
+					"id_creature": 41,
+					"x": 5,
+					"y": 5
+				}
+			]
 		},
 		{
+			"type": "placer_point",
 			"taille_grille": 6,
-			"x": 0,
-			"y": 1
+			"creatures": [
+				{
+					"id_creature": 52,
+					"x": 4,
+					"y": 0
+				},
+				{
+					"id_creature": 68,
+					"x": 4,
+					"y": 3
+				}
+			]
 		},
 		{
+			"type": "placer_point",
 			"taille_grille": 6,
-			"x": 3,
-			"y": 0
+			"creatures": [
+				{
+					"id_creature": 84,
+					"x": 0,
+					"y": 0
+				},
+				{
+					"id_creature": 99,
+					"x": 0,
+					"y": 1
+				}
+			]
 		},
 		{
+			"type": "placer_point",
 			"taille_grille": 6,
-			"x": 2,
-			"y": 1
+			"creatures": [
+				{
+					"id_creature": 112,
+					"x": 1,
+					"y": 4
+				},
+				{
+					"id_creature": 119,
+					"x": 4,
+					"y": 0
+				}
+			]
 		},
 		{
+			"type": "placer_point",
 			"taille_grille": 6,
-			"x": 0,
-			"y": 4
+			"creatures": [
+				{
+					"id_creature": 131,
+					"x": 4,
+					"y": 1
+				},
+				{
+					"id_creature": 140,
+					"x": 5,
+					"y": 5
+				}
+			]
 		},
 		{
+			"type": "placer_point",
 			"taille_grille": 6,
-			"x": 2,
-			"y": 2
+			"creatures": [
+				{
+					"id_creature": 147,
+					"x": 5,
+					"y": 4
+				},
+				{
+					"id_creature": 5,
+					"x": 3,
+					"y": 1
+				}
+			]
 		},
 		{
+			"type": "placer_point",
 			"taille_grille": 6,
-			"x": 3,
-			"y": 2
+			"creatures": [
+				{
+					"id_creature": 44,
+					"x": 3,
+					"y": 4
+				},
+				{
+					"id_creature": 77,
+					"x": 2,
+					"y": 6
+				}
+			]
 		},
 		{
+			"type": "placer_point",
 			"taille_grille": 6,
-			"x": 0,
-			"y": 0
+			"creatures": [
+				{
+					"id_creature": 101,
+					"x": 6,
+					"y": 0
+				},
+				{
+					"id_creature": 130,
+					"x": 6,
+					"y": 6
+				}
+			]
 		}
 	]
 }

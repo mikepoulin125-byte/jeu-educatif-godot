@@ -15,12 +15,15 @@ extends Control
 ## ecran ajoutee par-dessus avale tous les clics, meme au-dessus de
 ## boutons positionnes ailleurs a l'ecran).
 
-signal creature_deposee()
+## "index" : indice de la creature deposee (voir creature_deplacable.gd),
+## pour que le widget sache laquelle deplacer quand plusieurs creatures
+## sont a placer sur le meme plan (tableau 5+).
+signal creature_deposee(index: int)
 
 var actif: bool = false
 
 func _can_drop_data(_at_position: Vector2, data) -> bool:
 	return actif and typeof(data) == TYPE_DICTIONARY and data.get("type") == "creature_plan_cartesien"
 
-func _drop_data(_at_position: Vector2, _data) -> void:
-	creature_deposee.emit()
+func _drop_data(_at_position: Vector2, data) -> void:
+	creature_deposee.emit(int(data.get("index", 0)))

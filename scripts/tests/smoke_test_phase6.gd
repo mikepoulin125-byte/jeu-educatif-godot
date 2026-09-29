@@ -59,7 +59,8 @@ func _initialize() -> void:
 		1: ["taille_grille", "increment", "axe_manquant", "position", "reponse"],
 		2: ["taille_grille", "increment", "axe_manquant", "position", "reponse"],
 		3: ["type", "id_creature", "x", "y", "taille_grille"],
-		4: ["type", "id_creature", "x", "y", "taille_grille"],
+		4: ["type", "creatures", "taille_grille"],
+		5: ["type", "creatures", "taille_grille"],
 	}
 	for n in range(1, 11):
 		var niveau_id := "niveau_%02d" % n
@@ -174,8 +175,8 @@ func _initialize() -> void:
 	w_pc._valider_coordonnees()
 	if not _verifier(resultat_pc["valeur"] == false, "plan_cartesien : coordonnee Y fausse (1 au lieu de 4) devrait etre incorrecte"):
 		return
-	# 5ter. Widget plan_cartesien (tableau 4 : deplacer la creature - clic sur intersection, glisser-depose, confirmer).
-	w_pc.configurer({"type": "placer_point", "taille_grille": 6, "id_creature": 8, "x": 4, "y": 6}, {})
+	# 5ter. Widget plan_cartesien (tableau 4 : deplacer UNE creature - clic sur intersection, glisser-depose, confirmer).
+	w_pc.configurer({"type": "placer_point", "taille_grille": 6, "creatures": [{"id_creature": 8, "x": 4, "y": 6}]}, {})
 	var zone_depart: Control = w_pc.get_node("%ZoneDepart")
 	var bouton_confirmer: Button = w_pc.get_node("%BoutonConfirmer")
 	if not _verifier(zone_depot_pc.actif, "plan_cartesien : la zone de depot devrait accepter le glisser-depose pendant 'placer_point'"):
@@ -186,6 +187,8 @@ func _initialize() -> void:
 		return
 	var nb_intersections: int = w_pc._boutons_intersections.size()
 	if not _verifier(nb_intersections == 49, "plan_cartesien : grille 6x6 devrait avoir 49 intersections (7x7), obtenu %d" % nb_intersections):
+		return
+	if not _verifier(w_pc._cibles_placement.size() == 1, "plan_cartesien : 1 creature attendue pour le tableau 4"):
 		return
 	w_pc._on_intersection_pressee(1, 2)
 	if not _verifier(not bouton_confirmer.disabled, "plan_cartesien : Confirmer devrait s'activer apres un premier placement"):
@@ -198,14 +201,50 @@ func _initialize() -> void:
 	# pilotable en headless), on verifie plutot _placer_creature_a()
 	# directement - c'est la fonction qu'il appelle une fois la
 	# coordonnee la plus proche calculee.
-	w_pc.configurer({"type": "placer_point", "taille_grille": 6, "id_creature": 8, "x": 4, "y": 6}, {})
-	w_pc._placer_creature_a(4, 6)
+	w_pc.configurer({"type": "placer_point", "taille_grille": 6, "creatures": [{"id_creature": 8, "x": 4, "y": 6}]}, {})
+	w_pc._placer_creature_a(0, 4, 6)
 	w_pc._valider_placement()
 	if not _verifier(resultat_pc["valeur"] == true, "plan_cartesien : placement exact (4,6) devrait etre correct"):
 		return
+
+	# 5quater. Widget plan_cartesien (tableau 5 : DEUX creatures a placer sur le meme plan).
+	w_pc.configurer({"type": "placer_point", "taille_grille": 6, "creatures": [
+		{"id_creature": 8, "x": 4, "y": 6},
+		{"id_creature": 21, "x": 1, "y": 2},
+	]}, {})
+	if not _verifier(w_pc._cibles_placement.size() == 2, "plan_cartesien : 2 creatures attendues pour le tableau 5"):
+		return
+	if not _verifier(bouton_confirmer.disabled, "plan_cartesien : Confirmer devrait etre desactive avant tout placement (2 creatures)"):
+		return
+	# Ne placer que la 1ere creature (index 0) : Confirmer doit rester desactive.
+	w_pc._placer_creature_a(0, 4, 6)
+	if not _verifier(bouton_confirmer.disabled, "plan_cartesien : Confirmer devrait rester desactive tant que la 2e creature n'est pas placee"):
+		return
+	if not _verifier(w_pc._index_selectionne == 0, "plan_cartesien : placer la creature 0 devrait la selectionner"):
+		return
+	# Selectionner la 2e creature (simule un clic dessus) puis la placer via un clic d'intersection.
+	w_pc._on_creature_selectionnee(1)
+	if not _verifier(w_pc._index_selectionne == 1, "plan_cartesien : selectionner la creature 1 devrait mettre a jour l'indice selectionne"):
+		return
+	w_pc._on_intersection_pressee(1, 2)
+	if not _verifier(not bouton_confirmer.disabled, "plan_cartesien : Confirmer devrait s'activer une fois les 2 creatures placees"):
+		return
+	w_pc._valider_placement()
+	if not _verifier(resultat_pc["valeur"] == true, "plan_cartesien : les 2 creatures aux bonnes coordonnees (4,6) et (1,2) devraient etre correctes"):
+		return
+	w_pc.configurer({"type": "placer_point", "taille_grille": 6, "creatures": [
+		{"id_creature": 8, "x": 4, "y": 6},
+		{"id_creature": 21, "x": 1, "y": 2},
+	]}, {})
+	w_pc._placer_creature_a(0, 4, 6)
+	w_pc._placer_creature_a(1, 0, 0)
+	w_pc._valider_placement()
+	if not _verifier(resultat_pc["valeur"] == false, "plan_cartesien : une seule des 2 creatures au bon endroit devrait etre incorrect"):
+		return
+
 	root.remove_child(w_pc)
 	w_pc.free()
-	print("OK: widget plan_cartesien (graduation manquante + coordonnees lues + creature placee/confirmee, bonnes et mauvaises reponses)")
+	print("OK: widget plan_cartesien (graduation manquante + coordonnees lues + 1 puis 2 creatures placees/confirmees, bonnes et mauvaises reponses)")
 
 	# 6. Widget possible_impossible.
 	var scene_poss := preload("res://scenes/tableau/WidgetPossibleImpossible.tscn")
