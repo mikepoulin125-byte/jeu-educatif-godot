@@ -1,16 +1,16 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
+	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime). Phase 8 : terme manquant en DEBUT d'equation (? + b = c / ? - b = c).",
 	"nom": "Grotte du Chiffre Cache 1",
 	"questions": [
-		{ "texte": "7 + ? = 9", "reponse": 2 },
-		{ "texte": "12 - ? = 8", "reponse": 4 },
-		{ "texte": "8 + ? = 10", "reponse": 2 },
-		{ "texte": "10 - ? = 2", "reponse": 8 },
-		{ "texte": "9 + ? = 11", "reponse": 2 },
-		{ "texte": "13 - ? = 1", "reponse": 12 },
-		{ "texte": "5 + ? = 7", "reponse": 2 },
-		{ "texte": "11 - ? = 5", "reponse": 6 },
-		{ "texte": "6 + ? = 8", "reponse": 2 },
-		{ "texte": "14 - ? = 7", "reponse": 7 }
+		{ "texte": "? + 2 = 9", "reponse": 7 },
+		{ "texte": "? - 4 = 8", "reponse": 12 },
+		{ "texte": "? + 2 = 10", "reponse": 8 },
+		{ "texte": "? - 8 = 2", "reponse": 10 },
+		{ "texte": "? + 2 = 11", "reponse": 9 },
+		{ "texte": "? - 12 = 1", "reponse": 13 },
+		{ "texte": "? + 2 = 7", "reponse": 5 },
+		{ "texte": "? - 6 = 5", "reponse": 11 },
+		{ "texte": "? + 2 = 8", "reponse": 6 },
+		{ "texte": "? - 7 = 7", "reponse": 14 }
 	]
 }
