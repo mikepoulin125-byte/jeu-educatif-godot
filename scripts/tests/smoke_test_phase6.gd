@@ -31,7 +31,6 @@ func _initialize() -> void:
 		"approximation": ["texte", "min", "max"],
 		"terme_manquant": ["texte", "reponse"],
 		"possible_impossible": ["texte", "reponse"],
-		"tableau_pictogramme": ["texte", "reponse"],
 		"fractions": ["texte", "choix", "reponse_index"],
 		"croissant_decroissant": ["suite", "reponse"],
 	}
@@ -45,9 +44,29 @@ func _initialize() -> void:
 			for champ in schemas_attendus[matiere_id]:
 				if not _verifier(questions[0].has(champ), "%s_%s : champ '%s' manquant dans la 1ere question" % [matiere_id, niveau_id, champ]):
 					return
-			if matiere_id == "tableau_pictogramme" and not _verifier(data.has("graphique") and data["graphique"].get("barres", []).size() > 0, "%s_%s : graphique manquant ou vide" % [matiere_id, niveau_id]):
-				return
-	print("OK: les 79 fichiers de niveaux (hors plan_cartesien, verifie separement) ont le schema attendu pour leur matiere")
+	print("OK: les 73 fichiers de niveaux (hors plan_cartesien/tableau_pictogramme, verifies separement) ont le schema attendu pour leur matiere")
+
+	# 1ter. tableau_pictogramme : en cours de refonte tableau par tableau
+	# (voir CLAUDE.md badge 6) - chaque barre/question peut identifier une
+	# categorie par un sprite de creature (id_creature) plutot qu'un texte
+	# (categorie/texte). Niveaux refaits (TP_NIVEAUX_REFAITS) : nouveau
+	# schema. Les autres : ancien schema texte, inchange.
+	var tp_niveaux_refaits := [1]
+	for n in range(1, 11):
+		var niveau_id := "niveau_%02d" % n
+		var data := DataManager.load_niveau("tableau_pictogramme_%s" % niveau_id)
+		var questions: Array = data.get("questions", [])
+		if not _verifier(questions.size() == 10, "tableau_pictogramme_%s : 10 questions attendues, obtenu %d" % [niveau_id, questions.size()]):
+			return
+		if not _verifier(data.has("graphique") and data["graphique"].get("barres", []).size() > 0, "tableau_pictogramme_%s : graphique manquant ou vide" % niveau_id):
+			return
+		var champ_question: String = "id_creature" if n in tp_niveaux_refaits else "texte"
+		if not _verifier(questions[0].has(champ_question) and questions[0].has("reponse"), "tableau_pictogramme_%s : champ '%s'/'reponse' manquant dans la 1ere question" % [niveau_id, champ_question]):
+			return
+		var champ_barre: String = "id_creature" if n in tp_niveaux_refaits else "categorie"
+		if not _verifier(data["graphique"]["barres"][0].has(champ_barre), "tableau_pictogramme_%s : champ '%s' manquant dans la 1ere barre" % [niveau_id, champ_barre]):
+			return
+	print("OK: les 10 fichiers de niveaux tableau_pictogramme ont le schema attendu (%d refaits, %d en attente)" % [tp_niveaux_refaits.size(), 10 - tp_niveaux_refaits.size()])
 
 	# 1bis. plan_cartesien : en cours de refonte tableau par tableau (voir
 	# CLAUDE.md badge 4), donc chaque niveau peut avoir un schema
@@ -275,9 +294,35 @@ func _initialize() -> void:
 	w_tp._valider()
 	if not _verifier(resultat_tp["valeur"] == true, "tableau_pictogramme : reponse exacte devrait etre correcte"):
 		return
+
+	# 7bis. tableau_pictogramme (tableau 1 : barres/questions identifiees par sprite de creature).
+	var w_tp2 = scene_tp.instantiate()
+	root.add_child(w_tp2)
+	var resultat_tp2 = {"valeur": null}
+	w_tp2.reponse_donnee.connect(func(c): resultat_tp2["valeur"] = c)
+	var graphique_creatures := {"titre": "Test", "barres": [{"id_creature": 6, "valeur": 8}, {"id_creature": 55, "valeur": 4}]}
+	w_tp2.configurer({"id_creature": 6, "reponse": 8}, {"graphique": graphique_creatures})
+	var nb_barres2: int = w_tp2.get_node("%ZoneBarres").get_child_count()
+	if not _verifier(nb_barres2 == 2, "tableau_pictogramme : 2 barres (creatures) attendues, obtenu %d" % nb_barres2):
+		return
+	var rtl: RichTextLabel = w_tp2.get_node("%LabelTexte")
+	if not _verifier(rtl.get_parsed_text().length() > 0, "tableau_pictogramme : la question devrait afficher un texte non vide autour du sprite"):
+		return
+	w_tp2.get_node("%ChampReponse").text = "8"
+	w_tp2._valider()
+	if not _verifier(resultat_tp2["valeur"] == true, "tableau_pictogramme : reponse exacte (8, creature 6) devrait etre correcte"):
+		return
+	w_tp2.configurer({"id_creature": 55, "reponse": 4}, {"graphique": graphique_creatures})
+	w_tp2.get_node("%ChampReponse").text = "8"
+	w_tp2._valider()
+	if not _verifier(resultat_tp2["valeur"] == false, "tableau_pictogramme : reponse fausse (8 au lieu de 4, creature 55) devrait etre incorrecte"):
+		return
+	root.remove_child(w_tp2)
+	w_tp2.free()
+
 	root.remove_child(w_tp)
 	w_tp.free()
-	print("OK: widget tableau_pictogramme (graphique construit + reponse correcte)")
+	print("OK: widget tableau_pictogramme (graphique construit + questions texte et sprite de creature, bonnes et mauvaises reponses)")
 
 	# 8. Widget fractions.
 	var scene_fr := preload("res://scenes/tableau/WidgetFractions.tscn")

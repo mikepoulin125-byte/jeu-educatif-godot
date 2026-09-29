@@ -1,63 +1,67 @@
 {
-	"_commentaire": "Phase 8 - contenu regenere pour plus de variete (voir CLAUDE.md).",
+	"_commentaire": "Phase 8 - chaque barre identifiee par un sprite de creature (id_creature) plutot qu'un nom de categorie en texte (vrai 'pictogramme') - voir widget_tableau_pictogramme.gd. Les questions demandent 'Combien de [sprite] y a-t-il ?' (id_creature aussi cote question, sprite affiche EN LIGNE dans la phrase), reponse = la hauteur de la barre correspondante. Repond via un champ numerique (meme pattern que terme_manquant).",
 	"graphique": {
+		"titre": "Nombre d'eleves inscrits aux activites parascolaires",
 		"barres": [
 			{
-				"categorie": "Pommes",
-				"valeur": 15
+				"id_creature": 6,
+				"valeur": 8
 			},
 			{
-				"categorie": "Bananes",
-				"valeur": 12
+				"id_creature": 55,
+				"valeur": 4
 			},
 			{
-				"categorie": "Oranges",
-				"valeur": 14
+				"id_creature": 99,
+				"valeur": 6
+			},
+			{
+				"id_creature": 140,
+				"valeur": 2
 			}
-		],
-		"titre": "Fruits du panier"
+		]
 	},
 	"nom": "Rivage des Pictogrammes 1",
 	"questions": [
 		{
-			"reponse": 15,
-			"texte": "Combien y a-t-il de Pommes ?"
+			"id_creature": 6,
+			"reponse": 8
 		},
 		{
-			"reponse": 12,
-			"texte": "Combien y a-t-il de Bananes ?"
+			"id_creature": 55,
+			"reponse": 4
 		},
 		{
-			"reponse": 27,
-			"texte": "Combien de Pommes et de Bananes ensemble ?"
+			"id_creature": 99,
+			"reponse": 6
 		},
 		{
-			"reponse": 14,
-			"texte": "Combien y a-t-il de Oranges ?"
+			"id_creature": 140,
+			"reponse": 2
 		},
 		{
-			"reponse": 29,
-			"texte": "Combien de Oranges et de Pommes ensemble ?"
+			"id_creature": 6,
+			"reponse": 8
 		},
 		{
-			"reponse": 2,
-			"texte": "Combien de Oranges de plus que de Bananes ?"
+			"id_creature": 99,
+			"reponse": 6
 		},
 		{
-			"reponse": 1,
-			"texte": "Combien de Pommes de plus que de Oranges ?"
+			"id_creature": 55,
+			"reponse": 4
 		},
 		{
-			"reponse": 3,
-			"texte": "Combien de Pommes de plus que de Bananes ?"
+			"id_creature": 140,
+			"reponse": 2
 		},
 		{
-			"reponse": 12,
-			"texte": "Combien y a-t-il de Bananes ?"
+			"id_creature": 99,
+			"reponse": 6
 		},
 		{
-			"reponse": 26,
-			"texte": "Combien de Oranges et de Bananes ensemble ?"
+			"id_creature": 6,
+			"reponse": 8
 		}
 	]
 }

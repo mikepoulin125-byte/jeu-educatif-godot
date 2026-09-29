@@ -44,12 +44,13 @@ layout_mode = 2
 alignment = 1
 theme_override_constants/separation = 20
 
-[node name="LabelTexte" type="Label" parent="VBox"]
+[node name="LabelTexte" type="RichTextLabel" parent="VBox"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
-horizontal_alignment = 1
-autowrap_mode = 3
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = false
+fit_content = true
+scroll_active = false
 text = "..."
 
 [node name="HBoxSaisie" type="HBoxContainer" parent="VBox"]
