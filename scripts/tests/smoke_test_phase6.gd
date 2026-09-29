@@ -134,6 +134,9 @@ func _initialize() -> void:
 	w_pc.reponse_donnee.connect(func(c): resultat_pc["valeur"] = c)
 	w_pc.configurer({"taille_grille": 5, "increment": 1, "axe_manquant": "x", "position": 2, "reponse": 3}, {})
 	var vue: PlanCartesienView = w_pc.get_node("%Vue")
+	var zone_depot_pc: ZoneDepotPlanCartesien = w_pc.get_node("%ZonePlacement")
+	if not _verifier(not zone_depot_pc.actif, "plan_cartesien : la zone de depot ne devrait pas accepter de glisser-depose hors du tableau 'placer_point'"):
+		return
 	if not _verifier(vue.indice_x_marque == 2, "plan_cartesien : la graduation X 2 (0-based) devrait etre marquee"):
 		return
 	if not _verifier(vue.etiquettes_y[0] == "1" and vue.etiquettes_y[4] == "5", "plan_cartesien : l'axe Y devrait etre complet (1 a 5)"):
@@ -175,6 +178,8 @@ func _initialize() -> void:
 	w_pc.configurer({"type": "placer_point", "taille_grille": 6, "id_creature": 8, "x": 4, "y": 6}, {})
 	var zone_depart: Control = w_pc.get_node("%ZoneDepart")
 	var bouton_confirmer: Button = w_pc.get_node("%BoutonConfirmer")
+	if not _verifier(zone_depot_pc.actif, "plan_cartesien : la zone de depot devrait accepter le glisser-depose pendant 'placer_point'"):
+		return
 	if not _verifier(zone_depart.visible, "plan_cartesien : placer_point devrait afficher la zone de depart"):
 		return
 	if not _verifier(bouton_confirmer.disabled, "plan_cartesien : Confirmer devrait etre desactive avant tout placement"):
@@ -188,11 +193,11 @@ func _initialize() -> void:
 	w_pc._valider_placement()
 	if not _verifier(resultat_pc["valeur"] == false, "plan_cartesien : placement (1,2) sur cible (4,6) devrait etre incorrect"):
 		return
-	# Glisser-depose simule : _drop_data() ne dependant que de _type et de
-	# la position (via get_local_mouse_position(), non pilotable en
-	# headless), on verifie plutot _placer_creature_a() directement -
-	# c'est la fonction que _drop_data() appelle une fois la coordonnee
-	# la plus proche calculee.
+	# Glisser-depose simule : _on_creature_deposee() ne dependant que de
+	# la position de la souris (via get_local_mouse_position(), non
+	# pilotable en headless), on verifie plutot _placer_creature_a()
+	# directement - c'est la fonction qu'il appelle une fois la
+	# coordonnee la plus proche calculee.
 	w_pc.configurer({"type": "placer_point", "taille_grille": 6, "id_creature": 8, "x": 4, "y": 6}, {})
 	w_pc._placer_creature_a(4, 6)
 	w_pc._valider_placement()

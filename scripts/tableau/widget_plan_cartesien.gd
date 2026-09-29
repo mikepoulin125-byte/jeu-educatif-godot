@@ -17,10 +17,15 @@ extends Control
 ## D'autres types seront ajoutes ici au fur et a mesure des prochains
 ## tableaux.
 ##
-## Gere lui-meme _can_drop_data()/_drop_data() (cote "cible" du
-## glisser-depose de la creature, voir creature_deplacable.gd pour le
-## cote "source") plutot que PlanCartesienView, qui reste un composant
-## purement visuel/reutilisable.
+## Le cote "cible" du glisser-depose (_can_drop_data()/_drop_data())
+## vit sur %ZonePlacement (ZoneDepotPlanCartesien, zone LOCALISEE au
+## plan) et relaie un signal a ce script, plutot que d'implementer ces
+## methodes ici : la racine de ce widget couvre TOUT L'ECRAN (comme
+## chaque widget de tableau), et y activer la reception de glisser-
+## depose a deja fait regresser le bouton Quitter/DEV du tableau (bug
+## documente dans CLAUDE.md sur zone_reponse - une zone plein ecran qui
+## "voit" les clics, meme sur ses parties vides, avale tout ce qui est
+## dessous). voir creature_deplacable.gd pour le cote "source".
 ##
 ## Resout %Nom a la demande (voir widget_pair_impair.gd pour le
 ## pourquoi).
@@ -50,7 +55,7 @@ func configurer(question: Dictionary, _contexte: Dictionary) -> void:
 	var taille: int = int(question.get("taille_grille", 5))
 
 	var vue: PlanCartesienView = %Vue
-	var zone_placement: Control = %ZonePlacement
+	var zone_placement: ZoneDepotPlanCartesien = %ZonePlacement
 	var zone_depart: Control = %ZoneDepart
 	var zone_creature: Control = %ZoneCreature
 	var zone_saisie_axe: Control = %ZoneSaisieAxe
@@ -69,6 +74,7 @@ func configurer(question: Dictionary, _contexte: Dictionary) -> void:
 	zone_saisie_coords.visible = false
 	zone_saisie_placement.visible = false
 	zone_placement.custom_minimum_size = Vector2(486, 380) if _type == "placer_point" else Vector2(380, 380)
+	zone_placement.actif = (_type == "placer_point")
 
 	match _type:
 		"lire_coordonnees":
@@ -246,10 +252,11 @@ func _repositionner_boutons_intersections() -> void:
 			bouton.position = _vue_ref.point_vers_pixel(gx, gy) - bouton.size / 2.0
 			i += 1
 
-func _can_drop_data(_at_position: Vector2, data) -> bool:
-	return _type == "placer_point" and typeof(data) == TYPE_DICTIONARY and data.get("type") == "creature_plan_cartesien"
-
-func _drop_data(_at_position: Vector2, _data) -> void:
+## Appele par ZoneDepotPlanCartesien (%ZonePlacement) quand la creature
+## y est deposee - voir zone_depot_plan_cartesien.gd pour pourquoi la
+## detection de depot vit sur ce noeud LOCALISE plutot que sur la
+## racine du widget (qui couvre tout l'ecran).
+func _on_creature_deposee() -> void:
 	if _vue_ref == null:
 		return
 	var point := _vue_ref.pixel_vers_point(_vue_ref.get_local_mouse_position())
@@ -277,6 +284,9 @@ func _connecter() -> void:
 
 	var fila_placement: HBoxContainer = %FilaPlacement
 	fila_placement.sort_children.connect(_repositionner_apres_layout)
+
+	var zone_placement: ZoneDepotPlanCartesien = %ZonePlacement
+	zone_placement.creature_deposee.connect(_on_creature_deposee)
 
 	_connecte = true
 
