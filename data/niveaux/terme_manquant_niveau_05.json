@@ -1,16 +1,16 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
+	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime). Phase 8 : addition uniquement, terme manquant en DEBUT d'equation (? + b = c), nombres plus grands qu'au tableau 1.",
 	"nom": "Grotte du Chiffre Cache 5",
 	"questions": [
-		{ "texte": "15 + ? = 21", "reponse": 6 },
-		{ "texte": "29 - ? = 21", "reponse": 8 },
-		{ "texte": "21 + ? = 37", "reponse": 16 },
-		{ "texte": "12 - ? = 11", "reponse": 1 },
-		{ "texte": "27 + ? = 28", "reponse": 1 },
-		{ "texte": "20 - ? = 4", "reponse": 16 },
-		{ "texte": "8 + ? = 19", "reponse": 11 },
-		{ "texte": "28 - ? = 8", "reponse": 20 },
-		{ "texte": "14 + ? = 35", "reponse": 21 },
-		{ "texte": "11 - ? = 7", "reponse": 4 }
+		{ "texte": "? + 14 = 37", "reponse": 23 },
+		{ "texte": "? + 18 = 49", "reponse": 31 },
+		{ "texte": "? + 26 = 43", "reponse": 17 },
+		{ "texte": "? + 12 = 51", "reponse": 39 },
+		{ "texte": "? + 25 = 47", "reponse": 22 },
+		{ "texte": "? + 34 = 50", "reponse": 16 },
+		{ "texte": "? + 17 = 45", "reponse": 28 },
+		{ "texte": "? + 21 = 54", "reponse": 33 },
+		{ "texte": "? + 22 = 41", "reponse": 19 },
+		{ "texte": "? + 20 = 46", "reponse": 26 }
 	]
 }

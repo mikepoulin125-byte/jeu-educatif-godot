@@ -1,16 +1,16 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
+	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime). Phase 8 : addition uniquement, terme manquant au MILIEU de l'equation (a + ? = c), memes triplets que le tableau 5.",
 	"nom": "Grotte du Chiffre Cache 6",
 	"questions": [
-		{ "texte": "17 + ? = 24", "reponse": 7 },
-		{ "texte": "32 - ? = 23", "reponse": 9 },
-		{ "texte": "23 + ? = 40", "reponse": 17 },
-		{ "texte": "10 - ? = 6", "reponse": 4 },
-		{ "texte": "29 + ? = 56", "reponse": 27 },
-		{ "texte": "18 - ? = 1", "reponse": 17 },
-		{ "texte": "5 + ? = 12", "reponse": 7 },
-		{ "texte": "26 - ? = 5", "reponse": 21 },
-		{ "texte": "11 + ? = 28", "reponse": 17 },
-		{ "texte": "34 - ? = 9", "reponse": 25 }
+		{ "texte": "23 + ? = 37", "reponse": 14 },
+		{ "texte": "31 + ? = 49", "reponse": 18 },
+		{ "texte": "17 + ? = 43", "reponse": 26 },
+		{ "texte": "39 + ? = 51", "reponse": 12 },
+		{ "texte": "22 + ? = 47", "reponse": 25 },
+		{ "texte": "16 + ? = 50", "reponse": 34 },
+		{ "texte": "28 + ? = 45", "reponse": 17 },
+		{ "texte": "33 + ? = 54", "reponse": 21 },
+		{ "texte": "19 + ? = 41", "reponse": 22 },
+		{ "texte": "26 + ? = 46", "reponse": 20 }
 	]
 }
