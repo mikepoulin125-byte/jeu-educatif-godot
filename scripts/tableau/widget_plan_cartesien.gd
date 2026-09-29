@@ -1,44 +1,71 @@
 extends Control
-## Widget "plan_cartesien" : grille cliquable (quadrant positif
-## seulement), l'enfant clique la case (x,y) demandee. Simplification
-## assumee par rapport au glisser-depose litteral de la spec (voir
-## docs/phases/phase_06_scenes_tableau.md) : cliquer la bonne case
-## remplit le meme objectif pedagogique (identifier des coordonnees) en
-## restant simple et fiable a tester. Resout %Nom a la demande (voir
-## widget_pair_impair.gd pour le pourquoi).
+## Widget "plan_cartesien". Pour l'instant, un seul type de question
+## existe (tableau 1, badge 4 - demande de Mike : familiariser l'enfant
+## avec un vrai plan cartesien AVANT de lui demander d'y interagir) :
+## le plan est dessine (PlanCartesienView - axes flesches + quadrillage,
+## MEME visuel prevu pour tous les tableaux du badge) avec UN SEUL axe
+## affiche au complet et l'autre totalement vide sauf une graduation
+## mise en evidence (cercle rouge) ; l'enfant ecrit le chiffre qui va a
+## cet endroit (meme pattern de saisie que widget_terme_manquant.gd).
+## D'autres types de question (ex. cliquer une intersection) seront
+## ajoutes ici au fur et a mesure des prochains tableaux.
+##
+## Resout %Nom a la demande (voir widget_pair_impair.gd pour le
+## pourquoi).
 
 signal reponse_donnee(correcte: bool)
 
-var _x_attendu: int = 0
-var _y_attendu: int = 0
-var _repondu: bool = false
+var _reponse_attendue: int = 0
+var _connecte: bool = false
+
+func _ready() -> void:
+	_connecter()
 
 func configurer(question: Dictionary, _contexte: Dictionary) -> void:
-	_x_attendu = int(question.get("x", 0))
-	_y_attendu = int(question.get("y", 0))
+	_connecter()
 	var taille: int = int(question.get("taille_grille", 5))
+	var increment: int = int(question.get("increment", 1))
+	var axe: String = String(question.get("axe_manquant", "x"))
+	var position: int = int(question.get("position", 0))
+	_reponse_attendue = int(question.get("reponse", (position + 1) * increment))
+
+	var etiquettes_completes := []
+	for i in range(1, taille + 1):
+		etiquettes_completes.append(str(i * increment))
+	var etiquettes_vides := []
+	etiquettes_vides.resize(taille)
+
+	var vue: PlanCartesienView = %Vue
+	if axe == "x":
+		vue.configurer(taille, etiquettes_vides, etiquettes_completes, position, -1)
+	else:
+		vue.configurer(taille, etiquettes_completes, etiquettes_vides, -1, position)
+
 	var label_consigne: Label = %LabelConsigne
-	label_consigne.text = "Place la creature en (%d, %d)" % [_x_attendu, _y_attendu]
-	_repondu = false
-	_construire_grille(taille)
+	var nom_axe := "X" if axe == "x" else "Y"
+	label_consigne.text = "Quel nombre va dans le rond rouge de l'axe des %s ?" % nom_axe
 
-func _construire_grille(taille: int) -> void:
-	var grille: GridContainer = %Grille
-	for enfant in grille.get_children():
-		enfant.queue_free()
-	grille.columns = taille
-	# Rangee du haut = y le plus grand, pour un repere cartesien habituel.
-	for y in range(taille - 1, -1, -1):
-		for x in range(0, taille):
-			var bouton := Button.new()
-			bouton.custom_minimum_size = Vector2(36, 36)
-			bouton.text = ""
-			bouton.focus_mode = Control.FOCUS_NONE
-			bouton.pressed.connect(_on_case_pressee.bind(x, y))
-			grille.add_child(bouton)
+	var champ_reponse: LineEdit = %ChampReponse
+	var bouton_valider: Button = %BoutonValider
+	champ_reponse.text = ""
+	champ_reponse.editable = true
+	bouton_valider.disabled = false
 
-func _on_case_pressee(x: int, y: int) -> void:
-	if _repondu:
+func _connecter() -> void:
+	if _connecte:
 		return
-	_repondu = true
-	reponse_donnee.emit(x == _x_attendu and y == _y_attendu)
+	var champ_reponse: LineEdit = %ChampReponse
+	var bouton_valider: Button = %BoutonValider
+	bouton_valider.pressed.connect(_valider)
+	champ_reponse.text_submitted.connect(func(_t): _valider())
+	_connecte = true
+
+func _valider() -> void:
+	var champ_reponse: LineEdit = %ChampReponse
+	if not champ_reponse.text.is_valid_int():
+		return
+	var valeur := int(champ_reponse.text)
+	champ_reponse.editable = false
+	var bouton_valider: Button = %BoutonValider
+	bouton_valider.disabled = true
+	reponse_donnee.emit(valeur == _reponse_attendue)

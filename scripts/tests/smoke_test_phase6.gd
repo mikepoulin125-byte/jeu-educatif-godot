@@ -30,7 +30,6 @@ func _initialize() -> void:
 		"pair_impair": ["nombre", "reponse"],
 		"approximation": ["texte", "min", "max"],
 		"terme_manquant": ["texte", "reponse"],
-		"plan_cartesien": ["x", "y", "taille_grille"],
 		"possible_impossible": ["texte", "reponse"],
 		"tableau_pictogramme": ["texte", "reponse"],
 		"fractions": ["texte", "choix", "reponse_index"],
@@ -48,7 +47,31 @@ func _initialize() -> void:
 					return
 			if matiere_id == "tableau_pictogramme" and not _verifier(data.has("graphique") and data["graphique"].get("barres", []).size() > 0, "%s_%s : graphique manquant ou vide" % [matiere_id, niveau_id]):
 				return
-	print("OK: les 80 fichiers de niveaux ont le schema attendu pour leur matiere")
+	print("OK: les 79 fichiers de niveaux (hors plan_cartesien, verifie separement) ont le schema attendu pour leur matiere")
+
+	# 1bis. plan_cartesien : en cours de refonte tableau par tableau (voir
+	# CLAUDE.md badge 4), donc chaque niveau peut avoir un schema
+	# different tant que la refonte n'est pas terminee. Niveau 1 : nouveau
+	# schema (compter les graduations). Niveaux 2-10 : ancien schema
+	# (x/y/taille_grille, plus utilise par le widget actuel, en attente
+	# de refonte).
+	var data_pc1 := DataManager.load_niveau("plan_cartesien_niveau_01")
+	var questions_pc1: Array = data_pc1.get("questions", [])
+	if not _verifier(questions_pc1.size() == 10, "plan_cartesien_niveau_01 : 10 questions attendues, obtenu %d" % questions_pc1.size()):
+		return
+	for champ in ["taille_grille", "increment", "axe_manquant", "position", "reponse"]:
+		if not _verifier(questions_pc1[0].has(champ), "plan_cartesien_niveau_01 : champ '%s' manquant dans la 1ere question" % champ):
+			return
+	for n in range(2, 11):
+		var niveau_id := "niveau_%02d" % n
+		var data := DataManager.load_niveau("plan_cartesien_%s" % niveau_id)
+		var questions: Array = data.get("questions", [])
+		if not _verifier(questions.size() == 10, "plan_cartesien_%s : 10 questions attendues, obtenu %d" % [niveau_id, questions.size()]):
+			return
+		for champ in ["x", "y", "taille_grille"]:
+			if not _verifier(questions[0].has(champ), "plan_cartesien_%s : champ '%s' manquant dans la 1ere question" % [niveau_id, champ]):
+				return
+	print("OK: les 10 fichiers de niveaux plan_cartesien ont le schema attendu (niveau 1 refait, 2-10 en attente)")
 
 	# 2. Widget pair_impair.
 	var scene_pi := preload("res://scenes/tableau/WidgetPairImpair.tscn")
@@ -103,26 +126,34 @@ func _initialize() -> void:
 	w_tm.free()
 	print("OK: widget terme_manquant")
 
-	# 5. Widget plan_cartesien (grille cliquable).
+	# 5. Widget plan_cartesien (tableau 1 : graduation manquante a ecrire).
 	var scene_pc := preload("res://scenes/tableau/WidgetPlanCartesien.tscn")
 	var w_pc = scene_pc.instantiate()
 	root.add_child(w_pc)
 	var resultat_pc = {"valeur": null}
 	w_pc.reponse_donnee.connect(func(c): resultat_pc["valeur"] = c)
-	w_pc.configurer({"x": 2, "y": 3, "taille_grille": 5}, {})
-	var nb_cases: int = w_pc.get_node("%Grille").get_child_count()
-	if not _verifier(nb_cases == 25, "plan_cartesien : grille 5x5 attendue (25 cases), obtenu %d" % nb_cases):
+	w_pc.configurer({"taille_grille": 5, "increment": 1, "axe_manquant": "x", "position": 2, "reponse": 3}, {})
+	var vue: PlanCartesienView = w_pc.get_node("%Vue")
+	if not _verifier(vue.indice_x_marque == 2, "plan_cartesien : la graduation X 2 (0-based) devrait etre marquee"):
 		return
-	w_pc._on_case_pressee(2, 3)
-	if not _verifier(resultat_pc["valeur"] == true, "plan_cartesien : (2,3) devrait etre correct"):
+	if not _verifier(vue.etiquettes_y[0] == "1" and vue.etiquettes_y[4] == "5", "plan_cartesien : l'axe Y devrait etre complet (1 a 5)"):
 		return
-	w_pc.configurer({"x": 0, "y": 0, "taille_grille": 5}, {})
-	w_pc._on_case_pressee(4, 4)
-	if not _verifier(resultat_pc["valeur"] == false, "plan_cartesien : (4,4) sur cible (0,0) devrait etre incorrect"):
+	if not _verifier(vue.etiquettes_x[2] == null, "plan_cartesien : la graduation X marquee ne doit pas afficher de texte"):
+		return
+	w_pc.get_node("%ChampReponse").text = "3"
+	w_pc._valider()
+	if not _verifier(resultat_pc["valeur"] == true, "plan_cartesien : reponse exacte (3) devrait etre correcte"):
+		return
+	w_pc.configurer({"taille_grille": 5, "increment": 1, "axe_manquant": "y", "position": 0, "reponse": 1}, {})
+	if not _verifier(vue.indice_y_marque == 0, "plan_cartesien : axe_manquant='y' devrait marquer l'axe Y"):
+		return
+	w_pc.get_node("%ChampReponse").text = "4"
+	w_pc._valider()
+	if not _verifier(resultat_pc["valeur"] == false, "plan_cartesien : reponse fausse (4 au lieu de 1) devrait etre incorrecte"):
 		return
 	root.remove_child(w_pc)
 	w_pc.free()
-	print("OK: widget plan_cartesien (grille generee + case correcte/incorrecte)")
+	print("OK: widget plan_cartesien (graduation manquante ecrite, bonne et mauvaise reponse)")
 
 	# 6. Widget possible_impossible.
 	var scene_poss := preload("res://scenes/tableau/WidgetPossibleImpossible.tscn")

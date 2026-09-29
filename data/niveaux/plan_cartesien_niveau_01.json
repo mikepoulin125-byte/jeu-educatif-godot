@@ -1,56 +1,76 @@
 {
-	"_commentaire": "Phase 8 - contenu regenere pour plus de variete (voir CLAUDE.md).",
+	"_commentaire": "Phase 8 - refonte pour un vrai plan cartesien dessine (axes fleches + quadrillage + graduations, voir CLAUDE.md badge 4). But de ce tableau : familiariser l'enfant avec la lecture d'un plan cartesien, sans encore lui demander de placer un point. L'axe des Y est deja complet (1 a 5), l'enfant ecrit le chiffre manquant a la graduation marquee (rond rouge) sur l'axe des X.",
 	"nom": "Plateau des Coordonnees 1",
 	"questions": [
 		{
-			"taille_grille": 4,
-			"x": 3,
-			"y": 0
+			"taille_grille": 5,
+			"increment": 1,
+			"axe_manquant": "x",
+			"position": 2,
+			"reponse": 3
 		},
 		{
-			"taille_grille": 4,
-			"x": 0,
-			"y": 2
+			"taille_grille": 5,
+			"increment": 1,
+			"axe_manquant": "x",
+			"position": 0,
+			"reponse": 1
 		},
 		{
-			"taille_grille": 4,
-			"x": 1,
-			"y": 3
+			"taille_grille": 5,
+			"increment": 1,
+			"axe_manquant": "x",
+			"position": 4,
+			"reponse": 5
 		},
 		{
-			"taille_grille": 4,
-			"x": 1,
-			"y": 2
+			"taille_grille": 5,
+			"increment": 1,
+			"axe_manquant": "x",
+			"position": 1,
+			"reponse": 2
 		},
 		{
-			"taille_grille": 4,
-			"x": 2,
-			"y": 3
+			"taille_grille": 5,
+			"increment": 1,
+			"axe_manquant": "x",
+			"position": 3,
+			"reponse": 4
 		},
 		{
-			"taille_grille": 4,
-			"x": 0,
-			"y": 0
+			"taille_grille": 5,
+			"increment": 1,
+			"axe_manquant": "x",
+			"position": 0,
+			"reponse": 1
 		},
 		{
-			"taille_grille": 4,
-			"x": 3,
-			"y": 1
+			"taille_grille": 5,
+			"increment": 1,
+			"axe_manquant": "x",
+			"position": 3,
+			"reponse": 4
 		},
 		{
-			"taille_grille": 4,
-			"x": 2,
-			"y": 2
+			"taille_grille": 5,
+			"increment": 1,
+			"axe_manquant": "x",
+			"position": 1,
+			"reponse": 2
 		},
 		{
-			"taille_grille": 4,
-			"x": 2,
-			"y": 0
+			"taille_grille": 5,
+			"increment": 1,
+			"axe_manquant": "x",
+			"position": 4,
+			"reponse": 5
 		},
 		{
-			"taille_grille": 4,
-			"x": 3,
-			"y": 3
+			"taille_grille": 5,
+			"increment": 1,
+			"axe_manquant": "x",
+			"position": 2,
+			"reponse": 3
 		}
 	]
 }

@@ -10,9 +10,9 @@ extends Node
 ## boutons de reponse des tableaux, etc.) via `SceneTree.node_added` —
 ## chaque `BaseButton` qui entre dans l'arbre de scene se voit connecter
 ## automatiquement `button_down` vers `jouer_clic()`, qu'il s'agisse d'un
-## bouton d'une scene (.tscn) ou cree dynamiquement par du code (ex. la
-## grille du widget plan_cartesien). Aucun script/signal a cabler a la
-## main sur un bouton individuel pour qu'il ait le son.
+## bouton d'une scene (.tscn) ou cree dynamiquement par du code. Aucun
+## script/signal a cabler a la main sur un bouton individuel pour qu'il
+## ait le son.
 ##
 ## Deux consequences volontaires du choix de `button_down` plutot que
 ## `pressed` (qui n'emet qu'au RELACHEMENT du clic par defaut sur un
