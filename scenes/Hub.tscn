@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bqf0e0000hub00001"]
+[gd_scene load_steps=10 format=3 uid="uid://bqf0e0000hub00001"]
 
 [ext_resource type="Script" path="res://scripts/hub.gd" id="1"]
 [ext_resource type="Shader" path="res://shaders/fond_bandes_diagonales.gdshader" id="2"]
-[ext_resource type="PackedScene" path="res://scenes/components/TransitionRadiale.tscn" id="3"]
 [ext_resource type="Script" path="res://scripts/components/bouton_anime.gd" id="4"]
+[ext_resource type="FontFile" path="res://assets/fonts/Rubik-Bold.ttf" id="5"]
+[ext_resource type="Script" path="res://scripts/components/texture_rect_anime.gd" id="6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fond"]
 shader = ExtResource("2")
@@ -22,6 +23,24 @@ corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_banniere"]
+bg_color = Color(0.64, 0.16, 0.09, 0.95)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 0.9)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 6
+content_margin_left = 24.0
+content_margin_top = 8.0
+content_margin_right = 24.0
+content_margin_bottom = 8.0
 
 [node name="Hub" type="Control"]
 layout_mode = 3
@@ -42,17 +61,24 @@ grow_vertical = 2
 material = SubResource("ShaderMaterial_fond")
 color = Color(1, 1, 1, 1)
 
-[node name="LabelXp" type="Label" parent="."]
-unique_name_in_owner = true
+[node name="BanniereXp" type="PanelContainer" parent="."]
 layout_mode = 1
 offset_left = 30.0
-offset_top = 24.0
-offset_right = 260.0
-offset_bottom = 60.0
+offset_top = 18.0
+offset_right = 300.0
+offset_bottom = 78.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_banniere")
+
+[node name="LabelXp" type="Label" parent="BanniereXp"]
+unique_name_in_owner = true
+layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("5")
+theme_override_constants/outline_size = 4
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.35)
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
 text = "XP : 0"
 
 [node name="BoutonRoster" type="Button" parent="."]
@@ -76,19 +102,27 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_pill_blanc")
 text = "Roster"
 script = ExtResource("4")
 
-[node name="LabelTitre" type="Label" parent="."]
+[node name="CentreTitre" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 90.0
-offset_bottom = 140.0
+offset_top = 84.0
+offset_bottom = 148.0
 grow_horizontal = 2
+
+[node name="BanniereTitre" type="PanelContainer" parent="CentreTitre"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_banniere")
+
+[node name="LabelTitre" type="Label" parent="CentreTitre/BanniereTitre"]
+layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5")
 theme_override_constants/outline_size = 5
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.35)
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 34
 horizontal_alignment = 1
-text = "Choisis une matiere"
+text = "Choisis un badge"
 
 [node name="ScrollMatieres" type="ScrollContainer" parent="."]
 layout_mode = 1
@@ -96,19 +130,120 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 80.0
-offset_top = 160.0
+offset_top = 164.0
 offset_right = -80.0
 offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 2
+horizontal_scroll_mode = 0
 
-[node name="GrilleMatieres" type="GridContainer" parent="ScrollMatieres"]
-unique_name_in_owner = true
+[node name="CentreMatieres" type="CenterContainer" parent="ScrollMatieres"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GrilleMatieres" type="GridContainer" parent="ScrollMatieres/CentreMatieres"]
+unique_name_in_owner = true
+layout_mode = 2
 theme_override_constants/h_separation = 30
 theme_override_constants/v_separation = 30
 columns = 4
+
+[node name="ZoneGauche" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 30.0
+offset_top = -170.0
+offset_right = 250.0
+offset_bottom = 170.0
+grow_vertical = 2
+
+[node name="TextureGauche" type="TextureRect" parent="ZoneGauche"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 5
+stretch_mode = 5
+script = ExtResource("6")
+
+[node name="PlaceholderGauche" type="ColorRect" parent="ZoneGauche"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.3, 0.3, 0.35, 0.5)
+
+[node name="LabelPlaceholderGauche" type="Label" parent="ZoneGauche/PlaceholderGauche"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.4)
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+text = "assets/ui/hub/gauche.gif attendu ici"
+
+[node name="ZoneDroite" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 270.0
+offset_top = -20.0
+offset_right = 358.0
+offset_bottom = 116.0
+grow_vertical = 2
+
+[node name="TextureDroite" type="TextureRect" parent="ZoneDroite"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 5
+stretch_mode = 5
+script = ExtResource("6")
+
+[node name="PlaceholderDroite" type="ColorRect" parent="ZoneDroite"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.3, 0.3, 0.35, 0.5)
+
+[node name="LabelPlaceholderDroite" type="Label" parent="ZoneDroite/PlaceholderDroite"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.4)
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+text = "?"
 
 [node name="BarreInfo" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -128,6 +263,3 @@ theme_override_font_sizes/font_size = 16
 horizontal_alignment = 1
 vertical_alignment = 1
 text = "Clique sur une matiere pour commencer"
-
-[node name="VoileEntree" parent="." instance=ExtResource("3")]
-unique_name_in_owner = true

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bqf0e0000wpi00001"]
+[gd_scene load_steps=3 format=3 uid="uid://bqf0e0000wpi00001"]
 
 [ext_resource type="Script" path="res://scripts/tableau/widget_pair_impair.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/components/texture_rect_anime.gd" id="2"]
 
 [node name="WidgetPairImpair" type="Control"]
 layout_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1")
 
 [node name="VBox" type="VBoxContainer" parent="."]
@@ -34,6 +36,7 @@ horizontal_alignment = 1
 text = "0"
 
 [node name="HBoxBoutons" type="HBoxContainer" parent="VBox"]
+unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 theme_override_constants/separation = 30
@@ -51,3 +54,351 @@ custom_minimum_size = Vector2(160, 70)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Impair"
+
+[node name="LabelConsigne" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -190.0
+offset_right = 260.0
+offset_bottom = -140.0
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+text = "Clique sur les 4 nombres PAIRS"
+
+[node name="GrilleNombres" type="GridContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -80.0
+offset_right = 300.0
+offset_bottom = 80.0
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 4
+
+[node name="Bouton0" type="Button" parent="GrilleNombres"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "0"
+
+[node name="Bouton1" type="Button" parent="GrilleNombres"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "0"
+
+[node name="Bouton2" type="Button" parent="GrilleNombres"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "0"
+
+[node name="Bouton3" type="Button" parent="GrilleNombres"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "0"
+
+[node name="Bouton4" type="Button" parent="GrilleNombres"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "0"
+
+[node name="Bouton5" type="Button" parent="GrilleNombres"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "0"
+
+[node name="Bouton6" type="Button" parent="GrilleNombres"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "0"
+
+[node name="Bouton7" type="Button" parent="GrilleNombres"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "0"
+
+[node name="GrilleCreatures" type="GridContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -400.0
+offset_right = 300.0
+offset_bottom = -60.0
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+columns = 3
+
+[node name="Creature0" type="TextureRect" parent="GrilleCreatures"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(105, 105)
+layout_mode = 2
+expand_mode = 5
+stretch_mode = 5
+script = ExtResource("2")
+
+[node name="Creature1" type="TextureRect" parent="GrilleCreatures"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(105, 105)
+layout_mode = 2
+expand_mode = 5
+stretch_mode = 5
+script = ExtResource("2")
+
+[node name="Creature2" type="TextureRect" parent="GrilleCreatures"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(105, 105)
+layout_mode = 2
+expand_mode = 5
+stretch_mode = 5
+script = ExtResource("2")
+
+[node name="Creature3" type="TextureRect" parent="GrilleCreatures"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(105, 105)
+layout_mode = 2
+expand_mode = 5
+stretch_mode = 5
+script = ExtResource("2")
+
+[node name="Creature4" type="TextureRect" parent="GrilleCreatures"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(105, 105)
+layout_mode = 2
+expand_mode = 5
+stretch_mode = 5
+script = ExtResource("2")
+
+[node name="Creature5" type="TextureRect" parent="GrilleCreatures"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(105, 105)
+layout_mode = 2
+expand_mode = 5
+stretch_mode = 5
+script = ExtResource("2")
+
+[node name="Creature6" type="TextureRect" parent="GrilleCreatures"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(105, 105)
+layout_mode = 2
+expand_mode = 5
+stretch_mode = 5
+script = ExtResource("2")
+
+[node name="Creature7" type="TextureRect" parent="GrilleCreatures"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(105, 105)
+layout_mode = 2
+expand_mode = 5
+stretch_mode = 5
+script = ExtResource("2")
+
+[node name="Creature8" type="TextureRect" parent="GrilleCreatures"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(105, 105)
+layout_mode = 2
+expand_mode = 5
+stretch_mode = 5
+script = ExtResource("2")
+
+[node name="ZoneSaisie" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -140.0
+offset_right = 220.0
+offset_bottom = 140.0
+theme_override_constants/separation = 30
+
+[node name="HBoxSaisie" type="HBoxContainer" parent="ZoneSaisie"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 30
+
+[node name="Input0" type="LineEdit" parent="ZoneSaisie/HBoxSaisie"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+max_length = 1
+horizontal_alignment = 1
+
+[node name="Input1" type="LineEdit" parent="ZoneSaisie/HBoxSaisie"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+max_length = 1
+horizontal_alignment = 1
+
+[node name="BoutonValider" type="Button" parent="ZoneSaisie"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 22
+text = "Valider"
+
+[node name="ZoneSuite" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -140.0
+offset_right = 260.0
+offset_bottom = 140.0
+theme_override_constants/separation = 30
+
+[node name="LabelSuiteAffichee" type="Label" parent="ZoneSuite"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+text = "3, 5, 7, ..."
+
+[node name="HBoxSuiteInputs" type="HBoxContainer" parent="ZoneSuite"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 20
+
+[node name="Suite0" type="LineEdit" parent="ZoneSuite/HBoxSuiteInputs"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+max_length = 2
+horizontal_alignment = 1
+
+[node name="Suite1" type="LineEdit" parent="ZoneSuite/HBoxSuiteInputs"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+max_length = 2
+horizontal_alignment = 1
+
+[node name="Suite2" type="LineEdit" parent="ZoneSuite/HBoxSuiteInputs"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+max_length = 2
+horizontal_alignment = 1
+
+[node name="BoutonValiderSuite" type="Button" parent="ZoneSuite"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 22
+text = "Valider"
+
+[node name="ZoneCreation" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -140.0
+offset_right = 280.0
+offset_bottom = 140.0
+theme_override_constants/separation = 30
+
+[node name="LabelConsigneCreation" type="Label" parent="ZoneCreation"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+text = "Cree un resultat IMPAIR"
+
+[node name="HBoxExpression" type="HBoxContainer" parent="ZoneCreation"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="LabelOperandeA" type="Label" parent="ZoneCreation/HBoxExpression"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "32"
+
+[node name="LabelOperateur" type="Label" parent="ZoneCreation/HBoxExpression"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "+"
+
+[node name="InputCreation" type="LineEdit" parent="ZoneCreation/HBoxExpression"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+max_length = 3
+horizontal_alignment = 1
+
+[node name="LabelEgal" type="Label" parent="ZoneCreation/HBoxExpression"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "="
+
+[node name="LabelResultatCreation" type="Label" parent="ZoneCreation/HBoxExpression"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "?"
+
+[node name="BoutonConfirmerCreation" type="Button" parent="ZoneCreation"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 22
+text = "Confirmer"

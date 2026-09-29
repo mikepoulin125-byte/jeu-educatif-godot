@@ -1,16 +1,16 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
+	"_commentaire": "Phase 8 - continuer une suite de nombres (demande de Mike). Voir widget_pair_impair.gd (mode 'suite'/'suivants').",
 	"nom": "Sentier Pair-Impair 6",
 	"questions": [
-		{ "nombre": 19, "reponse": "impair" },
-		{ "nombre": 26, "reponse": "pair" },
-		{ "nombre": 33, "reponse": "impair" },
-		{ "nombre": 40, "reponse": "pair" },
-		{ "nombre": 47, "reponse": "impair" },
-		{ "nombre": 54, "reponse": "pair" },
-		{ "nombre": 1, "reponse": "impair" },
-		{ "nombre": 8, "reponse": "pair" },
-		{ "nombre": 15, "reponse": "impair" },
-		{ "nombre": 22, "reponse": "pair" }
+		{ "suite": [3, 5, 7], "suivants": [9, 11] },
+		{ "suite": [2, 4, 6], "suivants": [8, 10] },
+		{ "suite": [1, 3, 5], "suivants": [7, 9, 11] },
+		{ "suite": [0, 2, 4], "suivants": [6, 8] },
+		{ "suite": [10, 8, 6], "suivants": [4, 2] },
+		{ "suite": [5, 7, 9], "suivants": [11, 13, 15] },
+		{ "suite": [6, 9, 12], "suivants": [15, 18] },
+		{ "suite": [20, 17, 14], "suivants": [11, 8] },
+		{ "suite": [4, 8, 12], "suivants": [16, 20] },
+		{ "suite": [1, 4, 7], "suivants": [10, 13, 16] }
 	]
 }

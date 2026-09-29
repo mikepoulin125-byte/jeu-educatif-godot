@@ -1,0 +1,41 @@
+Icones par matiere (badges du Hub ET carte "Examen"), une par matiere
+=========================================================================
+
+Dépose tes icones ici, avec exactement ces noms de fichier. Le jeu les
+charge automatiquement — aucune modification de code nécessaire. Tant
+qu'une icone n'est pas présente : le badge du Hub affiche son
+placeholder coloré habituel (rond + symbole), et la carte "Examen" de
+cette matiere s'affiche sans icone dans le coin — le jeu reste testable
+des deux côtés.
+
+CHAQUE fichier sert aux DEUX endroits à la fois (même image, pas de
+copie séparée à faire) :
+   1) Le badge de la matiere sur l'écran du Hub (icone centrale, en
+      grand, remplace le rond colore + symbole).
+   2) Le coin supérieur droit de la carte "Examen" de cette matiere
+      (petite pastille), sur l'écran de sélection de niveau.
+
+Une icone DIFFÉRENTE par matière (pas une icone unique partagée) — le
+nom de fichier reprend le meme "id" que celui déjà utilisé dans
+data/matieres.json et data/niveaux/*.json :
+
+   Nom de fichier : exam_<id>_icon.png
+   Format         : PNG avec fond TRANSPARENT
+   Dimensions     : 116 x 116 px conseillé (utilisée en grand dans le
+                     badge du Hub — l'image est automatiquement
+                     redimensionnée plus petite pour le coin de la
+                     carte "Examen", pas besoin de deux fichiers)
+
+Les 8 fichiers attendus (un par matière) :
+
+   exam_pair_impair_icon.png
+   exam_approximation_icon.png
+   exam_terme_manquant_icon.png
+   exam_plan_cartesien_icon.png
+   exam_possible_impossible_icon.png
+   exam_tableau_pictogramme_icon.png
+   exam_fractions_icon.png
+   exam_croissant_decroissant_icon.png
+
+Dépose les fichiers dans ce dossier (assets/ui/examen/) et relance le
+jeu via ton raccourci.

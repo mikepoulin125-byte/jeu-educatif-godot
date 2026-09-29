@@ -25,13 +25,13 @@ func configurer(creature_id: String, creature_data: Dictionary) -> void:
 	var names: Dictionary = creature_data.get("names", {})
 	var sprite_id: String = forms.get("stage1", "")
 
-	var texture_rect: TextureRect = %TextureSprite
+	var texture_rect: TextureRectAnime = %TextureSprite
 	var placeholder: ColorRect = %PlaceholderSprite
 	var label_placeholder: Label = %LabelPlaceholder
 
 	var texture := SpriteUtil.charger_texture(sprite_id)
 	if texture != null:
-		texture_rect.texture = texture
+		texture_rect.configurer_animation(texture, SpriteUtil.compter_frames(texture))
 		texture_rect.visible = true
 		placeholder.visible = false
 	else:

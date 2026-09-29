@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://bqf0e0000roster01"]
+[gd_scene load_steps=16 format=3 uid="uid://bqf0e0000roster01"]
 
 [ext_resource type="Script" path="res://scripts/roster.gd" id="1"]
 [ext_resource type="Shader" path="res://shaders/fond_bandes_diagonales.gdshader" id="2"]
 [ext_resource type="Script" path="res://scripts/components/bouton_anime.gd" id="3"]
 [ext_resource type="Script" path="res://scripts/components/zone_drop_creature.gd" id="4"]
 [ext_resource type="Shader" path="res://shaders/halo_lumineux.gdshader" id="5"]
+[ext_resource type="Script" path="res://scripts/components/texture_rect_anime.gd" id="6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fond"]
 shader = ExtResource("2")
@@ -277,6 +278,7 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 5
 stretch_mode = 5
+script = ExtResource("6")
 
 [node name="PlaceholderDetail" type="ColorRect" parent="ZonePrincipale/PanneauDetail/MargeDetail/VBoxDetail/ZoneSprite"]
 unique_name_in_owner = true

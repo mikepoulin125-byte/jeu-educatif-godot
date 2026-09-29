@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b5lqa2gdho5fo"
+path="res://.godot/imported/HGSS 140 Congratulations! Your Pokemon Evolved!.ogg-2b9f653fb49e17b74c1a900e2df0d6fa.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/musique/HGSS 140 Congratulations! Your Pokemon Evolved!.ogg"
+dest_files=["res://.godot/imported/HGSS 140 Congratulations! Your Pokemon Evolved!.ogg-2b9f653fb49e17b74c1a900e2df0d6fa.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

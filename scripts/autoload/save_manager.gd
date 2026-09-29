@@ -28,7 +28,7 @@ func new_game(starter_id: String) -> void:
 	save_game()
 
 func _nouvelle_entree_creature() -> Dictionary:
-	return {"stage": 1, "xp_investi": 0, "surnom": "", "berries_recues": 0}
+	return {"stage": 1, "xp_investi": 0, "xp_investi_stade_actuel": 0, "surnom": "", "berries_recues": 0}
 
 func save_game() -> void:
 	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
@@ -181,6 +181,57 @@ func faire_evoluer_creature(creature_id: String) -> bool:
 	save_game()
 	return true
 
+## --- Attribution d'XP par petits bonds (Phase 8, demande de Mike) ---
+## Remplace l'ancienne attribution "tout le cout d'un coup" cote Roster :
+## chaque clic ajoute un petit montant (10 XP) vers le PROCHAIN palier
+## de CETTE creature specifiquement, retire du total du joueur.
+## L'evolution se declenche automatiquement des que ce palier est
+## atteint. "stage_max" vient de DataManager (creatures.json) et est
+## fourni par l'appelant, jamais lu ici — meme separation des
+## responsabilites que pour cout_evolution_vers() ci-dessus.
+
+## {"applique": bool, "evolue": bool, "nouveau_stade": int}. "applique"
+## reste false sans rien modifier si la creature n'est pas capturee, est
+## deja au stade maximal, ou si le joueur n'a pas assez de XP pour ce
+## bond precis.
+func ajouter_xp_creature(creature_id: String, montant: int, stage_max: int) -> Dictionary:
+	var resultat := {"applique": false, "evolue": false, "nouveau_stade": 0}
+	var capturees: Dictionary = data.get("creatures_capturees", {})
+	if not capturees.has(creature_id):
+		return resultat
+	var stage_actuel: int = int(capturees[creature_id].get("stage", 1))
+	if stage_actuel >= stage_max:
+		return resultat
+	if get_xp_total() < montant:
+		return resultat
+
+	var cout: int = cout_evolution_vers(stage_actuel + 1)
+	var progression: int = int(capturees[creature_id].get("xp_investi_stade_actuel", 0)) + montant
+
+	data["xp_total"] = get_xp_total() - montant
+	capturees[creature_id]["xp_investi"] = int(capturees[creature_id].get("xp_investi", 0)) + montant
+	resultat["applique"] = true
+
+	if cout >= 0 and progression >= cout:
+		capturees[creature_id]["stage"] = stage_actuel + 1
+		capturees[creature_id]["xp_investi_stade_actuel"] = 0
+		resultat["evolue"] = true
+		resultat["nouveau_stade"] = stage_actuel + 1
+	else:
+		capturees[creature_id]["xp_investi_stade_actuel"] = progression
+
+	data["creatures_capturees"] = capturees
+	save_game()
+	return resultat
+
+## Progression actuelle vers le PROCHAIN palier de cette creature (0 si
+## non capturee) — PAS le total XP du joueur. Corrige le bug ou la barre
+## de chaque creature affichait le meme total XP du portefeuille du
+## joueur (ex. 200 XP affiche identique sur toutes les creatures).
+func get_progression_stade_creature(creature_id: String) -> int:
+	var capturees: Dictionary = data.get("creatures_capturees", {})
+	return int(capturees.get(creature_id, {}).get("xp_investi_stade_actuel", 0))
+
 ## --- Surnom (personnalisation, distinct du nom d'espece) ---
 
 func get_surnom_creature(creature_id: String) -> String:
@@ -268,17 +319,27 @@ func get_progression_matiere(matiere_id: String) -> Dictionary:
 	var progression: Dictionary = data.get("progression", {})
 	return progression.get(matiere_id, {"niveaux": {}})
 
-func set_progression_niveau(matiere_id: String, niveau_id: String, reussi: bool, score: int, debloque: bool = true) -> void:
+## "total" = nombre de questions de CET essai (toujours 10 pour un niveau
+## normal ; variable pour l'examen, voir ExamenUtil). Stocke a cote de
+## meilleur_score pour un affichage correct ("N/total") meme quand le
+## total a pu varier d'un essai a l'autre (examen construit avec moins
+## de 10 questions faute de contenu disponible).
+func set_progression_niveau(matiere_id: String, niveau_id: String, reussi: bool, score: int, debloque: bool = true, total: int = 10) -> void:
 	var progression: Dictionary = data.get("progression", {})
 	if not progression.has(matiere_id):
 		progression[matiere_id] = {"niveaux": {}}
 	var niveaux: Dictionary = progression[matiere_id]["niveaux"]
 	var precedent: Dictionary = niveaux.get(niveau_id, {})
-	var meilleur_score: int = max(int(precedent.get("meilleur_score", 0)), score)
+	var score_precedent: int = int(precedent.get("meilleur_score", 0))
+	var meilleur_score: int = max(score_precedent, score)
+	# Le total accompagne toujours le meilleur score des DEUX essais compares
+	# (et non un total "record" separe, qui n'aurait pas de sens a comparer).
+	var meilleur_total: int = int(precedent.get("meilleur_total", total)) if score_precedent >= score else total
 	niveaux[niveau_id] = {
 		"debloque": debloque or bool(precedent.get("debloque", false)),
 		"reussi": reussi or bool(precedent.get("reussi", false)),
-		"meilleur_score": meilleur_score
+		"meilleur_score": meilleur_score,
+		"meilleur_total": meilleur_total
 	}
 	progression[matiere_id]["niveaux"] = niveaux
 	data["progression"] = progression
@@ -288,3 +349,31 @@ func est_niveau_debloque(matiere_id: String, niveau_id: String) -> bool:
 	var prog := get_progression_matiere(matiere_id)
 	var niveaux: Dictionary = prog.get("niveaux", {})
 	return bool(niveaux.get(niveau_id, {}).get("debloque", false))
+
+## --- Questions ratees (pour l'examen, section "11e niveau") ---
+
+const MAX_QUESTIONS_RATEES_PAR_MATIERE := 200
+
+## Enregistre une question ratee pour alimenter le pool de l'examen de
+## cette matiere. Deduplique (une meme question ratee plusieurs fois ne
+## cree qu'une seule entree) et plafonne la liste (retire la plus
+## ancienne au-dela de MAX_QUESTIONS_RATEES_PAR_MATIERE, ecran de secours
+## contre une croissance illimitee sur une tres longue partie).
+func ajouter_question_ratee(matiere_id: String, question: Dictionary, contexte: Dictionary) -> void:
+	var toutes: Dictionary = data.get("questions_ratees", {})
+	var liste: Array = toutes.get(matiere_id, [])
+	var entree := {"question": question, "contexte": contexte}
+	if liste.has(entree):
+		return
+	liste.append(entree)
+	if liste.size() > MAX_QUESTIONS_RATEES_PAR_MATIERE:
+		liste = liste.slice(liste.size() - MAX_QUESTIONS_RATEES_PAR_MATIERE)
+	toutes[matiere_id] = liste
+	data["questions_ratees"] = toutes
+	save_game()
+
+## Copie de la liste (jamais null), chaque entree = {"question": Dictionary, "contexte": Dictionary}.
+func get_questions_ratees(matiere_id: String) -> Array:
+	var toutes: Dictionary = data.get("questions_ratees", {})
+	var liste: Array = toutes.get(matiere_id, [])
+	return liste.duplicate(true)

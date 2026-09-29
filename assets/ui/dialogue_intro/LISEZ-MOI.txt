@@ -1,0 +1,20 @@
+Fond d'écran du dialogue d'intro ("Nouvelle partie")
+========================================================
+
+Dépose ton image ici, avec exactement ce nom de fichier. Le jeu la
+charge automatiquement au démarrage de cet écran — aucune modification
+de code nécessaire. Tant que le fichier n'est pas présent, un fond de
+couleur unie s'affiche à sa place, le jeu reste testable.
+
+   Nom de fichier : fond.png
+   Format         : PNG (JPG accepté aussi si tu renommes en fond.jpg)
+   Dimensions     : 1920 x 1080 px (plein écran, ratio 16:9)
+   Notes          : image d'ambiance en arrière-plan de la boîte de
+                     dialogue narrative qui s'affiche juste après avoir
+                     cliqué "Nouvelle partie". La boîte de texte
+                     elle-même est en bas de l'écran (fond semi-opaque
+                     par-dessus), donc le haut/centre de l'image est ce
+                     qu'on voit le mieux.
+
+Dépose le fichier dans ce dossier (assets/ui/dialogue_intro/) et
+relance le jeu via ton raccourci.

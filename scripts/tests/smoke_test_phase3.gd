@@ -33,8 +33,12 @@ func _initialize() -> void:
 			return
 	print("OK: les 8 ids de matiere attendus sont presents")
 
-	# 2. Instancie une CarteMatiere par matiere (verifie configurer() sans crash,
-	#    y compris le chemin placeholder puisqu'aucune icone n'existe encore).
+	# 2. Instancie une CarteMatiere par matiere (verifie configurer() sans
+	#    crash). Icone reelle (ExamenAssetUtil, Phase 8) OU placeholder
+	#    colore selon que Mike a deja depose exam_<id>_icon.png ou non —
+	#    ne presume pas lequel (Mike a deja depose les 8 icones reelles
+	#    en local a ce stade), verifie juste que c'est TOUJOURS l'un des
+	#    deux, jamais aucun ni les deux a la fois.
 	var CarteMatiereScene := preload("res://scenes/components/CarteMatiere.tscn")
 	for matiere in DataManager.matieres:
 		var carte = CarteMatiereScene.instantiate()
@@ -44,7 +48,11 @@ func _initialize() -> void:
 		var texte_attendu: String = String(matiere.get("nom"))
 		if not _verifier(texte_obtenu == texte_attendu, "nom mal applique pour %s : attendu '%s', obtenu '%s'" % [matiere.get("id"), texte_attendu, texte_obtenu]):
 			return
-		if not _verifier(carte.get_node("%PlaceholderIcone").visible, "placeholder icone devrait etre visible pour " + str(matiere.get("id"))):
+		var placeholder_visible: bool = carte.get_node("%PlaceholderIcone").visible
+		var texture_visible: bool = carte.get_node("%TextureIcone").visible
+		if not _verifier(placeholder_visible != texture_visible, "exactement un des deux (placeholder OU icone reelle) devrait etre visible pour " + str(matiere.get("id"))):
+			return
+		if not _verifier(not carte.get_node("%LabelNom").visible, "LabelNom devrait rester cache sous le badge (demande de Mike)"):
 			return
 		root.remove_child(carte)
 		carte.free()

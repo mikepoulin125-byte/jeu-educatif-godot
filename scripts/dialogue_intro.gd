@@ -4,11 +4,11 @@ extends Control
 ## Un clic/Espace/Entree complete la ligne courante, ou passe a la suivante.
 
 const VITESSE_CARACTERES_PAR_SEC := 40.0
-const DUREE_FONDU_ENTREE := 0.45
 
 @onready var label_dialogue: Label = %LabelDialogue
 @onready var label_indice: Label = %LabelIndice
-@onready var voile_entree: TransitionRadiale = %VoileEntree
+@onready var texture_fond: TextureRect = %TextureFond
+@onready var placeholder_fond: ColorRect = %PlaceholderFond
 
 var _lignes: Array = []
 var _index_ligne: int = 0
@@ -17,10 +17,8 @@ var _caracteres_affiches: float = 0.0
 var _en_cours_de_revelation: bool = false
 
 func _ready() -> void:
-	# Fondu radial depuis le blanc (centre en premier) a l'arrivee depuis
-	# l'ecran de chargement — voir shaders/transition_radiale_blanc.gdshader.
-	voile_entree.animer(1.0, 0.0, DUREE_FONDU_ENTREE)
-
+	AudioManager.jouer_musique(AudioManager.MUSIQUE_DEBUT_PARTIE)
+	_charger_fond()
 	_lignes = DataManager.get_lignes_intro()
 	label_indice.text = DataManager.get_texte_indice_intro()
 	if _lignes.is_empty():
@@ -42,6 +40,7 @@ func _process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
+		AudioManager.jouer_clic()
 		_avancer()
 		get_viewport().set_input_as_handled()
 	elif event is InputEventKey and event.pressed and (event.keycode == KEY_SPACE or event.keycode == KEY_ENTER):
@@ -68,4 +67,14 @@ func _afficher_ligne(index: int) -> void:
 	label_indice.visible = false
 
 func _aller_vers_selection_starter() -> void:
-	get_tree().change_scene_to_file("res://scenes/SelectionStarter.tscn")
+	SceneTransition.changer_scene("res://scenes/SelectionStarter.tscn")
+
+func _charger_fond() -> void:
+	var texture := DialogueIntroAssetUtil.charger_fond()
+	if texture != null:
+		texture_fond.texture = texture
+		texture_fond.visible = true
+		placeholder_fond.visible = false
+	else:
+		texture_fond.visible = false
+		placeholder_fond.visible = true

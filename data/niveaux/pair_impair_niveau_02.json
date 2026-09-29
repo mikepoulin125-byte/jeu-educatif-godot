@@ -1,16 +1,16 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
+	"_commentaire": "Phase 8 - meme format grille que le niveau 1, mais cible = impair (demande de Mike). Positions melangees (pas de pattern fixe). Voir widget_pair_impair.gd.",
 	"nom": "Sentier Pair-Impair 2",
 	"questions": [
-		{ "nombre": 7, "reponse": "impair" },
-		{ "nombre": 14, "reponse": "pair" },
-		{ "nombre": 1, "reponse": "impair" },
-		{ "nombre": 8, "reponse": "pair" },
-		{ "nombre": 15, "reponse": "impair" },
-		{ "nombre": 2, "reponse": "pair" },
-		{ "nombre": 9, "reponse": "impair" },
-		{ "nombre": 16, "reponse": "pair" },
-		{ "nombre": 3, "reponse": "impair" },
-		{ "nombre": 10, "reponse": "pair" }
+		{ "nombres": [4, 18, 7, 15, 9, 6, 12, 3], "cible": "impair" },
+		{ "nombres": [5, 13, 8, 20, 6, 17, 1, 16], "cible": "impair" },
+		{ "nombres": [10, 7, 14, 2, 19, 3, 18, 9], "cible": "impair" },
+		{ "nombres": [11, 4, 25, 17, 12, 20, 9, 6], "cible": "impair" },
+		{ "nombres": [8, 22, 15, 6, 27, 1, 14, 5], "cible": "impair" },
+		{ "nombres": [13, 9, 16, 21, 4, 10, 17, 2], "cible": "impair" },
+		{ "nombres": [20, 7, 3, 12, 25, 8, 6, 15], "cible": "impair" },
+		{ "nombres": [9, 14, 6, 27, 2, 19, 11, 10], "cible": "impair" },
+		{ "nombres": [16, 5, 2, 13, 7, 24, 17, 4], "cible": "impair" },
+		{ "nombres": [21, 8, 15, 6, 10, 19, 18, 3], "cible": "impair" }
 	]
 }

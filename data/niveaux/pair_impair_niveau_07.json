@@ -1,16 +1,16 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
+	"_commentaire": "Phase 8 - meme format grille que le niveau 1, mais nombres a 3 chiffres (demande de Mike). Positions melangees (pas de pattern fixe alterne). Voir widget_pair_impair.gd.",
 	"nom": "Sentier Pair-Impair 7",
 	"questions": [
-		{ "nombre": 22, "reponse": "pair" },
-		{ "nombre": 29, "reponse": "impair" },
-		{ "nombre": 36, "reponse": "pair" },
-		{ "nombre": 43, "reponse": "impair" },
-		{ "nombre": 50, "reponse": "pair" },
-		{ "nombre": 57, "reponse": "impair" },
-		{ "nombre": 64, "reponse": "pair" },
-		{ "nombre": 1, "reponse": "impair" },
-		{ "nombre": 8, "reponse": "pair" },
-		{ "nombre": 15, "reponse": "impair" }
+		{ "nombres": [310, 528, 247, 381, 729, 694, 156, 103] },
+		{ "nombres": [415, 137, 802, 946, 620, 259, 371, 884] },
+		{ "nombres": [906, 253, 418, 340, 771, 587, 692, 105] },
+		{ "nombres": [129, 456, 703, 897, 214, 362, 511, 980] },
+		{ "nombres": [742, 608, 315, 224, 189, 391, 470, 653] },
+		{ "nombres": [517, 809, 264, 675, 132, 940, 353, 786] },
+		{ "nombres": [610, 283, 947, 124, 559, 402, 336, 871] },
+		{ "nombres": [435, 728, 190, 561, 314, 907, 253, 682] },
+		{ "nombres": [846, 173, 520, 397, 305, 664, 211, 958] },
+		{ "nombres": [381, 704, 129, 856, 590, 217, 938, 463] }
 	]
 }

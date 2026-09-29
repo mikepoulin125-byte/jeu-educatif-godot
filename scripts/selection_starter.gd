@@ -8,6 +8,7 @@ const CarteCreatureScene := preload("res://scenes/components/CarteCreature.tscn"
 @onready var label_titre: Label = %LabelTitre
 
 func _ready() -> void:
+	AudioManager.jouer_musique(AudioManager.MUSIQUE_DEBUT_PARTIE)
 	var ids := DataManager.get_creatures_starters()
 	if ids.is_empty():
 		label_titre.text = "Aucune creature de depart configuree (data/creatures.json)."
@@ -20,4 +21,4 @@ func _ready() -> void:
 
 func _on_creature_choisie(creature_id: String) -> void:
 	SaveManager.new_game(creature_id)
-	get_tree().change_scene_to_file("res://scenes/Hub.tscn")
+	SceneTransition.changer_scene("res://scenes/Hub.tscn")

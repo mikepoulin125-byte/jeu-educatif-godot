@@ -1,16 +1,56 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
+	"_commentaire": "Phase 8 - contenu regenere pour plus de variete (voir CLAUDE.md).",
 	"nom": "Plateau des Coordonnees 7",
 	"questions": [
-		{ "x": 7, "y": 4, "taille_grille": 10 },
-		{ "x": 0, "y": 9, "taille_grille": 10 },
-		{ "x": 3, "y": 4, "taille_grille": 10 },
-		{ "x": 6, "y": 9, "taille_grille": 10 },
-		{ "x": 9, "y": 4, "taille_grille": 10 },
-		{ "x": 2, "y": 9, "taille_grille": 10 },
-		{ "x": 5, "y": 4, "taille_grille": 10 },
-		{ "x": 8, "y": 9, "taille_grille": 10 },
-		{ "x": 1, "y": 4, "taille_grille": 10 },
-		{ "x": 4, "y": 9, "taille_grille": 10 }
+		{
+			"taille_grille": 7,
+			"x": 3,
+			"y": 6
+		},
+		{
+			"taille_grille": 7,
+			"x": 2,
+			"y": 6
+		},
+		{
+			"taille_grille": 7,
+			"x": 2,
+			"y": 3
+		},
+		{
+			"taille_grille": 7,
+			"x": 4,
+			"y": 1
+		},
+		{
+			"taille_grille": 7,
+			"x": 6,
+			"y": 0
+		},
+		{
+			"taille_grille": 7,
+			"x": 6,
+			"y": 6
+		},
+		{
+			"taille_grille": 7,
+			"x": 1,
+			"y": 2
+		},
+		{
+			"taille_grille": 7,
+			"x": 4,
+			"y": 6
+		},
+		{
+			"taille_grille": 7,
+			"x": 6,
+			"y": 1
+		},
+		{
+			"taille_grille": 7,
+			"x": 5,
+			"y": 3
+		}
 	]
 }

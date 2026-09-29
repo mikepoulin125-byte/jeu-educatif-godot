@@ -1,16 +1,16 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
+	"_commentaire": "Phase 8 - le joueur ecrit le nombre manquant pour creer un resultat de la parite demandee, resultat affiche en direct (demande de Mike). Voir widget_pair_impair.gd (mode 'a'/'op'/'cible' sans 'b').",
 	"nom": "Sentier Pair-Impair 10",
 	"questions": [
-		{ "nombre": 31, "reponse": "impair" },
-		{ "nombre": 38, "reponse": "pair" },
-		{ "nombre": 45, "reponse": "impair" },
-		{ "nombre": 52, "reponse": "pair" },
-		{ "nombre": 59, "reponse": "impair" },
-		{ "nombre": 66, "reponse": "pair" },
-		{ "nombre": 73, "reponse": "impair" },
-		{ "nombre": 80, "reponse": "pair" },
-		{ "nombre": 87, "reponse": "impair" },
-		{ "nombre": 94, "reponse": "pair" }
+		{ "a": 32, "op": "+", "cible": "impair" },
+		{ "a": 15, "op": "+", "cible": "pair" },
+		{ "a": 40, "op": "-", "cible": "impair" },
+		{ "a": 27, "op": "-", "cible": "pair" },
+		{ "a": 9, "op": "+", "cible": "impair" },
+		{ "a": 50, "op": "+", "cible": "pair" },
+		{ "a": 63, "op": "-", "cible": "impair" },
+		{ "a": 18, "op": "-", "cible": "pair" },
+		{ "a": 21, "op": "+", "cible": "impair" },
+		{ "a": 44, "op": "+", "cible": "pair" }
 	]
 }

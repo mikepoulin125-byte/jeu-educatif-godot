@@ -1,16 +1,16 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
+	"_commentaire": "Phase 8 - nouveau format 'grille de 8' (demande de Mike) : le joueur clique les 4 nombres PAIRS parmi 8. Voir widget_pair_impair.gd. Positions des pairs/impairs VOLONTAIREMENT melangees (pas de pattern fixe alterne) sur chaque question.",
 	"nom": "Sentier Pair-Impair 1",
 	"questions": [
-		{ "nombre": 4, "reponse": "pair" },
-		{ "nombre": 1, "reponse": "impair" },
-		{ "nombre": 8, "reponse": "pair" },
-		{ "nombre": 5, "reponse": "impair" },
-		{ "nombre": 2, "reponse": "pair" },
-		{ "nombre": 9, "reponse": "impair" },
-		{ "nombre": 6, "reponse": "pair" },
-		{ "nombre": 3, "reponse": "impair" },
-		{ "nombre": 10, "reponse": "pair" },
-		{ "nombre": 7, "reponse": "impair" }
+		{ "nombres": [4, 18, 7, 15, 9, 6, 12, 3] },
+		{ "nombres": [5, 13, 8, 20, 6, 17, 1, 16] },
+		{ "nombres": [10, 7, 14, 2, 19, 3, 18, 9] },
+		{ "nombres": [11, 4, 25, 17, 12, 20, 9, 6] },
+		{ "nombres": [8, 22, 15, 6, 27, 1, 14, 5] },
+		{ "nombres": [13, 9, 16, 21, 4, 10, 17, 2] },
+		{ "nombres": [20, 7, 3, 12, 25, 8, 6, 15] },
+		{ "nombres": [9, 14, 6, 27, 2, 19, 11, 10] },
+		{ "nombres": [16, 5, 2, 13, 7, 24, 17, 4] },
+		{ "nombres": [21, 8, 15, 6, 10, 19, 18, 3] }
 	]
 }

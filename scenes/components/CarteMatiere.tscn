@@ -1,15 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://bqf0e0000cartmat1"]
+[gd_scene load_steps=8 format=3 uid="uid://bqf0e0000cartmat1"]
 
 [ext_resource type="Script" path="res://scripts/components/carte_matiere.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/components/bouton_anime.gd" id="2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_normal"]
-bg_color = Color(1, 1, 1, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.8, 0, 0, 1)
+bg_color = Color(0.92, 0.83, 0.68, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 70
 corner_radius_top_right = 70
 corner_radius_bottom_right = 70
@@ -18,12 +18,12 @@ shadow_color = Color(0, 0, 0, 0.25)
 shadow_size = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hover"]
-bg_color = Color(0.93, 0.93, 0.95, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.8, 0, 0, 1)
+bg_color = Color(0.95, 0.87, 0.73, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 70
 corner_radius_top_right = 70
 corner_radius_bottom_right = 70
@@ -32,26 +32,38 @@ shadow_color = Color(0, 0, 0, 0.3)
 shadow_size = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pressed"]
-bg_color = Color(0.85, 0.85, 0.88, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.8, 0, 0, 1)
+bg_color = Color(0.85, 0.75, 0.58, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 70
 corner_radius_top_right = 70
 corner_radius_bottom_right = 70
 corner_radius_bottom_left = 70
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_anneau_noir"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 61
+corner_radius_top_right = 61
+corner_radius_bottom_right = 61
+corner_radius_bottom_left = 61
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_icone_fond"]
 bg_color = Color(0.5, 0.5, 0.5, 1)
-corner_radius_top_left = 40
-corner_radius_top_right = 40
-corner_radius_bottom_right = 40
-corner_radius_bottom_left = 40
+corner_radius_top_left = 55
+corner_radius_top_right = 55
+corner_radius_bottom_right = 55
+corner_radius_bottom_left = 55
 
 [node name="CarteMatiere" type="VBoxContainer"]
-custom_minimum_size = Vector2(170, 210)
+custom_minimum_size = Vector2(170, 150)
 layout_mode = 2
 theme_override_constants/separation = 12
 script = ExtResource("1")
@@ -69,6 +81,23 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_normal")
 text = ""
 script = ExtResource("2")
 
+[node name="AnneauNoir" type="Panel" parent="BoutonCercle"]
+unique_name_in_owner = true
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -61.0
+offset_top = -61.0
+offset_right = 61.0
+offset_bottom = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_anneau_noir")
+
 [node name="TextureIcone" type="TextureRect" parent="BoutonCercle"]
 unique_name_in_owner = true
 visible = false
@@ -79,10 +108,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -45.0
-offset_top = -45.0
-offset_right = 45.0
-offset_bottom = 45.0
+offset_left = -58.0
+offset_top = -58.0
+offset_right = 58.0
+offset_bottom = 58.0
 grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 5
@@ -97,10 +126,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -40.0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -55.0
+offset_top = -55.0
+offset_right = 55.0
+offset_bottom = 55.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_icone_fond")
@@ -115,13 +144,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 34
+theme_override_font_sizes/font_size = 46
 horizontal_alignment = 1
 vertical_alignment = 1
 text = "?"
 
 [node name="LabelNom" type="Label" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)

@@ -1,24 +1,63 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
-	"nom": "Rivage des Pictogrammes 1",
+	"_commentaire": "Phase 8 - contenu regenere pour plus de variete (voir CLAUDE.md).",
 	"graphique": {
-		"titre": "Fruits du panier",
 		"barres": [
-			{ "categorie": "Pommes", "valeur": 5 },
-			{ "categorie": "Bananes", "valeur": 9 },
-			{ "categorie": "Oranges", "valeur": 13 }
-		]
+			{
+				"categorie": "Pommes",
+				"valeur": 15
+			},
+			{
+				"categorie": "Bananes",
+				"valeur": 12
+			},
+			{
+				"categorie": "Oranges",
+				"valeur": 14
+			}
+		],
+		"titre": "Fruits du panier"
 	},
+	"nom": "Rivage des Pictogrammes 1",
 	"questions": [
-		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 5 },
-		{ "texte": "Combien de Oranges de plus que de Bananes ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Oranges ?", "reponse": 13 },
-		{ "texte": "Combien de Bananes de plus que de Pommes ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Bananes ?", "reponse": 9 },
-		{ "texte": "Combien de Oranges de plus que de Pommes ?", "reponse": 8 },
-		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 5 },
-		{ "texte": "Combien de Oranges de plus que de Bananes ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Oranges ?", "reponse": 13 },
-		{ "texte": "Combien de Bananes de plus que de Pommes ?", "reponse": 4 }
+		{
+			"reponse": 15,
+			"texte": "Combien y a-t-il de Pommes ?"
+		},
+		{
+			"reponse": 12,
+			"texte": "Combien y a-t-il de Bananes ?"
+		},
+		{
+			"reponse": 27,
+			"texte": "Combien de Pommes et de Bananes ensemble ?"
+		},
+		{
+			"reponse": 14,
+			"texte": "Combien y a-t-il de Oranges ?"
+		},
+		{
+			"reponse": 29,
+			"texte": "Combien de Oranges et de Pommes ensemble ?"
+		},
+		{
+			"reponse": 2,
+			"texte": "Combien de Oranges de plus que de Bananes ?"
+		},
+		{
+			"reponse": 1,
+			"texte": "Combien de Pommes de plus que de Oranges ?"
+		},
+		{
+			"reponse": 3,
+			"texte": "Combien de Pommes de plus que de Bananes ?"
+		},
+		{
+			"reponse": 12,
+			"texte": "Combien y a-t-il de Bananes ?"
+		},
+		{
+			"reponse": 26,
+			"texte": "Combien de Oranges et de Bananes ensemble ?"
+		}
 	]
 }

@@ -1,0 +1,84 @@
+Sprites de créatures (151 créatures, jusqu'à 3 stades, variantes glow)
+=========================================================================
+
+CHANGEMENT (Phase 8) : les sprites sont maintenant fournis en GIF ANIMÉ
+(et non plus en PNG statique). Voir la section "Pourquoi GIF ne marche
+pas tel quel dans Godot" plus bas pour le detail technique — en bref,
+un petit outil convertit automatiquement chaque GIF au lancement du
+jeu, aucune action manuelle de plus a faire que deposer le fichier.
+
+1) CONVENTION DE NOMMAGE (inchangée, seule l'extension change)
+   ------------------------------------------------------------
+   Chaque forme de créature (une créature à un stade d'évolution donné)
+   a un identifiant numérique UNIQUE dans tout le jeu : c1, c2, c3, ...
+   jusqu'à c151, sans répétition — même si une créature a 3 stades, ses
+   3 stades utilisent 3 numéros DIFFÉRENTS (ex. Créature 1 : stage1=c1,
+   stage2=c2, stage3=c3 ; Créature 2 (2 stades) : stage1=c4, stage2=c5 ;
+   etc. — voir data/creatures.json, champ "forms", qui indique déjà
+   quel numéro correspond à quelle créature/quel stade).
+
+   Pour chaque numéro cN utilisé dans data/creatures.json :
+      Nom de fichier : cN.gif                  (ex. c1.gif, c42.gif...)
+      Emplacement    : assets/creatures/
+
+   VARIANTES "GLOW" (système de berries, 20 berries données à une
+   créature = elle "brille") : optionnel, un fichier de plus par forme
+   qui en a besoin, MÊME dossier, suffixe "_glow" :
+      Nom de fichier : cN_glow.gif              (ex. c1_glow.gif)
+      Emplacement    : assets/creatures/ (même dossier que cN.gif)
+
+   VARIANTES "DE DOS" (créature du JOUEUR affichée de dos pendant un
+   tableau, la créature sauvage en face reste affichée de face) :
+   même principe, "c" remplacé par "cb", avec sa propre variante glow :
+      Nom de fichier : cbN.gif                  (ex. cb1.gif)
+      Nom de fichier : cbN_glow.gif              (ex. cb1_glow.gif)
+      Emplacement    : assets/creatures/ (même dossier)
+   Tant qu'une variante "cbN" n'existe pas encore pour une créature, le
+   jeu retombe automatiquement sur sa version de face "cN" en attendant.
+
+   Résumé pour 151 créatures à 3 stades max, glow et dos : jusqu'à
+   151 fichiers cN.gif + 151 cN_glow.gif + 151 cbN.gif + 151 cbN_glow.gif.
+   Glow et dos sont tous les deux optionnels (repli automatique tant
+   qu'ils manquent — halo doré pour le glow manquant, version de face
+   pour le dos manquant).
+
+2) FORMAT DU GIF
+   --------------
+   - GIF animé standard (peu importe l'outil qui l'a exporté).
+   - Dimensions libres, mais reste cohérent avec le style du jeu
+     (sprites plutôt carrés, comme les anciens PNG statiques).
+   - Nombre de frames et vitesse d'animation libres — l'outil de
+     conversion détecte tout automatiquement, aucune information à
+     fournir en plus du fichier lui-même.
+   - Un simple PNG statique (une seule image, pas de .gif) reste
+     accepté aussi si tu préfères pour une créature en particulier :
+     le jeu l'affiche alors fixe, sans animation, comme avant.
+
+3) POURQUOI GIF NE MARCHE PAS TEL QUEL DANS GODOT
+   ------------------------------------------------
+   Godot ne sait pas lire un GIF animé nativement (vérifié sur la
+   version installée : aucune fonction de décodage GIF dans le moteur).
+   Plutôt que d'ajouter une extension tierce (dépendance externe, plus
+   fragile), le jeu convertit automatiquement chaque .gif en une
+   "planche" PNG (toutes les frames mises côte à côte dans une seule
+   image) à chaque lancement via le raccourci du Bureau — voir
+   lancer_jeu.bat + scripts/tools/convertir_gifs.ps1. Tu n'as jamais à
+   lancer cette conversion toi-même ni à t'en soucier : dépose le .gif,
+   relance le jeu avec ton raccourci, c'est tout. Seuls les fichiers
+   nouveaux ou modifiés depuis la dernière fois sont reconvertis (donc
+   pas de ralentissement au lancement une fois tous les fichiers en place).
+
+4) FICHIER SPECIAL "CATCH" (sequence de capture en fin de tableau reussi)
+   -----------------------------------------------------------------------
+   Un seul fichier, PAS lie a une creature precise (ne suit pas la
+   convention cN) : joue une fois (pas de boucle) par-dessus la
+   creature sauvage a la derniere reponse d'un tableau reussi (70% et
+   plus), voir ecran_tableau.gd::_jouer_sequence_capture().
+
+      Nom de fichier : catch.gif
+      Emplacement    : assets/creatures/ (meme dossier, meme conversion
+                       automatique que les creatures)
+
+Rien d'autre à faire : dépose tes fichiers .gif dans ce dossier
+(assets/creatures/) sous les noms indiqués dans data/creatures.json et
+relance le jeu via ton raccourci.

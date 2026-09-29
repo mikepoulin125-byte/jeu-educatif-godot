@@ -1,0 +1,27 @@
+Effets sonores ponctuels (sequence de capture)
+================================================
+
+Dépose tes fichiers ici, avec exactement ces noms. Le jeu les charge
+automatiquement — aucune modification de code nécessaire. Tant qu'un
+fichier n'est pas présent, le jeu reste silencieux à cet endroit (pas
+de son placeholder, comme pour le son de clic).
+
+Format accepté : .ogg, .mp3 ou .wav (un seul suffit par son, essayés
+dans cet ordre).
+
+   capture.ogg / capture.mp3 / capture.wav
+      Joué au moment où catch.gif est lancé (dernière réponse d'un
+      tableau réussi, 70% et plus).
+
+   reussite.ogg / reussite.mp3 / reussite.wav
+      Joué juste avant l'affichage de l'écran de résultats ("Niveau
+      réussi !").
+
+   attaque.ogg / attaque.mp3 / attaque.wav
+      Joué au moment précis de l'impact quand ta créature charge la
+      créature sauvage après une bonne réponse (pas à la dernière
+      réponse d'un tableau réussi — cette réponse-là utilise
+      capture.* à la place, voir plus haut).
+
+Dépose les fichiers dans ce dossier (assets/audio/sfx/) et relance le
+jeu via ton raccourci.

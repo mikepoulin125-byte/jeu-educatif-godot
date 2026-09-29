@@ -1,16 +1,46 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
+	"_commentaire": "Phase 8 - contenu regenere pour plus de variete (voir CLAUDE.md).",
 	"nom": "Foret du Possible 2",
 	"questions": [
-		{ "texte": "Une creature de type eau (niveau 2) peut-elle vaincre une creature de type feu (niveau 10) ?", "reponse": "possible" },
-		{ "texte": "Une creature de type feu (niveau 2) peut-elle vaincre une creature de type feuille (niveau 10) ?", "reponse": "possible" },
-		{ "texte": "Une creature de type feuille (niveau 2) peut-elle vaincre une creature de type eau (niveau 10) ?", "reponse": "possible" },
-		{ "texte": "Une creature de type eau (niveau 2) peut-elle vaincre une creature de type feuille (niveau 10) ?", "reponse": "impossible" },
-		{ "texte": "Une creature de type feu (niveau 2) peut-elle vaincre une creature de type eau (niveau 10) ?", "reponse": "impossible" },
-		{ "texte": "Une creature de type feuille (niveau 2) peut-elle vaincre une creature de type feu (niveau 10) ?", "reponse": "impossible" },
-		{ "texte": "Une creature de type eau (niveau 2) peut-elle vaincre une creature de type feuille (niveau 10) ?", "reponse": "impossible" },
-		{ "texte": "Une creature de type feu (niveau 2) peut-elle vaincre une creature de type eau (niveau 10) ?", "reponse": "impossible" },
-		{ "texte": "Une creature de type feuille (niveau 2) peut-elle vaincre une creature de type feu (niveau 10) ?", "reponse": "impossible" },
-		{ "texte": "Une creature de type eau (niveau 2) peut-elle vaincre une creature de type feu (niveau 10) ?", "reponse": "possible" }
+		{
+			"reponse": "possible",
+			"texte": "Est-il possible qu'une creature de type eau batte une creature de type feu ?"
+		},
+		{
+			"reponse": "possible",
+			"texte": "Est-il possible qu'une creature de type feu batte une creature de type feuille ?"
+		},
+		{
+			"reponse": "impossible",
+			"texte": "Si ta creature est de type feuille et l'adversaire de type feu, est-ce un combat gagnable ?"
+		},
+		{
+			"reponse": "possible",
+			"texte": "Si ta creature est de type eau et l'adversaire de type feu, est-ce un combat gagnable ?"
+		},
+		{
+			"reponse": "impossible",
+			"texte": "Est-il possible qu'une creature de type eau batte une creature de type feuille ?"
+		},
+		{
+			"reponse": "possible",
+			"texte": "Une creature feu affronte une creature feuille : peut-elle gagner ?"
+		},
+		{
+			"reponse": "possible",
+			"texte": "Est-il possible qu'une creature de type eau batte une creature de type feu ?"
+		},
+		{
+			"reponse": "impossible",
+			"texte": "Une creature de type feuille (niveau 7) peut-elle vaincre une creature de type feu (niveau 5) ?"
+		},
+		{
+			"reponse": "possible",
+			"texte": "Si ta creature est de type eau et l'adversaire de type feu, est-ce un combat gagnable ?"
+		},
+		{
+			"reponse": "impossible",
+			"texte": "Est-il possible qu'une creature de type eau batte une creature de type feuille ?"
+		}
 	]
 }

@@ -1,0 +1,24 @@
+Décor gauche du Hub (contenu à définir)
+==========================================
+
+Emplacement réservé pour un visuel a gauche de l'écran du Hub, centré
+verticalement dans la moitié gauche de l'écran. Le contenu exact n'est
+pas encore décidé — pour l'instant seul l'emplacement et le mécanisme de
+chargement sont en place.
+
+   Nom de fichier : gauche.gif (anime) ou gauche.png (statique)
+   Format         : GIF anime — converti automatiquement en planche PNG
+                     au lancement du jeu (voir assets/creatures/LISEZ-MOI.txt
+                     pour le detail du mecanisme, identique ici). PNG
+                     statique aussi accepté directement (pas d'animation
+                     dans ce cas).
+   Dimensions     : libre, mais prevoir un visuel plutot vertical/carre
+                     (la zone reservee fait environ 220 x 320 px).
+   Notes          : tant qu'aucun fichier n'est depose, un placeholder
+                     generique s'affiche a sa place.
+
+Le visuel de droite (creature principale du joueur) n'a pas besoin de
+fichier séparé ici : il réutilise automatiquement le sprite de la
+créature choisie via "Accompagne-moi !" au Roster (assets/creatures/).
+
+Dépose le fichier dans ce dossier (assets/ui/hub/) et relance le jeu.

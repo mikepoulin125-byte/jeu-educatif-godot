@@ -1,16 +1,16 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
+	"_commentaire": "Phase 8 - le joueur compte les images d'une meme creature (1 a 9) et clique Pair/Impair. Voir widget_pair_impair.gd (mode 'creature_id').",
 	"nom": "Sentier Pair-Impair 3",
 	"questions": [
-		{ "nombre": 10, "reponse": "pair" },
-		{ "nombre": 17, "reponse": "impair" },
-		{ "nombre": 24, "reponse": "pair" },
-		{ "nombre": 1, "reponse": "impair" },
-		{ "nombre": 8, "reponse": "pair" },
-		{ "nombre": 15, "reponse": "impair" },
-		{ "nombre": 22, "reponse": "pair" },
-		{ "nombre": 29, "reponse": "impair" },
-		{ "nombre": 6, "reponse": "pair" },
-		{ "nombre": 13, "reponse": "impair" }
+		{ "creature_id": "c12", "quantite": 4 },
+		{ "creature_id": "c45", "quantite": 7 },
+		{ "creature_id": "c78", "quantite": 2 },
+		{ "creature_id": "c101", "quantite": 9 },
+		{ "creature_id": "c33", "quantite": 5 },
+		{ "creature_id": "c150", "quantite": 3 },
+		{ "creature_id": "c5", "quantite": 6 },
+		{ "creature_id": "c67", "quantite": 1 },
+		{ "creature_id": "c120", "quantite": 8 },
+		{ "creature_id": "c89", "quantite": 3 }
 	]
 }

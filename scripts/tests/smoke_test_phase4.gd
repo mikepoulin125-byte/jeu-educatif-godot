@@ -92,6 +92,76 @@ func _initialize() -> void:
 		return
 	print("OK: le stade et l'XP investi persistent apres sauvegarde/rechargement")
 
+	# 7b. Attribution d'XP par bonds de 10 (Phase 8, demande de Mike) :
+	# chaque appel ajoute vers le PROCHAIN palier de LA creature ciblee
+	# specifiquement (pas le total XP du joueur) — corrige le bug ou la
+	# barre du Roster affichait le meme total XP sur toutes les creatures.
+	# Repart d'une sauvegarde propre (portefeuille a 0) pour des
+	# assertions fiables, y compris le refus "XP insuffisant" plus bas —
+	# creature_test (creature_01) redevient donc stade 1 ici, sans lien
+	# avec son etat stade-3 verifie juste au-dessus (deja teste).
+	SaveManager.delete_save()
+	SaveManager.new_game(creature_test)
+	SaveManager.capturer_creature("creature_02")
+	if not _verifier(SaveManager.get_progression_stade_creature("creature_02") == 0, "aucune progression au depart pour creature_02"):
+		return
+
+	var xp_depart := SaveManager.get_xp_total()
+	if not _verifier(xp_depart == 0, "portefeuille attendu a 0 juste apres new_game()"):
+		return
+	SaveManager.add_xp(25)  # de quoi faire 2 bonds de 10 (20), il en restera 5
+	var resultat := SaveManager.ajouter_xp_creature("creature_02", 10, 2)
+	if not _verifier(bool(resultat.get("applique", false)) and not bool(resultat.get("evolue", false)), "1er bond de 10 devrait s'appliquer sans evolution"):
+		return
+	if not _verifier(SaveManager.get_progression_stade_creature("creature_02") == 10, "progression attendue 10 apres 1 bond"):
+		return
+	if not _verifier(SaveManager.get_xp_total() == xp_depart + 25 - 10, "XP total incorrect apres le 1er bond de 10 (+25-10)"):
+		return
+
+	SaveManager.ajouter_xp_creature("creature_02", 10, 2)
+	if not _verifier(SaveManager.get_progression_stade_creature("creature_02") == 20, "progression attendue 20 apres 2 bonds"):
+		return
+	if not _verifier(SaveManager.get_xp_total() == xp_depart + 25 - 20, "XP total incorrect apres 2 bonds de 10 (+25-20)"):
+		return
+
+	# XP insuffisant pour un 3e bond de 10 (il ne reste que 5) : refuse,
+	# rien ne change.
+	resultat = SaveManager.ajouter_xp_creature("creature_02", 10, 2)
+	if not _verifier(not bool(resultat.get("applique", false)), "le bond devrait etre refuse (XP insuffisant : 5 restants)"):
+		return
+	if not _verifier(SaveManager.get_progression_stade_creature("creature_02") == 20, "la progression ne devrait pas bouger apres un refus"):
+		return
+	if not _verifier(SaveManager.get_xp_total() == xp_depart + 25 - 20, "le portefeuille ne devrait pas bouger apres un bond refuse"):
+		return
+
+	# Isolation par creature : creature_01 (stade 1, tout juste
+	# recapturee ci-dessus, aucun XP investi) n'a AUCUNE progression, et
+	# n'est pas affectee par les bonds attribues a creature_02.
+	if not _verifier(SaveManager.get_progression_stade_creature(creature_test) == 0, "creature_01 ne devrait avoir aucune progression (les bonds visaient creature_02, pas elle)"):
+		return
+	print("OK: ajouter_xp_creature() - bonds de 10, isolation par creature (pas le total XP du joueur)")
+
+	# Complete le palier (300 XP au total, 20 deja investis -> il manque
+	# 280) par bonds de 10 successifs, jusqu'a declenchement automatique
+	# de l'evolution.
+	xp_depart = SaveManager.get_xp_total()
+	SaveManager.add_xp(280)
+	var evolue := false
+	for i in range(28):
+		resultat = SaveManager.ajouter_xp_creature("creature_02", 10, 2)
+		if bool(resultat.get("evolue", false)):
+			evolue = true
+			break
+	if not _verifier(evolue, "creature_02 devrait avoir evolue apres 300 XP investis par bonds de 10"):
+		return
+	if not _verifier(SaveManager.get_stage_creature("creature_02") == 2, "creature_02 devrait etre au stade 2 apres evolution"):
+		return
+	if not _verifier(SaveManager.get_progression_stade_creature("creature_02") == 0, "la progression devrait etre remise a 0 apres evolution"):
+		return
+	if not _verifier(SaveManager.get_xp_total() == xp_depart + 280 - 280, "XP total incorrect apres avoir tout investi (les 280 ajoutes ont ete entierement depenses)"):
+		return
+	print("OK: ajouter_xp_creature() declenche l'evolution automatiquement au seuil du palier")
+
 	SaveManager.delete_save()
 
 	# 8. CarteCreatureRoster : configurer() sans crash, nom applique pour le bon stade.

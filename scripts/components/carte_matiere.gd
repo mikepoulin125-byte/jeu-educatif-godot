@@ -1,10 +1,19 @@
 extends VBoxContainer
 ## Carte reutilisable pour un badge de matiere du hub : cercle blanc avec
-## icone reelle (assets/ui/) ou placeholder colore (couleur+symbole de
-## matieres.json), libelle blanc en dessous. Style inspire du langage
-## visuel generique envoye par Mike (bouton rond blanc + icone centree +
-## libelle dessous, sur fond a bandes diagonales) — aucun asset externe
-## reproduit, tout est genere ou fourni par les donnees du projet.
+## icone reelle ou placeholder colore (couleur+symbole de matieres.json).
+## Style inspire du langage visuel generique envoye par Mike (bouton
+## rond blanc + icone centree, sur fond a bandes diagonales) — aucun
+## asset externe reproduit, tout est genere ou fourni par les donnees
+## du projet.
+##
+## Phase 8 (raffinement demande par Mike) : l'icone reelle est la MEME
+## image que celle de la carte "Examen" de cette matiere
+## (assets/ui/examen/exam_<id>_icon.png, voir ExamenAssetUtil) — un seul
+## fichier par matiere, reutilise aux deux endroits, plutot que deux
+## conventions de nommage separees. Le libelle sous le cercle (LabelNom)
+## est cache visuellement (mais toujours rempli programmatiquement, pour
+## garder le tooltip/l'accessibilite et ne pas casser les tests qui en
+## verifient le contenu).
 ##
 ## Comme les autres cartes : configurer() resout les noeuds enfants via
 ## %Nom a chaque appel (fonctionne des instantiate(), pas besoin
@@ -22,12 +31,11 @@ func configurer(matiere_data: Dictionary) -> void:
 	_matiere_id = String(matiere_data.get("id", ""))
 	_connecter_bouton()
 
-	var icone_id: String = String(matiere_data.get("icone", ""))
 	var texture_icone: TextureRect = %TextureIcone
 	var placeholder_icone: Panel = %PlaceholderIcone
 	var label_symbole: Label = %LabelSymbole
 
-	var texture := UiIconUtil.charger_texture(icone_id)
+	var texture := ExamenAssetUtil.charger_icone(_matiere_id)
 	if texture != null:
 		texture_icone.texture = texture
 		texture_icone.visible = true

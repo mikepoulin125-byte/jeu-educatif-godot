@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/selection_niveau.gd" id="1"]
 [ext_resource type="Shader" path="res://shaders/fond_bandes_diagonales.gdshader" id="2"]
 [ext_resource type="Script" path="res://scripts/components/bouton_anime.gd" id="3"]
-[ext_resource type="PackedScene" path="res://scenes/components/TransitionRadiale.tscn" id="4"]
+[ext_resource type="Script" path="res://scripts/components/chemin_niveaux.gd" id="4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fond"]
 shader = ExtResource("2")
@@ -96,7 +96,7 @@ anchor_bottom = 1.0
 offset_left = 80.0
 offset_top = 110.0
 offset_right = -80.0
-offset_bottom = -40.0
+offset_bottom = -170.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -104,6 +104,12 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_top = 20
+
+[node name="CheminNiveaux" type="Control" parent="ScrollNiveaux/MargeNiveaux"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("4")
 
 [node name="GrilleNiveaux" type="GridContainer" parent="ScrollNiveaux/MargeNiveaux"]
 unique_name_in_owner = true
@@ -113,5 +119,14 @@ theme_override_constants/h_separation = 30
 theme_override_constants/v_separation = 30
 columns = 5
 
-[node name="VoileEntree" parent="." instance=ExtResource("4")]
+[node name="ZoneExamen" type="CenterContainer" parent="."]
 unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -160.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0

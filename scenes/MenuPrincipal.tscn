@@ -1,8 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://bqf0e0000menu01"]
+[gd_scene load_steps=14 format=3 uid="uid://bqf0e0000menu01"]
 
 [ext_resource type="Script" path="res://scripts/menu_principal.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/components/bouton_anime.gd" id="2"]
-[ext_resource type="PackedScene" path="res://scenes/components/TransitionRadiale.tscn" id="3"]
+[ext_resource type="Shader" path="res://shaders/fond_bandes_diagonales.gdshader" id="3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fond_boutons"]
+shader = ExtResource("3")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cadre_logo"]
 bg_color = Color(0.1, 0.1, 0.14, 0.55)
@@ -17,11 +20,22 @@ corner_radius_bottom_right = 18
 corner_radius_bottom_left = 18
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panneau_boutons"]
-bg_color = Color(0.06, 0.07, 0.1, 0.5)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
+bg_color = Color(1, 1, 1, 0.85)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.8, 0, 0, 1)
+corner_radius_top_left = 28
+corner_radius_top_right = 28
+corner_radius_bottom_right = 28
+corner_radius_bottom_left = 28
+content_margin_left = 14.0
+content_margin_top = 14.0
+content_margin_right = 14.0
+content_margin_bottom = 14.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primaire_normal"]
 bg_color = Color(0.98, 0.98, 1, 1)
@@ -152,6 +166,18 @@ theme_override_font_sizes/font_size = 18
 horizontal_alignment = 1
 text = "assets/ui/menu/fond_menu.png attendu ici (1920x1080)"
 
+[node name="VideoFond" type="VideoStreamPlayer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand = true
+
 [node name="ZoneLogo" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 1
@@ -211,6 +237,12 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_panneau_boutons")
 
+[node name="FondBandes" type="ColorRect" parent="ZoneBoutons"]
+layout_mode = 2
+mouse_filter = 2
+material = SubResource("ShaderMaterial_fond_boutons")
+color = Color(1, 1, 1, 1)
+
 [node name="MargeBoutons" type="MarginContainer" parent="ZoneBoutons"]
 layout_mode = 2
 theme_override_constants/margin_left = 24
@@ -227,7 +259,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(336, 74)
 layout_mode = 2
 focus_mode = 0
-theme_override_colors/font_color = Color(0.16, 0.4, 0.85, 1)
+theme_override_colors/font_color = Color(0.8, 0, 0, 1)
 theme_override_colors/font_disabled_color = Color(0.4, 0.4, 0.4, 1)
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = SubResource("StyleBoxFlat_primaire_normal")
@@ -243,7 +275,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(336, 74)
 layout_mode = 2
 focus_mode = 0
-theme_override_colors/font_color = Color(0.16, 0.4, 0.85, 1)
+theme_override_colors/font_color = Color(0.8, 0, 0, 1)
 theme_override_colors/font_disabled_color = Color(0.4, 0.4, 0.4, 1)
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = SubResource("StyleBoxFlat_primaire_normal")
@@ -259,7 +291,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(336, 74)
 layout_mode = 2
 focus_mode = 0
-theme_override_colors/font_color = Color(0.32, 0.34, 0.38, 1)
+theme_override_colors/font_color = Color(0.8, 0, 0, 1)
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = SubResource("StyleBoxFlat_secondaire_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_secondaire_hover")
@@ -267,7 +299,4 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_secondaire_pressed")
 theme_override_styles/focus = SubResource("StyleBoxFlat_secondaire_normal")
 text = "Quitter"
 script = ExtResource("2")
-
-[node name="FadeBlanc" parent="." instance=ExtResource("3")]
-unique_name_in_owner = true
 

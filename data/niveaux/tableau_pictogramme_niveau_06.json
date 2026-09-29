@@ -1,25 +1,67 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
-	"nom": "Rivage des Pictogrammes 6",
+	"_commentaire": "Phase 8 - contenu regenere pour plus de variete (voir CLAUDE.md).",
 	"graphique": {
-		"titre": "Fruits du panier",
 		"barres": [
-			{ "categorie": "Pommes", "valeur": 8 },
-			{ "categorie": "Bananes", "valeur": 12 },
-			{ "categorie": "Oranges", "valeur": 4 },
-			{ "categorie": "Raisins", "valeur": 8 }
-		]
+			{
+				"categorie": "Robots",
+				"valeur": 18
+			},
+			{
+				"categorie": "Poupees",
+				"valeur": 10
+			},
+			{
+				"categorie": "Ballons",
+				"valeur": 29
+			},
+			{
+				"categorie": "Cerfs-volants",
+				"valeur": 27
+			}
+		],
+		"titre": "Jouets du coffre"
 	},
+	"nom": "Rivage des Pictogrammes 6",
 	"questions": [
-		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 8 },
-		{ "texte": "Combien de Bananes de plus que de Oranges ?", "reponse": 8 },
-		{ "texte": "Combien y a-t-il de Oranges ?", "reponse": 4 },
-		{ "texte": "Combien de Raisins de plus que de Pommes ?", "reponse": 0 },
-		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 8 },
-		{ "texte": "Combien de Bananes de plus que de Oranges ?", "reponse": 8 },
-		{ "texte": "Combien y a-t-il de Oranges ?", "reponse": 4 },
-		{ "texte": "Combien de Raisins de plus que de Pommes ?", "reponse": 0 },
-		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 8 },
-		{ "texte": "Combien de Bananes de plus que de Oranges ?", "reponse": 8 }
+		{
+			"reponse": 27,
+			"texte": "Combien y a-t-il de Cerfs-volants ?"
+		},
+		{
+			"reponse": 27,
+			"texte": "Combien y a-t-il de Cerfs-volants ?"
+		},
+		{
+			"reponse": 17,
+			"texte": "Combien de Cerfs-volants de plus que de Poupees ?"
+		},
+		{
+			"reponse": 18,
+			"texte": "Combien y a-t-il de Robots ?"
+		},
+		{
+			"reponse": 9,
+			"texte": "Combien de Cerfs-volants de plus que de Robots ?"
+		},
+		{
+			"reponse": 10,
+			"texte": "Combien y a-t-il de Poupees ?"
+		},
+		{
+			"reponse": 18,
+			"texte": "Combien y a-t-il de Robots ?"
+		},
+		{
+			"reponse": 56,
+			"texte": "Combien de Ballons et de Cerfs-volants ensemble ?"
+		},
+		{
+			"reponse": 29,
+			"texte": "Combien y a-t-il de Ballons ?"
+		},
+		{
+			"reponse": 17,
+			"texte": "Combien de Cerfs-volants de plus que de Poupees ?"
+		}
 	]
 }

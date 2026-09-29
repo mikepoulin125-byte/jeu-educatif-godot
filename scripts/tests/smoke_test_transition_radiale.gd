@@ -46,28 +46,21 @@ func _initialize() -> void:
 	root.remove_child(voile)
 	voile.free()
 
-	# 3. Verifie que les 3 scenes concernees ont bien un noeud de
-	# transition (structure statique, independante du script racine qui
-	# ne compile pas sous --script pour les scenes referencant un
-	# autoload — voir smoke_test_raffinements_menu.gd pour le detail de
-	# cette limite documentee).
-	var verifications := [
-		["res://scenes/MenuPrincipal.tscn", "%FadeBlanc"],
-		["res://scenes/DialogueIntro.tscn", "%VoileEntree"],
-		["res://scenes/Hub.tscn", "%VoileEntree"],
-	]
-	for v in verifications:
-		var chemin_scene: String = v[0]
-		var nom_noeud: String = v[1]
-		var scene = load(chemin_scene).instantiate()
-		root.add_child(scene)
-		var noeud = scene.get_node_or_null(nom_noeud)
-		var ok := _verifier(noeud != null, "%s : noeud %s manquant" % [chemin_scene, nom_noeud])
-		root.remove_child(scene)
-		scene.free()
-		if not ok:
-			return
-	print("OK: MenuPrincipal, DialogueIntro et Hub ont chacun leur noeud de transition radiale")
+	# 3. SceneTransition (autoload, Phase 8) : centralise desormais le
+	# fondu au blanc pour TOUTES les transitions entre scenes (remplace
+	# les anciens noeuds VoileEntree/FadeBlanc par scene). Cree son propre
+	# voile partage a _ready(), invisible par defaut (progression=0.0).
+	var SceneTransitionScript := preload("res://scripts/autoload/scene_transition.gd")
+	var scene_transition = SceneTransitionScript.new()
+	scene_transition._ready()
+	var voile_partage: TransitionRadiale = scene_transition._voile
+	if not _verifier(voile_partage != null, "SceneTransition devrait creer son voile partage des _ready()"):
+		return
+	var progression_partagee: float = voile_partage.material.get_shader_parameter("progression")
+	if not _verifier(is_equal_approx(progression_partagee, 0.0), "le voile de SceneTransition devrait demarrer invisible (progression=0.0), obtenu %f" % progression_partagee):
+		return
+	scene_transition.free()
+	print("OK: SceneTransition cree un voile partage unique, invisible par defaut")
 
 	print("=== Smoke test transition radiale : SUCCES ===")
 	quit(0)

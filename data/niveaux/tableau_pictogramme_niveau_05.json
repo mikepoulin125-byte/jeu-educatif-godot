@@ -1,25 +1,63 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
-	"nom": "Rivage des Pictogrammes 5",
+	"_commentaire": "Phase 8 - contenu regenere pour plus de variete (voir CLAUDE.md).",
 	"graphique": {
-		"titre": "Fruits du panier",
 		"barres": [
-			{ "categorie": "Pommes", "valeur": 5 },
-			{ "categorie": "Bananes", "valeur": 9 },
-			{ "categorie": "Oranges", "valeur": 13 },
-			{ "categorie": "Raisins", "valeur": 5 }
-		]
+			{
+				"categorie": "Rouges",
+				"valeur": 26
+			},
+			{
+				"categorie": "Bleues",
+				"valeur": 21
+			},
+			{
+				"categorie": "Vertes",
+				"valeur": 24
+			}
+		],
+		"titre": "Billes de la collection"
 	},
+	"nom": "Rivage des Pictogrammes 5",
 	"questions": [
-		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 5 },
-		{ "texte": "Combien de Oranges de plus que de Bananes ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Oranges ?", "reponse": 13 },
-		{ "texte": "Combien de Raisins de plus que de Pommes ?", "reponse": 0 },
-		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 5 },
-		{ "texte": "Combien de Oranges de plus que de Bananes ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Oranges ?", "reponse": 13 },
-		{ "texte": "Combien de Raisins de plus que de Pommes ?", "reponse": 0 },
-		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 5 },
-		{ "texte": "Combien de Oranges de plus que de Bananes ?", "reponse": 4 }
+		{
+			"reponse": 26,
+			"texte": "Combien y a-t-il de Rouges ?"
+		},
+		{
+			"reponse": 45,
+			"texte": "Combien de Vertes et de Bleues ensemble ?"
+		},
+		{
+			"reponse": 3,
+			"texte": "Combien de Vertes de plus que de Bleues ?"
+		},
+		{
+			"reponse": 50,
+			"texte": "Combien de Vertes et de Rouges ensemble ?"
+		},
+		{
+			"reponse": 47,
+			"texte": "Combien de Rouges et de Bleues ensemble ?"
+		},
+		{
+			"reponse": 45,
+			"texte": "Combien de Bleues et de Vertes ensemble ?"
+		},
+		{
+			"reponse": 47,
+			"texte": "Combien de Rouges et de Bleues ensemble ?"
+		},
+		{
+			"reponse": 2,
+			"texte": "Combien de Rouges de plus que de Vertes ?"
+		},
+		{
+			"reponse": 2,
+			"texte": "Combien de Rouges de plus que de Vertes ?"
+		},
+		{
+			"reponse": 24,
+			"texte": "Combien y a-t-il de Vertes ?"
+		}
 	]
 }

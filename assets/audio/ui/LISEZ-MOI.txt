@@ -8,9 +8,9 @@ placeholder généré : plus simple, et ça évite un bruit générique agaçant
 en attendant le vrai son).
 
    Nom de fichier : clic_bouton.ogg
-   Format         : OGG Vorbis (recommandé) — .wav aussi accepté si tu
-                     renommes en clic_bouton.wav (le jeu essaie les deux
-                     extensions, OGG en premier)
+   Format         : OGG Vorbis (recommandé) — .mp3 ou .wav aussi acceptés
+                     si tu renommes en clic_bouton.mp3 / clic_bouton.wav
+                     (le jeu essaie les trois extensions, OGG en premier)
    Durée conseillée : très court, entre 0.05 et 0.3 seconde
    Notes          : un clic net et discret fonctionne mieux qu'un son
                      long pour un bouton de menu.

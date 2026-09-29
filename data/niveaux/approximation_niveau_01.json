@@ -1,16 +1,16 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
+	"_commentaire": "Phase 8 - 'Qui gagne le combat ?' entre 2 types (demande de Mike, triangle inspire des faiblesses Pokemon : eau bat feu, feu bat feuille, feuille bat eau). Voir data/types.json (source de verite) et widget_approximation.gd (mode 'type_a'/'type_b').",
 	"nom": "Vallee des Estimations 1",
 	"questions": [
-		{ "texte": "Il y a environ 16 objets dans le groupe. Ecris un nombre proche (a 6 pres).", "min": 10, "max": 22 },
-		{ "texte": "Il y a environ 19 objets dans le groupe. Ecris un nombre proche (a 6 pres).", "min": 13, "max": 25 },
-		{ "texte": "Il y a environ 22 objets dans le groupe. Ecris un nombre proche (a 6 pres).", "min": 16, "max": 28 },
-		{ "texte": "Il y a environ 25 objets dans le groupe. Ecris un nombre proche (a 6 pres).", "min": 19, "max": 31 },
-		{ "texte": "Il y a environ 28 objets dans le groupe. Ecris un nombre proche (a 6 pres).", "min": 22, "max": 34 },
-		{ "texte": "Il y a environ 31 objets dans le groupe. Ecris un nombre proche (a 6 pres).", "min": 25, "max": 37 },
-		{ "texte": "Il y a environ 34 objets dans le groupe. Ecris un nombre proche (a 6 pres).", "min": 28, "max": 40 },
-		{ "texte": "Il y a environ 37 objets dans le groupe. Ecris un nombre proche (a 6 pres).", "min": 31, "max": 43 },
-		{ "texte": "Il y a environ 40 objets dans le groupe. Ecris un nombre proche (a 6 pres).", "min": 34, "max": 46 },
-		{ "texte": "Il y a environ 43 objets dans le groupe. Ecris un nombre proche (a 6 pres).", "min": 37, "max": 49 }
+		{ "type_a": "eau", "type_b": "feu", "gagnant": "eau" },
+		{ "type_a": "feu", "type_b": "feuille", "gagnant": "feu" },
+		{ "type_a": "feuille", "type_b": "eau", "gagnant": "feuille" },
+		{ "type_a": "feu", "type_b": "eau", "gagnant": "eau" },
+		{ "type_a": "feuille", "type_b": "feu", "gagnant": "feu" },
+		{ "type_a": "eau", "type_b": "feuille", "gagnant": "feuille" },
+		{ "type_a": "eau", "type_b": "feu", "gagnant": "eau" },
+		{ "type_a": "feuille", "type_b": "eau", "gagnant": "feuille" },
+		{ "type_a": "feu", "type_b": "feuille", "gagnant": "feu" },
+		{ "type_a": "feu", "type_b": "eau", "gagnant": "eau" }
 	]
 }

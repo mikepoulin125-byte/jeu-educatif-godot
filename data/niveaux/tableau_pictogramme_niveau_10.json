@@ -1,26 +1,67 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
-	"nom": "Rivage des Pictogrammes 10",
+	"_commentaire": "Phase 8 - contenu regenere pour plus de variete (voir CLAUDE.md).",
 	"graphique": {
-		"titre": "Fruits du panier",
 		"barres": [
-			{ "categorie": "Pommes", "valeur": 8 },
-			{ "categorie": "Bananes", "valeur": 12 },
-			{ "categorie": "Oranges", "valeur": 4 },
-			{ "categorie": "Raisins", "valeur": 8 },
-			{ "categorie": "Fraises", "valeur": 12 }
-		]
+			{
+				"categorie": "Roses",
+				"valeur": 34
+			},
+			{
+				"categorie": "Tulipes",
+				"valeur": 33
+			},
+			{
+				"categorie": "Marguerites",
+				"valeur": 25
+			},
+			{
+				"categorie": "Lys",
+				"valeur": 21
+			}
+		],
+		"titre": "Fleurs du jardin"
 	},
+	"nom": "Rivage des Pictogrammes 10",
 	"questions": [
-		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 8 },
-		{ "texte": "Combien de Bananes de plus que de Oranges ?", "reponse": 8 },
-		{ "texte": "Combien y a-t-il de Oranges ?", "reponse": 4 },
-		{ "texte": "Combien de Fraises de plus que de Raisins ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Fraises ?", "reponse": 12 },
-		{ "texte": "Combien de Bananes de plus que de Pommes ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Bananes ?", "reponse": 12 },
-		{ "texte": "Combien de Raisins de plus que de Oranges ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Raisins ?", "reponse": 8 },
-		{ "texte": "Combien de Fraises de plus que de Pommes ?", "reponse": 4 }
+		{
+			"reponse": 1,
+			"texte": "Combien de Roses de plus que de Tulipes ?"
+		},
+		{
+			"reponse": 55,
+			"texte": "Combien de Lys et de Roses ensemble ?"
+		},
+		{
+			"reponse": 21,
+			"texte": "Combien y a-t-il de Lys ?"
+		},
+		{
+			"reponse": 25,
+			"texte": "Combien y a-t-il de Marguerites ?"
+		},
+		{
+			"reponse": 46,
+			"texte": "Combien de Marguerites et de Lys ensemble ?"
+		},
+		{
+			"reponse": 21,
+			"texte": "Combien y a-t-il de Lys ?"
+		},
+		{
+			"reponse": 4,
+			"texte": "Combien de Marguerites de plus que de Lys ?"
+		},
+		{
+			"reponse": 4,
+			"texte": "Combien de Marguerites de plus que de Lys ?"
+		},
+		{
+			"reponse": 21,
+			"texte": "Combien y a-t-il de Lys ?"
+		},
+		{
+			"reponse": 34,
+			"texte": "Combien y a-t-il de Roses ?"
+		}
 	]
 }

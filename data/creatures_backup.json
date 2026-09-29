@@ -1,0 +1,32 @@
+{
+	"_commentaire": "PLACEHOLDER - a completer par Mike. Voir docs/evolutions.md pour une explication en langage simple de cette structure (chaque bloc = une ligne d'evolution complete, pas une seule creature). 81 lignes de creatures au total (une par 'id'), stages 1 a 3, sprites c1..c151 sans repetition. Le champ 'starter' marque les creatures proposees au choix de depart (section 5 de la spec). Exemple ci-dessous avec 3 lignes seulement, toutes marquees starter pour pouvoir tester l'ecran de choix. SPRITES 'GLOW' (systeme de berries, Phase 4 bis) : pour chaque sprite normal 'cN' utilise dans 'forms', un sprite glow optionnel peut etre depose sous le nom 'cN_glow.png' dans le MEME dossier assets/creatures/ (pas de sous-dossier separe - meme mecanisme de resolution que les sprites normaux, juste un suffixe). Ex.: forms.stage1='c1' -> glow attendu a assets/creatures/c1_glow.png. Tant que le fichier glow n'existe pas, un placeholder distinct (halo dore autour du placeholder normal) s'affiche a sa place une fois le seuil de 20 berries atteint.",
+	"creatures": [
+		{
+			"id": "creature_01",
+			"stages": 3,
+			"types": ["eau"],
+			"starter": true,
+			"forms": { "stage1": "c1", "stage2": "c2", "stage3": "c3" },
+			"names": { "stage1": "Creature 1", "stage2": "Creature 1 Evo", "stage3": "Creature 1 Evo Finale" },
+			"description": "Description a venir."
+		},
+		{
+			"id": "creature_02",
+			"stages": 2,
+			"types": ["feu"],
+			"starter": true,
+			"forms": { "stage1": "c4", "stage2": "c5" },
+			"names": { "stage1": "Creature 2", "stage2": "Creature 2 Evo" },
+			"description": "Description a venir."
+		},
+		{
+			"id": "creature_03",
+			"stages": 1,
+			"types": ["feuille"],
+			"starter": true,
+			"forms": { "stage1": "c7" },
+			"names": { "stage1": "Creature 3" },
+			"description": "Description a venir."
+		}
+	]
+}

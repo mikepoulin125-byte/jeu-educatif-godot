@@ -31,5 +31,18 @@ générique s'affiche à sa place pour que le menu reste testable.
                      placeholder actuel affiche un texte encadre
                      générique a la meme position/taille.
 
+3) FOND VIDÉO (optionnel, remplace le fond d'écran fixe si présent)
+   Nom de fichier : fond_menu.ogv
+   Format         : Ogg Theora (.ogv) UNIQUEMENT — Godot ne lit pas le
+                     mp4/h264 nativement (aucun plugin ajouté au projet
+                     pour ça). Si ta video est en .mp4, convertis-la
+                     d'abord avec ffmpeg, par exemple :
+                       ffmpeg -i fond_menu.mp4 -c:v libtheora -q:v 7 -c:a libvorbis -q:a 4 fond_menu.ogv
+   Dimensions     : 1920 x 1080 px (plein écran, ratio 16:9)
+   Notes          : jouée en boucle automatiquement, plein écran, en
+                     arrière-plan derrière le logo et les boutons (ne
+                     bloque jamais les clics). Si absent, le jeu retombe
+                     sur fond_menu.png, puis sur le placeholder.
+
 Rien d'autre à faire : dépose les fichiers dans ce dossier
 (assets/ui/menu/) sous ces noms exacts et relance le jeu.

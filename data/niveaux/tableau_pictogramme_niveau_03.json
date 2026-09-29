@@ -1,24 +1,63 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
-	"nom": "Rivage des Pictogrammes 3",
+	"_commentaire": "Phase 8 - contenu regenere pour plus de variete (voir CLAUDE.md).",
 	"graphique": {
-		"titre": "Fruits du panier",
 		"barres": [
-			{ "categorie": "Pommes", "valeur": 11 },
-			{ "categorie": "Bananes", "valeur": 3 },
-			{ "categorie": "Oranges", "valeur": 7 }
-		]
+			{
+				"categorie": "Autos",
+				"valeur": 20
+			},
+			{
+				"categorie": "Velos",
+				"valeur": 12
+			},
+			{
+				"categorie": "Camions",
+				"valeur": 9
+			}
+		],
+		"titre": "Vehicules du stationnement"
 	},
+	"nom": "Rivage des Pictogrammes 3",
 	"questions": [
-		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 11 },
-		{ "texte": "Combien de Oranges de plus que de Bananes ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Oranges ?", "reponse": 7 },
-		{ "texte": "Combien de Pommes de plus que de Bananes ?", "reponse": 8 },
-		{ "texte": "Combien y a-t-il de Bananes ?", "reponse": 3 },
-		{ "texte": "Combien de Pommes de plus que de Oranges ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 11 },
-		{ "texte": "Combien de Oranges de plus que de Bananes ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Oranges ?", "reponse": 7 },
-		{ "texte": "Combien de Pommes de plus que de Bananes ?", "reponse": 8 }
+		{
+			"reponse": 20,
+			"texte": "Combien y a-t-il de Autos ?"
+		},
+		{
+			"reponse": 12,
+			"texte": "Combien y a-t-il de Velos ?"
+		},
+		{
+			"reponse": 20,
+			"texte": "Combien y a-t-il de Autos ?"
+		},
+		{
+			"reponse": 12,
+			"texte": "Combien y a-t-il de Velos ?"
+		},
+		{
+			"reponse": 3,
+			"texte": "Combien de Velos de plus que de Camions ?"
+		},
+		{
+			"reponse": 20,
+			"texte": "Combien y a-t-il de Autos ?"
+		},
+		{
+			"reponse": 20,
+			"texte": "Combien y a-t-il de Autos ?"
+		},
+		{
+			"reponse": 20,
+			"texte": "Combien y a-t-il de Autos ?"
+		},
+		{
+			"reponse": 12,
+			"texte": "Combien y a-t-il de Velos ?"
+		},
+		{
+			"reponse": 12,
+			"texte": "Combien y a-t-il de Velos ?"
+		}
 	]
 }

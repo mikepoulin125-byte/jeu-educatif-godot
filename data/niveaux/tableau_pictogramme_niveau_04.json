@@ -1,25 +1,63 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
-	"nom": "Rivage des Pictogrammes 4",
+	"_commentaire": "Phase 8 - contenu regenere pour plus de variete (voir CLAUDE.md).",
 	"graphique": {
-		"titre": "Fruits du panier",
 		"barres": [
-			{ "categorie": "Pommes", "valeur": 2 },
-			{ "categorie": "Bananes", "valeur": 6 },
-			{ "categorie": "Oranges", "valeur": 10 },
-			{ "categorie": "Raisins", "valeur": 2 }
-		]
+			{
+				"categorie": "Soccer",
+				"valeur": 9
+			},
+			{
+				"categorie": "Hockey",
+				"valeur": 14
+			},
+			{
+				"categorie": "Natation",
+				"valeur": 8
+			}
+		],
+		"titre": "Sports preferes"
 	},
+	"nom": "Rivage des Pictogrammes 4",
 	"questions": [
-		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 2 },
-		{ "texte": "Combien de Oranges de plus que de Bananes ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Oranges ?", "reponse": 10 },
-		{ "texte": "Combien de Raisins de plus que de Pommes ?", "reponse": 0 },
-		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 2 },
-		{ "texte": "Combien de Oranges de plus que de Bananes ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Oranges ?", "reponse": 10 },
-		{ "texte": "Combien de Raisins de plus que de Pommes ?", "reponse": 0 },
-		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 2 },
-		{ "texte": "Combien de Oranges de plus que de Bananes ?", "reponse": 4 }
+		{
+			"reponse": 8,
+			"texte": "Combien y a-t-il de Natation ?"
+		},
+		{
+			"reponse": 23,
+			"texte": "Combien de Hockey et de Soccer ensemble ?"
+		},
+		{
+			"reponse": 8,
+			"texte": "Combien y a-t-il de Natation ?"
+		},
+		{
+			"reponse": 22,
+			"texte": "Combien de Natation et de Hockey ensemble ?"
+		},
+		{
+			"reponse": 5,
+			"texte": "Combien de Hockey de plus que de Soccer ?"
+		},
+		{
+			"reponse": 14,
+			"texte": "Combien y a-t-il de Hockey ?"
+		},
+		{
+			"reponse": 14,
+			"texte": "Combien y a-t-il de Hockey ?"
+		},
+		{
+			"reponse": 8,
+			"texte": "Combien y a-t-il de Natation ?"
+		},
+		{
+			"reponse": 1,
+			"texte": "Combien de Soccer de plus que de Natation ?"
+		},
+		{
+			"reponse": 22,
+			"texte": "Combien de Hockey et de Natation ensemble ?"
+		}
 	]
 }

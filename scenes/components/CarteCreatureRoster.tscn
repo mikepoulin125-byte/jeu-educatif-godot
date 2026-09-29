@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bqf0e0000crost01"]
+[gd_scene load_steps=6 format=3 uid="uid://bqf0e0000crost01"]
 
 [ext_resource type="Script" path="res://scripts/components/carte_creature_roster.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/components/bouton_anime.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/components/texture_rect_anime.gd" id="3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_normal"]
 bg_color = Color(1, 1, 1, 1)
@@ -64,6 +65,7 @@ offset_left = -40.0
 offset_top = -40.0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("3")
 grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 5

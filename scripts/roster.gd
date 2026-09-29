@@ -15,13 +15,19 @@ const DUREE_STRETCH := 0.45
 const DUREE_HALO_MONTEE := 0.15
 const DUREE_HALO_DESCENTE := 0.7
 
+## Attribution d'XP par petits bonds (Phase 8, demande de Mike) : chaque
+## clic sur "Attribuer XP" ajoute ce montant vers le PROCHAIN palier de
+## la creature selectionnee (SaveManager.ajouter_xp_creature()), au lieu
+## de deduire le cout complet d'un coup.
+const INCREMENT_XP_MANUEL := 10
+
 @onready var label_xp: Label = %LabelXp
 @onready var bouton_retour: Button = %BoutonRetour
 @onready var grille_creatures: GridContainer = %GrilleCreatures
 
 @onready var zone_sprite: ZoneDropCreature = %ZoneSprite
 @onready var halo: TextureRect = %Halo
-@onready var texture_detail: TextureRect = %TextureDetail
+@onready var texture_detail: TextureRectAnime = %TextureDetail
 @onready var placeholder_detail: ColorRect = %PlaceholderDetail
 @onready var label_placeholder_detail: Label = %LabelPlaceholderDetail
 @onready var line_edit_surnom: LineEdit = %LineEditSurnom
@@ -41,7 +47,7 @@ var _cartes_par_id: Dictionary = {}
 var _creature_selectionnee_id: String = ""
 
 func _ready() -> void:
-	bouton_retour.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/Hub.tscn"))
+	bouton_retour.pressed.connect(func(): SceneTransition.changer_scene("res://scenes/Hub.tscn"))
 	bouton_attribuer_xp.pressed.connect(_on_attribuer_xp_presse)
 	bouton_principale.pressed.connect(_on_definir_principale_presse)
 	line_edit_surnom.text_submitted.connect(func(_texte): _sauvegarder_surnom())
@@ -124,7 +130,7 @@ func _actualiser_details() -> void:
 
 	var texture := SpriteUtil.charger_texture_avec_glow(sprite_id, est_glow)
 	if texture != null:
-		texture_detail.texture = texture
+		texture_detail.configurer_animation(texture, SpriteUtil.compter_frames(texture))
 		texture_detail.visible = true
 		placeholder_detail.visible = false
 	else:
@@ -157,6 +163,12 @@ func _actualiser_bouton_principale() -> void:
 		bouton_principale.disabled = false
 		bouton_principale.text = "Accompagne-moi !"
 
+## Barre de PROGRESSION VERS LE PROCHAIN PALIER de cette creature
+## specifiquement (SaveManager.get_progression_stade_creature()) — PAS
+## le total XP du portefeuille du joueur. Bug corrige : avant, la barre
+## affichait min(xp_total_du_joueur, cout), donc le MEME nombre (ex.
+## 200 XP) apparaissait sur la barre de toutes les creatures, laissant
+## croire a tort qu'elles progressaient toutes pareil.
 func _actualiser_barre_xp(stage_actuel: int, stage_max: int) -> void:
 	if stage_actuel >= stage_max:
 		barre_xp.max_value = 1
@@ -164,10 +176,10 @@ func _actualiser_barre_xp(stage_actuel: int, stage_max: int) -> void:
 		label_barre_xp_texte.text = "Stade maximal"
 		return
 	var cout: int = SaveManager.cout_evolution_vers(stage_actuel + 1)
-	var xp_disponible: int = min(SaveManager.get_xp_total(), cout)
+	var progression: int = SaveManager.get_progression_stade_creature(_creature_selectionnee_id)
 	barre_xp.max_value = cout
-	barre_xp.value = xp_disponible
-	label_barre_xp_texte.text = "%d / %d XP" % [xp_disponible, cout]
+	barre_xp.value = progression
+	label_barre_xp_texte.text = "%d / %d XP" % [progression, cout]
 
 func _actualiser_barre_affection() -> void:
 	var affection := SaveManager.get_affection_creature(_creature_selectionnee_id)
@@ -185,11 +197,10 @@ func _actualiser_bouton_attribuer(stage_actuel: int, stage_max: int) -> void:
 		label_statut.text = ""
 		return
 
-	var cout: int = SaveManager.cout_evolution_vers(stage_actuel + 1)
-	bouton_attribuer_xp.text = "Attribuer XP (%d)" % cout
-	if SaveManager.get_xp_total() < cout:
+	bouton_attribuer_xp.text = "Attribuer +%d XP" % INCREMENT_XP_MANUEL
+	if SaveManager.get_xp_total() < INCREMENT_XP_MANUEL:
 		bouton_attribuer_xp.disabled = true
-		label_statut.text = "XP insuffisant (%d requis)" % cout
+		label_statut.text = "XP insuffisant (%d requis)" % INCREMENT_XP_MANUEL
 	else:
 		bouton_attribuer_xp.disabled = false
 		label_statut.text = ""
@@ -210,15 +221,19 @@ func _on_definir_principale_presse() -> void:
 	_actualiser_badges_principale()
 	_actualiser_bouton_principale()
 
-## --- Attribution d'XP (evolution) : pulsation + particules ---
+## --- Attribution d'XP par bonds de 10 (Phase 8, demande de Mike) :
+## pulsation + particules a chaque clic, evolution automatique des que
+## le palier de la creature SELECTIONNEE est atteint. ---
 
 func _on_attribuer_xp_presse() -> void:
-	var reussi := SaveManager.faire_evoluer_creature(_creature_selectionnee_id)
-	if not reussi:
-		label_statut.text = "Evolution impossible."
+	var creature_data: Dictionary = DataManager.creatures.get(_creature_selectionnee_id, {})
+	var stage_max: int = int(creature_data.get("stages", 1))
+	var resultat := SaveManager.ajouter_xp_creature(_creature_selectionnee_id, INCREMENT_XP_MANUEL, stage_max)
+	if not bool(resultat.get("applique", false)):
+		label_statut.text = "Impossible d'attribuer de l'XP."
 		return
 
-	label_statut.text = "Evolution reussie !"
+	label_statut.text = "Evolution reussie !" if bool(resultat.get("evolue", false)) else "+%d XP attribues !" % INCREMENT_XP_MANUEL
 	_jouer_effet_attribution_xp()
 	_actualiser_label_xp()
 	_actualiser_details()

@@ -1,9 +1,12 @@
 class_name BoutonAnime
 extends Button
 ## Bouton avec transition fluide au survol (leger agrandissement) et a
-## l'enfoncement (retrecissement), plus un son de clic (AudioManager,
-## silencieux tant qu'aucun son n'est depose). Reutilisable sur n'importe
-## quel Button en lui assignant simplement ce script.
+## l'enfoncement (retrecissement). Reutilisable sur n'importe quel
+## Button en lui assignant simplement ce script.
+##
+## Le son de clic n'est PAS gere ici : AudioManager le branche de facon
+## centralisee sur tout BaseButton du jeu (voir audio_manager.gd), que
+## le bouton utilise ce script ou non.
 
 const ECHELLE_SURVOL := Vector2(1.05, 1.05)
 const ECHELLE_ENFONCE := Vector2(0.94, 0.94)
@@ -21,7 +24,6 @@ func _ready() -> void:
 	mouse_exited.connect(_on_survol_sort)
 	button_down.connect(_on_enfonce)
 	button_up.connect(_on_relache)
-	pressed.connect(_on_presse)
 
 func _on_survol_entre() -> void:
 	_survole = true
@@ -36,9 +38,6 @@ func _on_enfonce() -> void:
 
 func _on_relache() -> void:
 	_animer_vers(ECHELLE_SURVOL if _survole else ECHELLE_NORMALE, DUREE_ENFONCE)
-
-func _on_presse() -> void:
-	AudioManager.jouer_clic()
 
 func _animer_vers(echelle_cible: Vector2, duree: float) -> void:
 	if _tween != null and _tween.is_valid():

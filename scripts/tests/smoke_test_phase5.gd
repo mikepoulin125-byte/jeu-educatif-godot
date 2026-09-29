@@ -104,7 +104,7 @@ func _initialize() -> void:
 	var SelectionNiveauScene := preload("res://scenes/SelectionNiveau.tscn")
 	var ecran_selection = SelectionNiveauScene.instantiate()
 	root.add_child(ecran_selection)
-	for chemin in ["%LabelXp", "%BoutonRetour", "%LabelTitre", "%GrilleNiveaux", "%VoileEntree"]:
+	for chemin in ["%LabelXp", "%BoutonRetour", "%LabelTitre", "%GrilleNiveaux"]:
 		if not _verifier(ecran_selection.get_node_or_null(chemin) != null, "noeud manquant dans SelectionNiveau.tscn: " + chemin):
 			return
 	root.remove_child(ecran_selection)

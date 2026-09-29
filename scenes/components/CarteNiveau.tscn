@@ -68,3 +68,19 @@ script = ExtResource("1")
 style_reussi_normal = SubResource("StyleBoxFlat_reussi")
 style_reussi_hover = SubResource("StyleBoxFlat_reussi")
 style_reussi_pressed = SubResource("StyleBoxFlat_reussi")
+
+[node name="IconeCoin" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -82.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = 82.0
+grow_horizontal = 0
+expand_mode = 5
+stretch_mode = 5

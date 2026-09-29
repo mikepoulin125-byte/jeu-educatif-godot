@@ -53,4 +53,4 @@ func _terminer() -> void:
 	var cible := GameState.scene_suivante
 	if cible.is_empty():
 		cible = SCENE_PAR_DEFAUT
-	get_tree().change_scene_to_file(cible)
+	SceneTransition.changer_scene(cible)

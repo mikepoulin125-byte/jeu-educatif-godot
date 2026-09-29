@@ -20,6 +20,8 @@ func _initialize() -> void:
 		return
 	if not _verifier(MenuAssetUtil.charger_logo() == null, "charger_logo() devrait etre null (aucun logo_menu.png depose)"):
 		return
+	if not _verifier(MenuAssetUtil.charger_video_fond() == null, "charger_video_fond() devrait etre null (aucun fond_menu.ogv depose)"):
+		return
 	print("OK: MenuAssetUtil retourne null tant qu'aucun asset n'est depose")
 
 	# 2. Instancie la scene MenuPrincipal et verifie les valeurs PAR DEFAUT
@@ -41,6 +43,11 @@ func _initialize() -> void:
 	if not _verifier(placeholder_fond.visible and not texture_fond.visible, "placeholder de fond devrait etre visible par defaut dans le .tscn"):
 		return
 	print("OK: placeholder de fond visible par defaut, texture de fond cachee par defaut")
+
+	var video_fond: VideoStreamPlayer = menu.get_node("%VideoFond")
+	if not _verifier(video_fond != null and not video_fond.visible, "VideoFond devrait exister et etre cache par defaut dans le .tscn"):
+		return
+	print("OK: VideoFond existe et est cache par defaut (fond video optionnel, Phase 8)")
 
 	var placeholder_logo = menu.get_node("%PlaceholderLogo")
 	var texture_logo: TextureRect = menu.get_node("%TextureLogo")

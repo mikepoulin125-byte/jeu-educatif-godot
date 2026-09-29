@@ -1,0 +1,15 @@
+Fond d'écran des tableaux (UN SEUL, partagé par toutes les matières)
+=====================================================================
+
+Dépose ton image ici, avec exactement ce nom de fichier (sans le
+suffixe de matière). Le jeu la charge automatiquement au démarrage de
+n'importe quel écran de tableau (questions), peu importe la matière ou
+l'examen — aucune modification de code nécessaire. Tant que le fichier
+n'est pas présent, le fond de couleur unie habituel s'affiche à sa
+place, le jeu reste testable.
+
+   Nom de fichier : fond.jpeg   (ou fond.jpg / fond.png, un seul suffit)
+   Dimensions     : 1920 x 1080 px (plein écran, ratio 16:9)
+
+Dépose le fichier dans ce dossier (assets/ui/tableau/) et relance le
+jeu via ton raccourci.

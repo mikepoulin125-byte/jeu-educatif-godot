@@ -1,0 +1,33 @@
+Musiques remplaçables (menu, hub, début de partie)
+=====================================================
+
+Dépose tes fichiers ici, avec exactement ces noms. Le jeu les charge
+automatiquement au démarrage de chaque écran concerné — aucune
+modification de code nécessaire. Tant qu'un fichier n'est pas présent,
+l'écran reste silencieux (pas de musique placeholder générée).
+
+1) MUSIQUE DU MENU PRINCIPAL (écran-titre)
+   Nom de fichier : titre.ogg
+   Joue sur       : MenuPrincipal.tscn
+
+2) MUSIQUE DU HUB
+   Nom de fichier : hub.ogg
+   Joue sur       : Hub.tscn
+
+3) MUSIQUE DE DÉBUT DE PARTIE ("Nouvelle partie")
+   Nom de fichier : debut_partie.ogg
+   Joue sur       : DialogueIntro.tscn et SelectionStarter.tscn (la
+                     meme piste continue sans redemarrer en passant de
+                     l'un a l'autre, tant que c'est la meme musique
+                     demandee)
+
+Format          : OGG Vorbis (.ogg) uniquement.
+Boucle          : chaque piste boucle automatiquement (pas besoin de
+                   preparer un fichier "sans fin" special, juste une
+                   piste qui boucle proprement au point de depart).
+
+Le son de clic des boutons (assets/audio/ui/clic_bouton.ogg) est
+documenté séparément dans assets/audio/ui/LISEZ-MOI.txt.
+
+Rien d'autre à faire : dépose les fichiers dans ce dossier
+(assets/audio/musique/) sous ces noms exacts et relance le jeu.

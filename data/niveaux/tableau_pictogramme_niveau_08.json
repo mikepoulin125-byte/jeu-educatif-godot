@@ -1,26 +1,67 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
-	"nom": "Rivage des Pictogrammes 8",
+	"_commentaire": "Phase 8 - contenu regenere pour plus de variete (voir CLAUDE.md).",
 	"graphique": {
-		"titre": "Fruits du panier",
 		"barres": [
-			{ "categorie": "Pommes", "valeur": 2 },
-			{ "categorie": "Bananes", "valeur": 6 },
-			{ "categorie": "Oranges", "valeur": 10 },
-			{ "categorie": "Raisins", "valeur": 2 },
-			{ "categorie": "Fraises", "valeur": 6 }
-		]
+			{
+				"categorie": "Aventure",
+				"valeur": 35
+			},
+			{
+				"categorie": "Mystere",
+				"valeur": 32
+			},
+			{
+				"categorie": "Science",
+				"valeur": 23
+			},
+			{
+				"categorie": "Conte",
+				"valeur": 31
+			}
+		],
+		"titre": "Livres de la bibliotheque"
 	},
+	"nom": "Rivage des Pictogrammes 8",
 	"questions": [
-		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 2 },
-		{ "texte": "Combien de Oranges de plus que de Bananes ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Oranges ?", "reponse": 10 },
-		{ "texte": "Combien de Fraises de plus que de Raisins ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Fraises ?", "reponse": 6 },
-		{ "texte": "Combien de Bananes de plus que de Pommes ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Bananes ?", "reponse": 6 },
-		{ "texte": "Combien de Oranges de plus que de Raisins ?", "reponse": 8 },
-		{ "texte": "Combien y a-t-il de Raisins ?", "reponse": 2 },
-		{ "texte": "Combien de Fraises de plus que de Pommes ?", "reponse": 4 }
+		{
+			"reponse": 58,
+			"texte": "Combien de Science et de Aventure ensemble ?"
+		},
+		{
+			"reponse": 23,
+			"texte": "Combien y a-t-il de Science ?"
+		},
+		{
+			"reponse": 32,
+			"texte": "Combien y a-t-il de Mystere ?"
+		},
+		{
+			"reponse": 32,
+			"texte": "Combien y a-t-il de Mystere ?"
+		},
+		{
+			"reponse": 1,
+			"texte": "Combien de Mystere de plus que de Conte ?"
+		},
+		{
+			"reponse": 35,
+			"texte": "Combien y a-t-il de Aventure ?"
+		},
+		{
+			"reponse": 31,
+			"texte": "Combien y a-t-il de Conte ?"
+		},
+		{
+			"reponse": 3,
+			"texte": "Combien de Aventure de plus que de Mystere ?"
+		},
+		{
+			"reponse": 1,
+			"texte": "Combien de Mystere de plus que de Conte ?"
+		},
+		{
+			"reponse": 54,
+			"texte": "Combien de Conte et de Science ensemble ?"
+		}
 	]
 }

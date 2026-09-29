@@ -1,26 +1,67 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
-	"nom": "Rivage des Pictogrammes 9",
+	"_commentaire": "Phase 8 - contenu regenere pour plus de variete (voir CLAUDE.md).",
 	"graphique": {
-		"titre": "Fruits du panier",
 		"barres": [
-			{ "categorie": "Pommes", "valeur": 5 },
-			{ "categorie": "Bananes", "valeur": 9 },
-			{ "categorie": "Oranges", "valeur": 13 },
-			{ "categorie": "Raisins", "valeur": 5 },
-			{ "categorie": "Fraises", "valeur": 9 }
-		]
+			{
+				"categorie": "Coccinelles",
+				"valeur": 13
+			},
+			{
+				"categorie": "Papillons",
+				"valeur": 31
+			},
+			{
+				"categorie": "Fourmis",
+				"valeur": 28
+			},
+			{
+				"categorie": "Abeilles",
+				"valeur": 15
+			}
+		],
+		"titre": "Insectes du jardin"
 	},
+	"nom": "Rivage des Pictogrammes 9",
 	"questions": [
-		{ "texte": "Combien y a-t-il de Pommes ?", "reponse": 5 },
-		{ "texte": "Combien de Oranges de plus que de Bananes ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Oranges ?", "reponse": 13 },
-		{ "texte": "Combien de Fraises de plus que de Raisins ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Fraises ?", "reponse": 9 },
-		{ "texte": "Combien de Bananes de plus que de Pommes ?", "reponse": 4 },
-		{ "texte": "Combien y a-t-il de Bananes ?", "reponse": 9 },
-		{ "texte": "Combien de Oranges de plus que de Raisins ?", "reponse": 8 },
-		{ "texte": "Combien y a-t-il de Raisins ?", "reponse": 5 },
-		{ "texte": "Combien de Fraises de plus que de Pommes ?", "reponse": 4 }
+		{
+			"reponse": 13,
+			"texte": "Combien y a-t-il de Coccinelles ?"
+		},
+		{
+			"reponse": 28,
+			"texte": "Combien de Coccinelles et de Abeilles ensemble ?"
+		},
+		{
+			"reponse": 3,
+			"texte": "Combien de Papillons de plus que de Fourmis ?"
+		},
+		{
+			"reponse": 44,
+			"texte": "Combien de Coccinelles et de Papillons ensemble ?"
+		},
+		{
+			"reponse": 15,
+			"texte": "Combien y a-t-il de Abeilles ?"
+		},
+		{
+			"reponse": 3,
+			"texte": "Combien de Papillons de plus que de Fourmis ?"
+		},
+		{
+			"reponse": 28,
+			"texte": "Combien y a-t-il de Fourmis ?"
+		},
+		{
+			"reponse": 59,
+			"texte": "Combien de Fourmis et de Papillons ensemble ?"
+		},
+		{
+			"reponse": 41,
+			"texte": "Combien de Coccinelles et de Fourmis ensemble ?"
+		},
+		{
+			"reponse": 13,
+			"texte": "Combien y a-t-il de Coccinelles ?"
+		}
 	]
 }

@@ -49,14 +49,30 @@ func _initialize() -> void:
 	print("OK: AnimMathUtil.decalage_point_chargement() - effet de vague entre les 3 points")
 
 	# 3. AudioManager : silencieux tant qu'aucun son n'est depose (pas de crash).
+	# Ajoute a l'arbre avant _ready() : depuis la Phase 8, _ready() appelle
+	# get_tree() (hook du son de clic centralise sur tout BaseButton), qui
+	# necessite que le noeud soit reellement dans l'arbre.
 	var AudioManagerScript := preload("res://scripts/autoload/audio_manager.gd")
 	var audio_manager = AudioManagerScript.new()
-	audio_manager._ready()
+	root.add_child(audio_manager)
+	# _ready() se declenche automatiquement des que le noeud est reellement
+	# dans l'arbre, a partir de la frame suivante (meme piege de timing
+	# que documente pour @onready) -- ne PAS le rappeler manuellement ici,
+	# sinon double connexion sur node_added (erreur "already connected").
+	await process_frame
 	if not _verifier(audio_manager._son_clic == null, "aucun son de clic ne devrait etre charge (assets/audio/ui/clic_bouton.* absent)"):
 		return
 	audio_manager.jouer_clic()  # ne doit pas planter
-	audio_manager.free()
 	print("OK: AudioManager silencieux et sans erreur en l'absence de clic_bouton.*")
+
+	# 3bis. Musiques (Phase 8) : jouer_musique() reste silencieux et sans
+	# crash tant que le fichier demande n'est pas depose (assets/audio/musique/).
+	audio_manager.jouer_musique(audio_manager.MUSIQUE_TITRE)  # ne doit pas planter
+	if not _verifier(audio_manager._chemin_musique_actuelle == "", "aucune musique ne devrait etre marquee comme jouee (fichier absent)"):
+		return
+	root.remove_child(audio_manager)
+	audio_manager.free()
+	print("OK: jouer_musique() silencieux et sans erreur en l'absence de fichier")
 
 	# 4. MenuPrincipal.tscn : bordure rouge #CC0000 sur les 3 boutons.
 	# Note : on ne peut PAS verifier ici que le script BoutonAnime est
@@ -80,15 +96,9 @@ func _initialize() -> void:
 			return
 	print("OK: les 3 boutons ont la bordure #CC0000")
 
-	# FadeBlanc est maintenant une instance de TransitionRadiale (shader) :
-	# sa visibilite est pilotee par le parametre "progression" du shader,
-	# pas par la propriete "color" du ColorRect (le shader ecrase COLOR
-	# entierement). Valeur par defaut attendue : 0.0 (invisible).
-	var fade_blanc = menu.get_node("%FadeBlanc")
-	var progression_initiale: float = fade_blanc.material.get_shader_parameter("progression")
-	if not _verifier(is_equal_approx(progression_initiale, 0.0), "FadeBlanc devrait demarrer avec progression=0.0 (invisible), obtenu %f" % progression_initiale):
-		return
-	print("OK: FadeBlanc demarre invisible (progression=0.0)")
+	# Le fondu au blanc n'est plus un noeud par scene (FadeBlanc) : il est
+	# centralise dans l'autoload SceneTransition, verifie separement dans
+	# smoke_test_transition_radiale.gd.
 
 	root.remove_child(menu)
 	menu.free()

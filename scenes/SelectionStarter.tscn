@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bqf0e0000startr01"]
+[gd_scene load_steps=3 format=3 uid="uid://bqf0e0000startr01"]
 
 [ext_resource type="Script" path="res://scripts/selection_starter.gd" id="1"]
+[ext_resource type="FontFile" path="res://assets/fonts/Rubik-Bold.ttf" id="2"]
 
 [node name="SelectionStarter" type="Control"]
 layout_mode = 3
@@ -34,6 +35,7 @@ theme_override_constants/separation = 40
 [node name="LabelTitre" type="Label" parent="VBox"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2")
 theme_override_font_sizes/font_size = 34
 horizontal_alignment = 1
 text = "Choisis ta creature de depart"

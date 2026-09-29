@@ -1,32 +1,1401 @@
 {
-	"_commentaire": "PLACEHOLDER - a completer par Mike. 81 lignes de creatures au total (une par 'id'), stages 1 a 3, sprites c1..c151 sans repetition. Le champ 'starter' marque les creatures proposees au choix de depart (section 5 de la spec). Exemple ci-dessous avec 3 lignes seulement, toutes marquees starter pour pouvoir tester l'ecran de choix. SPRITES 'GLOW' (systeme de berries, Phase 4 bis) : pour chaque sprite normal 'cN' utilise dans 'forms', un sprite glow optionnel peut etre depose sous le nom 'cN_glow.png' dans le MEME dossier assets/creatures/ (pas de sous-dossier separe - meme mecanisme de resolution que les sprites normaux, juste un suffixe). Ex.: forms.stage1='c1' -> glow attendu a assets/creatures/c1_glow.png. Tant que le fichier glow n'existe pas, un placeholder distinct (halo dore autour du placeholder normal) s'affiche a sa place une fois le seuil de 20 berries atteint.",
-	"creatures": [
-		{
-			"id": "creature_01",
-			"stages": 3,
-			"types": ["eau"],
-			"starter": true,
-			"forms": { "stage1": "c1", "stage2": "c2", "stage3": "c3" },
-			"names": { "stage1": "Creature 1", "stage2": "Creature 1 Evo", "stage3": "Creature 1 Evo Finale" },
-			"description": "Description a venir."
-		},
-		{
-			"id": "creature_02",
-			"stages": 2,
-			"types": ["feu"],
-			"starter": true,
-			"forms": { "stage1": "c4", "stage2": "c5" },
-			"names": { "stage1": "Creature 2", "stage2": "Creature 2 Evo" },
-			"description": "Description a venir."
-		},
-		{
-			"id": "creature_03",
-			"stages": 1,
-			"types": ["feuille"],
-			"starter": true,
-			"forms": { "stage1": "c6" },
-			"names": { "stage1": "Creature 3" },
-			"description": "Description a venir."
-		}
-	]
+  "_commentaire": "151 premiers Pokémon de la série originale. Les identifiants pokemon_NNN correspondent aux numéros réels du Pokédex national. Les sprites c1 à c151 correspondent respectivement aux Pokémon #001 à #151. Chaque sprite est utilisé une seule fois.",
+  "creatures": [
+    {
+      "id": "pokemon_001",
+      "stages": 3,
+      "types": [
+        "plante",
+        "poison"
+      ],
+      "starter": true,
+      "forms": {
+        "stage1": "c1",
+        "stage2": "c2",
+        "stage3": "c3"
+      },
+      "names": {
+        "stage1": "Bulbizarre",
+        "stage2": "Herbizarre",
+        "stage3": "Florizarre"
+      },
+      "description": "Un Pokémon plante qui porte une graine mystérieuse sur son dos. Elle grandit avec lui et lui permet de puiser l'énergie du soleil."
+    },
+    {
+      "id": "pokemon_004",
+      "stages": 3,
+      "types": [
+        "feu"
+      ],
+      "starter": true,
+      "forms": {
+        "stage1": "c4",
+        "stage2": "c5",
+        "stage3": "c6"
+      },
+      "names": {
+        "stage1": "Salamèche",
+        "stage2": "Reptincel",
+        "stage3": "Dracaufeu"
+      },
+      "description": "Un jeune Pokémon feu dont la flamme brûle au bout de la queue. Son tempérament vif devient de plus en plus puissant à mesure qu'il évolue."
+    },
+    {
+      "id": "pokemon_007",
+      "stages": 3,
+      "types": [
+        "eau"
+      ],
+      "starter": true,
+      "forms": {
+        "stage1": "c7",
+        "stage2": "c8",
+        "stage3": "c9"
+      },
+      "names": {
+        "stage1": "Carapuce",
+        "stage2": "Carabaffe",
+        "stage3": "Tortank"
+      },
+      "description": "Un Pokémon tortue capable de projeter de puissants jets d'eau. Sa carapace lui offre une excellente protection contre les attaques."
+    },
+    {
+      "id": "pokemon_010",
+      "stages": 3,
+      "types": [
+        "insecte"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c10",
+        "stage2": "c11",
+        "stage3": "c12"
+      },
+      "names": {
+        "stage1": "Chenipan",
+        "stage2": "Chrysacier",
+        "stage3": "Papilusion"
+      },
+      "description": "Une petite chenille très commune qui se nourrit de feuilles. Malgré sa fragilité, elle évolue rapidement pour se protéger."
+    },
+    {
+      "id": "pokemon_013",
+      "stages": 3,
+      "types": [
+        "insecte",
+        "poison"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c13",
+        "stage2": "c14",
+        "stage3": "c15"
+      },
+      "names": {
+        "stage1": "Aspicot",
+        "stage2": "Coconfort",
+        "stage3": "Dardargnan"
+      },
+      "description": "Une chenille munie d'un aiguillon empoisonné. Elle se déplace parmi les plantes à la recherche de feuilles à dévorer."
+    },
+    {
+      "id": "pokemon_016",
+      "stages": 3,
+      "types": [
+        "normal",
+        "vol"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c16",
+        "stage2": "c17",
+        "stage3": "c18"
+      },
+      "names": {
+        "stage1": "Roucool",
+        "stage2": "Roucoups",
+        "stage3": "Roucarnage"
+      },
+      "description": "Un Pokémon oiseau très répandu qui vit près des zones habitées. Il utilise ses ailes et son agilité pour éviter les prédateurs."
+    },
+    {
+      "id": "pokemon_019",
+      "stages": 2,
+      "types": [
+        "normal"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c19",
+        "stage2": "c20"
+      },
+      "names": {
+        "stage1": "Rattata",
+        "stage2": "Rattatac"
+      },
+      "description": "Un petit Pokémon rongeur qui s'adapte facilement à son environnement. Il est particulièrement actif et opportuniste."
+    },
+    {
+      "id": "pokemon_021",
+      "stages": 2,
+      "types": [
+        "normal",
+        "vol"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c21",
+        "stage2": "c22"
+      },
+      "names": {
+        "stage1": "Piafabec",
+        "stage2": "Rapasdepic"
+      },
+      "description": "Un Pokémon oiseau au caractère territorial. Son bec acéré et son endurance en font un adversaire redoutable."
+    },
+    {
+      "id": "pokemon_023",
+      "stages": 2,
+      "types": [
+        "poison"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c23",
+        "stage2": "c24"
+      },
+      "names": {
+        "stage1": "Abo",
+        "stage2": "Arbok"
+      },
+      "description": "Un Pokémon serpent qui se déplace silencieusement dans les hautes herbes. Son venin lui permet de neutraliser ses proies."
+    },
+    {
+      "id": "pokemon_025",
+      "stages": 2,
+      "types": [
+        "électrik"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c25",
+        "stage2": "c26"
+      },
+      "names": {
+        "stage1": "Pikachu",
+        "stage2": "Raichu"
+      },
+      "description": "Un Pokémon électrique dont les joues peuvent accumuler une grande quantité d'électricité. Il est petit, rapide et étonnamment puissant."
+    },
+    {
+      "id": "pokemon_027",
+      "stages": 2,
+      "types": [
+        "sol"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c27",
+        "stage2": "c28"
+      },
+      "names": {
+        "stage1": "Sabelette",
+        "stage2": "Sablaireau"
+      },
+      "description": "Un Pokémon qui vit dans les régions arides. Ses griffes et son aptitude à se cacher dans le sable lui permettent de surprendre ses adversaires."
+    },
+    {
+      "id": "pokemon_029",
+      "stages": 3,
+      "types": [
+        "poison"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c29",
+        "stage2": "c30",
+        "stage3": "c31"
+      },
+      "names": {
+        "stage1": "Nidoran♀",
+        "stage2": "Nidorina",
+        "stage3": "Nidoqueen"
+      },
+      "description": "Un Pokémon poison dont les formes mâle et femelle suivent des lignes d'évolution différentes. Son venin constitue son principal moyen de défense."
+    },
+    {
+      "id": "pokemon_032",
+      "stages": 3,
+      "types": [
+        "poison"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c32",
+        "stage2": "c33",
+        "stage3": "c34"
+      },
+      "names": {
+        "stage1": "Nidoran♂",
+        "stage2": "Nidorino",
+        "stage3": "Nidoking"
+      },
+      "description": "Un Pokémon poison dont les formes mâle et femelle suivent des lignes d'évolution différentes. Son poison devient particulièrement dangereux à mesure qu'il évolue."
+    },
+    {
+      "id": "pokemon_035",
+      "stages": 2,
+      "types": [
+        "fée"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c35",
+        "stage2": "c36"
+      },
+      "names": {
+        "stage1": "Mélofée",
+        "stage2": "Mélodelfe"
+      },
+      "description": "Un Pokémon féerique au corps doux et aux pouvoirs mystérieux. Il est souvent associé aux nuits claires et à la lumière de la lune."
+    },
+    {
+      "id": "pokemon_037",
+      "stages": 2,
+      "types": [
+        "feu"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c37",
+        "stage2": "c38"
+      },
+      "names": {
+        "stage1": "Goupix",
+        "stage2": "Feunard"
+      },
+      "description": "Un Pokémon renard capable de produire des flammes. Son apparence élégante cache un tempérament rusé et des pouvoirs impressionnants."
+    },
+    {
+      "id": "pokemon_039",
+      "stages": 2,
+      "types": [
+        "normal",
+        "fée"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c39",
+        "stage2": "c40"
+      },
+      "names": {
+        "stage1": "Rondoudou",
+        "stage2": "Grodoudou"
+      },
+      "description": "Un Pokémon rond et doux qui chante pour endormir ses adversaires. Sa voix mélodieuse peut devenir un puissant moyen de défense."
+    },
+    {
+      "id": "pokemon_041",
+      "stages": 2,
+      "types": [
+        "poison",
+        "vol"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c41",
+        "stage2": "c42"
+      },
+      "names": {
+        "stage1": "Nosferapti",
+        "stage2": "Nosferalto"
+      },
+      "description": "Une petite chauve-souris qui se repère grâce aux ultrasons. Elle préfère les endroits sombres et les grottes."
+    },
+    {
+      "id": "pokemon_043",
+      "stages": 3,
+      "types": [
+        "plante",
+        "poison"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c43",
+        "stage2": "c44",
+        "stage3": "c45"
+      },
+      "names": {
+        "stage1": "Mystherbe",
+        "stage2": "Ortide",
+        "stage3": "Rafflesia"
+      },
+      "description": "Un Pokémon plante qui pousse dans les zones humides. Ses évolutions développent des capacités toujours plus puissantes liées à la végétation."
+    },
+    {
+      "id": "pokemon_046",
+      "stages": 2,
+      "types": [
+        "insecte",
+        "plante"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c46",
+        "stage2": "c47"
+      },
+      "names": {
+        "stage1": "Paras",
+        "stage2": "Parasect"
+      },
+      "description": "Un Pokémon insecte qui vit en association avec des champignons. Son corps devient progressivement couvert de spores."
+    },
+    {
+      "id": "pokemon_048",
+      "stages": 2,
+      "types": [
+        "insecte",
+        "poison"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c48",
+        "stage2": "c49"
+      },
+      "names": {
+        "stage1": "Mimitoss",
+        "stage2": "Aéromite"
+      },
+      "description": "Un Pokémon insecte qui utilise ses antennes pour détecter son environnement. Ses ailes lui permettent de se déplacer rapidement."
+    },
+    {
+      "id": "pokemon_050",
+      "stages": 2,
+      "types": [
+        "sol"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c50",
+        "stage2": "c51"
+      },
+      "names": {
+        "stage1": "Taupiqueur",
+        "stage2": "Triopikeur"
+      },
+      "description": "Un petit Pokémon qui vit sous terre. Il creuse de nombreux tunnels et ne montre généralement que sa tête à la surface."
+    },
+    {
+      "id": "pokemon_052",
+      "stages": 2,
+      "types": [
+        "normal"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c52",
+        "stage2": "c53"
+      },
+      "names": {
+        "stage1": "Miaouss",
+        "stage2": "Persian"
+      },
+      "description": "Un Pokémon félin très agile et curieux. Il aime les objets brillants et peut se montrer particulièrement imprévisible."
+    },
+    {
+      "id": "pokemon_054",
+      "stages": 2,
+      "types": [
+        "eau"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c54",
+        "stage2": "c55"
+      },
+      "names": {
+        "stage1": "Psykokwak",
+        "stage2": "Akwakwak"
+      },
+      "description": "Un Pokémon aquatique au comportement parfois distrait. Ses pouvoirs psychiques se développent fortement avec l'évolution."
+    },
+    {
+      "id": "pokemon_056",
+      "stages": 2,
+      "types": [
+        "combat"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c56",
+        "stage2": "c57"
+      },
+      "names": {
+        "stage1": "Férosinge",
+        "stage2": "Colossinge"
+      },
+      "description": "Un Pokémon singe énergique au tempérament colérique. Sa force augmente encore lorsqu'il laisse libre cours à sa colère."
+    },
+    {
+      "id": "pokemon_058",
+      "stages": 2,
+      "types": [
+        "feu"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c58",
+        "stage2": "c59"
+      },
+      "names": {
+        "stage1": "Caninos",
+        "stage2": "Arcanin"
+      },
+      "description": "Un Pokémon canin fidèle et puissant qui possède un sens aigu de l'odorat. Il peut courir sur de longues distances."
+    },
+    {
+      "id": "pokemon_060",
+      "stages": 3,
+      "types": [
+        "eau"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c60",
+        "stage2": "c61",
+        "stage3": "c62"
+      },
+      "names": {
+        "stage1": "Ptitard",
+        "stage2": "Têtarte",
+        "stage3": "Tartard"
+      },
+      "description": "Un petit Pokémon têtard qui vit près de l'eau. Sa ligne d'évolution peut mener à des formes extrêmement puissantes."
+    },
+    {
+      "id": "pokemon_063",
+      "stages": 3,
+      "types": [
+        "psy"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c63",
+        "stage2": "c64",
+        "stage3": "c65"
+      },
+      "names": {
+        "stage1": "Abra",
+        "stage2": "Kadabra",
+        "stage3": "Alakazam"
+      },
+      "description": "Un Pokémon doté de pouvoirs psychiques remarquables. Il utilise son intelligence et sa télékinésie pour prendre l'avantage."
+    },
+    {
+      "id": "pokemon_066",
+      "stages": 3,
+      "types": [
+        "combat"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c66",
+        "stage2": "c67",
+        "stage3": "c68"
+      },
+      "names": {
+        "stage1": "Machoc",
+        "stage2": "Machopeur",
+        "stage3": "Mackogneur"
+      },
+      "description": "Un Pokémon combattant qui s'entraîne sans relâche. Ses évolutions développent une force physique exceptionnelle."
+    },
+    {
+      "id": "pokemon_069",
+      "stages": 3,
+      "types": [
+        "plante",
+        "poison"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c69",
+        "stage2": "c70",
+        "stage3": "c71"
+      },
+      "names": {
+        "stage1": "Chétiflor",
+        "stage2": "Boustiflor",
+        "stage3": "Empiflor"
+      },
+      "description": "Un Pokémon plante qui utilise ses lianes et ses feuilles pour capturer ses proies. Ses fleurs deviennent de plus en plus imposantes."
+    },
+    {
+      "id": "pokemon_072",
+      "stages": 2,
+      "types": [
+        "eau",
+        "poison"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c72",
+        "stage2": "c73"
+      },
+      "names": {
+        "stage1": "Tentacool",
+        "stage2": "Tentacruel"
+      },
+      "description": "Un Pokémon marin aux tentacules souples. Il se déplace aisément dans l'eau et utilise son poison pour se défendre."
+    },
+    {
+      "id": "pokemon_074",
+      "stages": 3,
+      "types": [
+        "roche",
+        "sol"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c74",
+        "stage2": "c75",
+        "stage3": "c76"
+      },
+      "names": {
+        "stage1": "Racaillou",
+        "stage2": "Gravalanch",
+        "stage3": "Grolem"
+      },
+      "description": "Un Pokémon rocheux qui vit dans les montagnes et les cavernes. Sa carapace minérale devient de plus en plus massive."
+    },
+    {
+      "id": "pokemon_077",
+      "stages": 2,
+      "types": [
+        "feu"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c77",
+        "stage2": "c78"
+      },
+      "names": {
+        "stage1": "Ponyta",
+        "stage2": "Galopa"
+      },
+      "description": "Un Pokémon cheval dont les flammes parcourent le corps. Il devient capable de courir à une vitesse impressionnante."
+    },
+    {
+      "id": "pokemon_079",
+      "stages": 2,
+      "types": [
+        "eau",
+        "psy"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c79",
+        "stage2": "c80"
+      },
+      "names": {
+        "stage1": "Ramoloss",
+        "stage2": "Flagadoss"
+      },
+      "description": "Un Pokémon lent et placide qui possède des pouvoirs psychiques. Il semble souvent distrait, mais peut se montrer très puissant."
+    },
+    {
+      "id": "pokemon_081",
+      "stages": 2,
+      "types": [
+        "électrik"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c81",
+        "stage2": "c82"
+      },
+      "names": {
+        "stage1": "Magnéti",
+        "stage2": "Magnéton"
+      },
+      "description": "Un petit Pokémon métallique capable de produire des champs magnétiques. Il est attiré par les objets métalliques."
+    },
+    {
+      "id": "pokemon_083",
+      "stages": 1,
+      "types": [
+        "normal",
+        "vol"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c83"
+      },
+      "names": {
+        "stage1": "Canarticho"
+      },
+      "description": "Un Pokémon oiseau solitaire qui porte souvent un poireau comme arme. Il se bat avec une grande précision."
+    },
+    {
+      "id": "pokemon_084",
+      "stages": 2,
+      "types": [
+        "normal",
+        "vol"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c84",
+        "stage2": "c85"
+      },
+      "names": {
+        "stage1": "Doduo",
+        "stage2": "Dodrio"
+      },
+      "description": "Un Pokémon oiseau à deux têtes qui se déplace rapidement. Son évolution développe une troisième tête et une grande endurance."
+    },
+    {
+      "id": "pokemon_086",
+      "stages": 2,
+      "types": [
+        "eau"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c86",
+        "stage2": "c87"
+      },
+      "names": {
+        "stage1": "Otaria",
+        "stage2": "Lamantine"
+      },
+      "description": "Un Pokémon marin adapté aux eaux froides. Son corps est recouvert d'une couche isolante qui le protège du froid."
+    },
+    {
+      "id": "pokemon_088",
+      "stages": 2,
+      "types": [
+        "poison"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c88",
+        "stage2": "c89"
+      },
+      "names": {
+        "stage1": "Tadmorv",
+        "stage2": "Grotadmorv"
+      },
+      "description": "Un Pokémon constitué d'une substance visqueuse et toxique. Il peut se répandre dans les endroits contaminés."
+    },
+    {
+      "id": "pokemon_090",
+      "stages": 2,
+      "types": [
+        "eau"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c90",
+        "stage2": "c91"
+      },
+      "names": {
+        "stage1": "Kokiyas",
+        "stage2": "Crustabri"
+      },
+      "description": "Un Pokémon bivalve protégé par une coquille extrêmement résistante. Il utilise des jets d'eau pour se déplacer."
+    },
+    {
+      "id": "pokemon_092",
+      "stages": 3,
+      "types": [
+        "spectre",
+        "poison"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c92",
+        "stage2": "c93",
+        "stage3": "c94"
+      },
+      "names": {
+        "stage1": "Fantominus",
+        "stage2": "Spectrum",
+        "stage3": "Ectoplasma"
+      },
+      "description": "Un Pokémon spectre qui habite les lieux sombres. Il peut se cacher dans les ombres et effrayer les voyageurs."
+    },
+    {
+      "id": "pokemon_095",
+      "stages": 1,
+      "types": [
+        "roche",
+        "sol"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c95"
+      },
+      "names": {
+        "stage1": "Onix"
+      },
+      "description": "Un gigantesque serpent rocheux qui vit profondément sous terre. Son corps solide lui permet de creuser la roche."
+    },
+    {
+      "id": "pokemon_096",
+      "stages": 2,
+      "types": [
+        "psy"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c96",
+        "stage2": "c97"
+      },
+      "names": {
+        "stage1": "Soporifik",
+        "stage2": "Hypnomade"
+      },
+      "description": "Un Pokémon qui attaque principalement par ses pouvoirs psychiques. Il utilise des techniques de sommeil et d'hypnose pour affaiblir ses adversaires."
+    },
+    {
+      "id": "pokemon_098",
+      "stages": 2,
+      "types": [
+        "eau"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c98",
+        "stage2": "c99"
+      },
+      "names": {
+        "stage1": "Krabby",
+        "stage2": "Krabboss"
+      },
+      "description": "Un Pokémon crustacé qui vit dans les eaux peu profondes. Ses pinces peuvent saisir et broyer des objets avec une grande force."
+    },
+    {
+      "id": "pokemon_100",
+      "stages": 2,
+      "types": [
+        "électrik"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c100",
+        "stage2": "c101"
+      },
+      "names": {
+        "stage1": "Voltorbe",
+        "stage2": "Électrode"
+      },
+      "description": "Un Pokémon artificiel ressemblant à une sphère. Il accumule de l'électricité et peut provoquer de puissantes décharges."
+    },
+    {
+      "id": "pokemon_102",
+      "stages": 2,
+      "types": [
+        "plante",
+        "psy"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c102",
+        "stage2": "c103"
+      },
+      "names": {
+        "stage1": "Noeunoeuf",
+        "stage2": "Noadkoko"
+      },
+      "description": "Un Pokémon végétal étrange dont les œufs semblent former son corps. Il possède également de puissants pouvoirs psychiques."
+    },
+    {
+      "id": "pokemon_104",
+      "stages": 2,
+      "types": [
+        "sol"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c104",
+        "stage2": "c105"
+      },
+      "names": {
+        "stage1": "Osselait",
+        "stage2": "Ossatueur"
+      },
+      "description": "Un Pokémon terrestre qui porte un os comme arme. Il est particulièrement attaché à son crâne et à son os."
+    },
+    {
+      "id": "pokemon_106",
+      "stages": 1,
+      "types": [
+        "combat"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c106"
+      },
+      "names": {
+        "stage1": "Kicklee"
+      },
+      "description": "Un Pokémon spécialiste des arts martiaux. Ses jambes puissantes lui permettent de porter des coups de pied rapides et précis."
+    },
+    {
+      "id": "pokemon_107",
+      "stages": 1,
+      "types": [
+        "combat"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c107"
+      },
+      "names": {
+        "stage1": "Tygnon"
+      },
+      "description": "Un Pokémon combattant qui utilise principalement ses poings. Son entraînement lui permet d'enchaîner des coups avec une grande rapidité."
+    },
+    {
+      "id": "pokemon_108",
+      "stages": 1,
+      "types": [
+        "normal"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c108"
+      },
+      "names": {
+        "stage1": "Excelangue"
+      },
+      "description": "Un Pokémon doté d'une langue incroyablement longue. Il peut l'utiliser pour attraper des objets ou surprendre ses adversaires."
+    },
+    {
+      "id": "pokemon_109",
+      "stages": 2,
+      "types": [
+        "poison"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c109",
+        "stage2": "c110"
+      },
+      "names": {
+        "stage1": "Smogo",
+        "stage2": "Smogogo"
+      },
+      "description": "Un Pokémon poison qui ressemble à un nuage de gaz. Il produit des substances toxiques pour se défendre."
+    },
+    {
+      "id": "pokemon_111",
+      "stages": 2,
+      "types": [
+        "sol",
+        "roche"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c111",
+        "stage2": "c112"
+      },
+      "names": {
+        "stage1": "Rhinocorne",
+        "stage2": "Rhinoféros"
+      },
+      "description": "Un Pokémon rhinocéros recouvert d'une peau très résistante. Sa puissance physique augmente considérablement avec l'évolution."
+    },
+    {
+      "id": "pokemon_113",
+      "stages": 1,
+      "types": [
+        "normal"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c113"
+      },
+      "names": {
+        "stage1": "Leveinard"
+      },
+      "description": "Un Pokémon calme et attentionné dont le corps possède des propriétés particulièrement remarquables. Il est connu pour prendre soin des autres."
+    },
+    {
+      "id": "pokemon_114",
+      "stages": 1,
+      "types": [
+        "plante"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c114"
+      },
+      "names": {
+        "stage1": "Saquedeneu"
+      },
+      "description": "Un Pokémon plante possédant de longues lianes. Il peut s'en servir pour attraper ses adversaires à distance."
+    },
+    {
+      "id": "pokemon_115",
+      "stages": 1,
+      "types": [
+        "normal"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c115"
+      },
+      "names": {
+        "stage1": "Kangourex"
+      },
+      "description": "Un Pokémon marsupial qui protège un petit dans sa poche. Malgré son apparence paisible, il peut se montrer très puissant."
+    },
+    {
+      "id": "pokemon_116",
+      "stages": 2,
+      "types": [
+        "eau"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c116",
+        "stage2": "c117"
+      },
+      "names": {
+        "stage1": "Hypotrempe",
+        "stage2": "Hypocéan"
+      },
+      "description": "Un petit Pokémon marin qui ressemble à un hippocampe. Il nage avec agilité et devient plus imposant en évoluant."
+    },
+    {
+      "id": "pokemon_118",
+      "stages": 2,
+      "types": [
+        "eau"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c118",
+        "stage2": "c119"
+      },
+      "names": {
+        "stage1": "Poissirène",
+        "stage2": "Poissoroy"
+      },
+      "description": "Un Pokémon poisson gracieux qui vit dans les eaux douces. Son évolution conserve son affinité avec l'eau tout en gagnant en puissance."
+    },
+    {
+      "id": "pokemon_120",
+      "stages": 2,
+      "types": [
+        "eau"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c120",
+        "stage2": "c121"
+      },
+      "names": {
+        "stage1": "Stari",
+        "stage2": "Staross"
+      },
+      "description": "Un Pokémon marin en forme d'étoile. Il possède un noyau lumineux qui joue un rôle essentiel dans son fonctionnement."
+    },
+    {
+      "id": "pokemon_122",
+      "stages": 1,
+      "types": [
+        "psy"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c122"
+      },
+      "names": {
+        "stage1": "M. Mime"
+      },
+      "description": "Un Pokémon humanoïde doté de pouvoirs psychiques et d'une grande agilité. Il est connu pour ses talents de mime."
+    },
+    {
+      "id": "pokemon_123",
+      "stages": 1,
+      "types": [
+        "insecte",
+        "vol"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c123"
+      },
+      "names": {
+        "stage1": "Insécateur"
+      },
+      "description": "Un Pokémon insecte qui utilise ses lames naturelles pour attaquer. Il est extrêmement rapide et difficile à surprendre."
+    },
+    {
+      "id": "pokemon_124",
+      "stages": 1,
+      "types": [
+        "glace",
+        "psy"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c124"
+      },
+      "names": {
+        "stage1": "Lippoutou"
+      },
+      "description": "Un Pokémon humanoïde qui utilise ses pouvoirs psychiques et ses capacités liées au froid pour combattre."
+    },
+    {
+      "id": "pokemon_125",
+      "stages": 1,
+      "types": [
+        "électrik"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c125"
+      },
+      "names": {
+        "stage1": "Élektek"
+      },
+      "description": "Un Pokémon électrique qui stocke l'énergie dans son corps. Ses attaques peuvent libérer de puissantes décharges."
+    },
+    {
+      "id": "pokemon_126",
+      "stages": 1,
+      "types": [
+        "feu"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c126"
+      },
+      "names": {
+        "stage1": "Magmar"
+      },
+      "description": "Un Pokémon feu dont le corps produit une chaleur intense. Il peut projeter des flammes avec une grande puissance."
+    },
+    {
+      "id": "pokemon_127",
+      "stages": 1,
+      "types": [
+        "insecte"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c127"
+      },
+      "names": {
+        "stage1": "Scarabrute"
+      },
+      "description": "Un Pokémon insecte doté de pinces impressionnantes. Sa force physique et sa robustesse en font un combattant redoutable."
+    },
+    {
+      "id": "pokemon_128",
+      "stages": 1,
+      "types": [
+        "normal"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c128"
+      },
+      "names": {
+        "stage1": "Tauros"
+      },
+      "description": "Un Pokémon taureau extrêmement énergique. Il aime charger ses adversaires et peut continuer à courir très longtemps."
+    },
+    {
+      "id": "pokemon_129",
+      "stages": 2,
+      "types": [
+        "eau"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c129",
+        "stage2": "c130"
+      },
+      "names": {
+        "stage1": "Magicarpe",
+        "stage2": "Léviator"
+      },
+      "description": "Un Pokémon poisson réputé pour sa faiblesse apparente. Son évolution révèle toutefois un immense potentiel."
+    },
+    {
+      "id": "pokemon_131",
+      "stages": 1,
+      "types": [
+        "eau",
+        "glace"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c131"
+      },
+      "names": {
+        "stage1": "Lokhlass"
+      },
+      "description": "Un Pokémon marin doux et imposant qui peut transporter des personnes sur son dos. Son corps résiste parfaitement aux eaux froides."
+    },
+    {
+      "id": "pokemon_132",
+      "stages": 1,
+      "types": [
+        "normal"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c132"
+      },
+      "names": {
+        "stage1": "Métamorph"
+      },
+      "description": "Un Pokémon capable de prendre l'apparence de n'importe quelle créature. Sa faculté à modifier son corps lui permet d'imiter ses adversaires."
+    },
+    {
+      "id": "pokemon_133",
+      "stages": 1,
+      "types": [
+        "normal"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c133"
+      },
+      "names": {
+        "stage1": "Évoli"
+      },
+      "description": "Un Pokémon particulièrement adaptable dont le corps peut évoluer en plusieurs formes différentes selon les conditions rencontrées."
+    },
+    {
+      "id": "pokemon_134",
+      "stages": 1,
+      "types": [
+        "eau"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c134"
+      },
+      "names": {
+        "stage1": "Aquali"
+      },
+      "description": "Une évolution d'Évoli adaptée à l'eau. Son corps lui permet de vivre et de se déplacer naturellement dans les milieux aquatiques."
+    },
+    {
+      "id": "pokemon_135",
+      "stages": 1,
+      "types": [
+        "électrik"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c135"
+      },
+      "names": {
+        "stage1": "Voltali"
+      },
+      "description": "Une évolution d'Évoli spécialisée dans l'électricité. Elle accumule l'énergie électrique et peut la libérer sous forme de puissantes décharges."
+    },
+    {
+      "id": "pokemon_136",
+      "stages": 1,
+      "types": [
+        "feu"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c136"
+      },
+      "names": {
+        "stage1": "Pyroli"
+      },
+      "description": "Une évolution d'Évoli adaptée au feu. Sa fourrure conserve une chaleur intense et lui permet de produire de puissantes flammes."
+    },
+    {
+      "id": "pokemon_137",
+      "stages": 1,
+      "types": [
+        "normal"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c137"
+      },
+      "names": {
+        "stage1": "Porygon"
+      },
+      "description": "Un Pokémon artificiel créé grâce à une technologie avancée. Son apparence et ses capacités peuvent être modifiées."
+    },
+    {
+      "id": "pokemon_138",
+      "stages": 2,
+      "types": [
+        "roche",
+        "eau"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c138",
+        "stage2": "c139"
+      },
+      "names": {
+        "stage1": "Amonita",
+        "stage2": "Amonistar"
+      },
+      "description": "Un Pokémon fossile ramené à la vie grâce à des techniques scientifiques. Il ressemble à une ancienne créature marine."
+    },
+    {
+      "id": "pokemon_140",
+      "stages": 2,
+      "types": [
+        "roche",
+        "eau"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c140",
+        "stage2": "c141"
+      },
+      "names": {
+        "stage1": "Kabuto",
+        "stage2": "Kabutops"
+      },
+      "description": "Un Pokémon fossile ramené à la vie grâce à des techniques scientifiques. Il possède une armure solide et des griffes puissantes."
+    },
+    {
+      "id": "pokemon_142",
+      "stages": 1,
+      "types": [
+        "roche",
+        "vol"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c142"
+      },
+      "names": {
+        "stage1": "Ptéra"
+      },
+      "description": "Un Pokémon fossile capable de voler. Ses ailes et son corps témoignent d'une époque où de puissants prédateurs dominaient les cieux."
+    },
+    {
+      "id": "pokemon_143",
+      "stages": 1,
+      "types": [
+        "normal"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c143"
+      },
+      "names": {
+        "stage1": "Ronflex"
+      },
+      "description": "Un Pokémon très imposant qui passe une grande partie de son temps à dormir et à manger. Sa force physique est considérable."
+    },
+    {
+      "id": "pokemon_144",
+      "stages": 1,
+      "types": [
+        "glace",
+        "vol"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c144"
+      },
+      "names": {
+        "stage1": "Artikodin"
+      },
+      "description": "Un Pokémon légendaire associé au froid. Ses ailes peuvent produire un vent glacial et des températures extrêmement basses."
+    },
+    {
+      "id": "pokemon_145",
+      "stages": 1,
+      "types": [
+        "électrik",
+        "vol"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c145"
+      },
+      "names": {
+        "stage1": "Électhor"
+      },
+      "description": "Un Pokémon légendaire associé à l'électricité. Il est capable de créer de puissantes décharges et des orages."
+    },
+    {
+      "id": "pokemon_146",
+      "stages": 1,
+      "types": [
+        "feu",
+        "vol"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c146"
+      },
+      "names": {
+        "stage1": "Sulfura"
+      },
+      "description": "Un Pokémon légendaire associé au feu. Ses ailes peuvent provoquer une chaleur intense et de violentes flammes."
+    },
+    {
+      "id": "pokemon_147",
+      "stages": 3,
+      "types": [
+        "dragon"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c147",
+        "stage2": "c148",
+        "stage3": "c149"
+      },
+      "names": {
+        "stage1": "Minidraco",
+        "stage2": "Draco",
+        "stage3": "Dracolosse"
+      },
+      "description": "Un Pokémon dragon extrêmement rare. Son évolution progressive transforme un petit dragon aquatique en une créature volante redoutable."
+    },
+    {
+      "id": "pokemon_150",
+      "stages": 1,
+      "types": [
+        "psy"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c150"
+      },
+      "names": {
+        "stage1": "Mewtwo"
+      },
+      "description": "Un Pokémon légendaire créé artificiellement à partir de recherches scientifiques. Ses pouvoirs psychiques sont parmi les plus impressionnants."
+    },
+    {
+      "id": "pokemon_151",
+      "stages": 1,
+      "types": [
+        "psy"
+      ],
+      "starter": false,
+      "forms": {
+        "stage1": "c151"
+      },
+      "names": {
+        "stage1": "Mew"
+      },
+      "description": "Un Pokémon mythique extrêmement rare dont les capacités lui permettent d'apprendre les techniques de nombreux autres Pokémon."
+    }
+  ]
 }

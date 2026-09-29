@@ -43,6 +43,19 @@ func _initialize() -> void:
 		return
 	print("OK: %d creatures starter trouvees: %s" % [starters.size(), str(starters)])
 
+	# 2b. Sprites des starters confirmes par Mike : c1, c4, c7 (stage1 de
+	# chaque ligne de creature starter).
+	var sprites_starters_attendus := ["c1", "c4", "c7"]
+	var sprites_starters_obtenus := []
+	for id in starters:
+		var forms: Dictionary = DataManager.creatures[id].get("forms", {})
+		sprites_starters_obtenus.append(String(forms.get("stage1", "")))
+	sprites_starters_obtenus.sort()
+	sprites_starters_attendus.sort()
+	if not _verifier(sprites_starters_obtenus == sprites_starters_attendus, "sprites des starters attendus %s, obtenu %s" % [sprites_starters_attendus, sprites_starters_obtenus]):
+		return
+	print("OK: les 3 starters utilisent bien les sprites c1/c4/c7")
+
 	# 3. Instancie une carte pour chaque starter (verifie configurer() ne crashe pas).
 	for id in starters:
 		var carte = CarteCreatureScene.instantiate()
@@ -56,6 +69,39 @@ func _initialize() -> void:
 		root.remove_child(carte)
 		carte.free()
 	print("OK: cartes de starter configurees sans erreur")
+
+	# 3b. Sprite reduit de 50% (demande de Mike) dans CarteCreature : le
+	# sprite occupe le centre 50%x50% (donc chaque dimension lineaire
+	# divisee par 2) de SpriteZone, pas la totalite.
+	var carte_taille = CarteCreatureScene.instantiate()
+	root.add_child(carte_taille)
+	var texture_sprite: TextureRect = carte_taille.get_node("%TextureSprite")
+	if not _verifier(is_equal_approx(texture_sprite.anchor_left, 0.25) and is_equal_approx(texture_sprite.anchor_right, 0.75) and is_equal_approx(texture_sprite.anchor_top, 0.25) and is_equal_approx(texture_sprite.anchor_bottom, 0.75), "TextureSprite devrait occuper le centre 50%%x50%% de SpriteZone (creature reduite de 50%%), obtenu anchors (%f,%f,%f,%f)" % [texture_sprite.anchor_left, texture_sprite.anchor_top, texture_sprite.anchor_right, texture_sprite.anchor_bottom]):
+		return
+	root.remove_child(carte_taille)
+	carte_taille.free()
+	print("OK: CarteCreature - sprite reduit de 50%% (anchors 0.25-0.75)")
+
+	# 3c. Police Rubik (demande de Mike) appliquee sur l'ecran de choix du
+	# starter : LabelTitre (SelectionStarter.tscn) et LabelNom (CarteCreature.tscn).
+	var RubikFont := load("res://assets/fonts/Rubik-Bold.ttf")
+	var SelectionStarterScene := preload("res://scenes/SelectionStarter.tscn")
+	var selection_starter = SelectionStarterScene.instantiate()
+	root.add_child(selection_starter)
+	var label_titre_starter: Label = selection_starter.get_node("%LabelTitre")
+	if not _verifier(label_titre_starter.get_theme_font("font") == RubikFont, "LabelTitre de SelectionStarter.tscn devrait utiliser Rubik-Bold"):
+		return
+	root.remove_child(selection_starter)
+	selection_starter.free()
+
+	var carte_police = CarteCreatureScene.instantiate()
+	root.add_child(carte_police)
+	var label_nom_carte: Label = carte_police.get_node("%LabelNom")
+	if not _verifier(label_nom_carte.get_theme_font("font") == RubikFont, "LabelNom de CarteCreature.tscn devrait utiliser Rubik-Bold"):
+		return
+	root.remove_child(carte_police)
+	carte_police.free()
+	print("OK: police Rubik appliquee sur l'ecran de choix du starter (titre + nom des creatures)")
 
 	# 4. Simule le choix d'un starter -> cree la sauvegarde.
 	SaveManager.delete_save()
@@ -79,6 +125,32 @@ func _initialize() -> void:
 	print("OK: sauvegarde rechargee depuis le disque")
 
 	SaveManager.delete_save()
+
+	# 6. Fond remplacable de DialogueIntro.tscn (Phase 8, demande de Mike) :
+	# structure des noeuds presente (script racine ne compile pas sous
+	# --script, meme limite documentee depuis cette meme phase — structure
+	# verifiable quand meme). Pas de test "null par defaut" ici : Mike a
+	# deja depose son propre assets/ui/dialogue_intro/fond.png en local
+	# (meme situation deja documentee pour logo_menu.png/gauche.png/
+	# clic_bouton.mp3) — on verifie juste que charger_fond() ne plante
+	# pas et renvoie bien un Texture2D des qu'un fichier existe.
+	var texture_reelle := DialogueIntroAssetUtil.charger_fond()
+	if not _verifier(texture_reelle == null or texture_reelle is Texture2D, "charger_fond() devrait renvoyer null ou un Texture2D, obtenu %s" % typeof(texture_reelle)):
+		return
+	var DialogueIntroScene := preload("res://scenes/DialogueIntro.tscn")
+	var dialogue = DialogueIntroScene.instantiate()
+	root.add_child(dialogue)
+	for chemin in ["%TextureFond", "%PlaceholderFond", "%LabelDialogue", "%LabelIndice"]:
+		if not _verifier(dialogue.get_node_or_null(chemin) != null, "noeud manquant dans DialogueIntro.tscn: " + chemin):
+			return
+	var placeholder_fond: ColorRect = dialogue.get_node("%PlaceholderFond")
+	var texture_fond: TextureRect = dialogue.get_node("%TextureFond")
+	if not _verifier(placeholder_fond.visible and not texture_fond.visible, "placeholder de fond devrait etre visible par defaut dans le .tscn (texture cachee)"):
+		return
+	root.remove_child(dialogue)
+	dialogue.free()
+	print("OK: DialogueIntro.tscn - fond remplacable en place (placeholder par defaut)")
+
 	DataManager.free()
 	SaveManager.free()
 	print("=== Smoke test Phase 2 : SUCCES ===")

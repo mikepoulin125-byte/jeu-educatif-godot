@@ -1,16 +1,16 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
+	"_commentaire": "Phase 8 - addition/soustraction, cliquer Pair/Impair selon la parite du resultat (demande de Mike). Voir widget_pair_impair.gd (mode 'a'/'b'/'op').",
 	"nom": "Sentier Pair-Impair 9",
 	"questions": [
-		{ "nombre": 28, "reponse": "pair" },
-		{ "nombre": 35, "reponse": "impair" },
-		{ "nombre": 42, "reponse": "pair" },
-		{ "nombre": 49, "reponse": "impair" },
-		{ "nombre": 56, "reponse": "pair" },
-		{ "nombre": 63, "reponse": "impair" },
-		{ "nombre": 70, "reponse": "pair" },
-		{ "nombre": 77, "reponse": "impair" },
-		{ "nombre": 84, "reponse": "pair" },
-		{ "nombre": 1, "reponse": "impair" }
+		{ "a": 32, "b": 10, "op": "+" },
+		{ "a": 27, "b": 4, "op": "-" },
+		{ "a": 15, "b": 8, "op": "+" },
+		{ "a": 40, "b": 13, "op": "-" },
+		{ "a": 9, "b": 6, "op": "+" },
+		{ "a": 50, "b": 17, "op": "-" },
+		{ "a": 21, "b": 21, "op": "+" },
+		{ "a": 33, "b": 9, "op": "-" },
+		{ "a": 18, "b": 25, "op": "+" },
+		{ "a": 60, "b": 22, "op": "-" }
 	]
 }
