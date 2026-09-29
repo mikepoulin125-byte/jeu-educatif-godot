@@ -63,6 +63,17 @@ func _point_grille(gx: float, gy: float) -> Vector2:
 func point_vers_pixel(gx: float, gy: float) -> Vector2:
 	return _point_grille(gx, gy)
 
+## Inverse de point_vers_pixel() : convertit une position en pixels
+## (locale a ce noeud) vers la coordonnee de graduation la plus proche,
+## bornee a [0, taille] sur chaque axe (jamais de coordonnee negative ni
+## hors grille). Utilise pour le glisser-depose (tableau "placer_point").
+func pixel_vers_point(pixel: Vector2) -> Vector2i:
+	var pas := _pas()
+	var origine := _origine()
+	var gx := roundi((pixel.x - origine.x) / pas)
+	var gy := roundi((origine.y - pixel.y) / pas)
+	return Vector2i(clampi(gx, 0, taille), clampi(gy, 0, taille))
+
 func _draw() -> void:
 	var pas := _pas()
 	var origine := _origine()

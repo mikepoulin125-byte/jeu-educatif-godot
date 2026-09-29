@@ -1,56 +1,76 @@
 {
-	"_commentaire": "Phase 8 - contenu regenere pour plus de variete (voir CLAUDE.md).",
+	"_commentaire": "Phase 8 - nouveau type de question 'placer_point' (voir widget_plan_cartesien.gd) : la consigne donne directement les coordonnees (ex. (4, 6)) et l'enfant DEPLACE la creature (glisser-depose ou clic sur l'intersection voulue - jamais le centre d'une case, qui ne correspond a aucune coordonnee reelle) puis clique Confirmer. Grille 6x6 (au lieu de 5x5) pour couvrir des coordonnees jusqu'a 6. Aucune coordonnee negative (x et y toujours entre 0 et taille_grille).",
 	"nom": "Plateau des Coordonnees 4",
 	"questions": [
 		{
-			"taille_grille": 5,
-			"x": 1,
-			"y": 0
-		},
-		{
-			"taille_grille": 5,
-			"x": 1,
-			"y": 4
-		},
-		{
-			"taille_grille": 5,
-			"x": 2,
-			"y": 1
-		},
-		{
-			"taille_grille": 5,
-			"x": 2,
-			"y": 0
-		},
-		{
-			"taille_grille": 5,
+			"type": "placer_point",
+			"taille_grille": 6,
+			"id_creature": 8,
 			"x": 4,
-			"y": 4
+			"y": 6
 		},
 		{
-			"taille_grille": 5,
-			"x": 1,
+			"type": "placer_point",
+			"taille_grille": 6,
+			"id_creature": 21,
+			"x": 0,
+			"y": 3
+		},
+		{
+			"type": "placer_point",
+			"taille_grille": 6,
+			"id_creature": 35,
+			"x": 6,
 			"y": 1
 		},
 		{
-			"taille_grille": 5,
+			"type": "placer_point",
+			"taille_grille": 6,
+			"id_creature": 47,
 			"x": 2,
+			"y": 0
+		},
+		{
+			"type": "placer_point",
+			"taille_grille": 6,
+			"id_creature": 60,
+			"x": 5,
+			"y": 4
+		},
+		{
+			"type": "placer_point",
+			"taille_grille": 6,
+			"id_creature": 72,
+			"x": 1,
+			"y": 5
+		},
+		{
+			"type": "placer_point",
+			"taille_grille": 6,
+			"id_creature": 95,
+			"x": 3,
 			"y": 3
 		},
 		{
-			"taille_grille": 5,
-			"x": 1,
-			"y": 3
+			"type": "placer_point",
+			"taille_grille": 6,
+			"id_creature": 110,
+			"x": 6,
+			"y": 6
 		},
 		{
-			"taille_grille": 5,
-			"x": 1,
-			"y": 2
-		},
-		{
-			"taille_grille": 5,
+			"type": "placer_point",
+			"taille_grille": 6,
+			"id_creature": 128,
 			"x": 0,
 			"y": 0
+		},
+		{
+			"type": "placer_point",
+			"taille_grille": 6,
+			"id_creature": 150,
+			"x": 4,
+			"y": 2
 		}
 	]
 }
