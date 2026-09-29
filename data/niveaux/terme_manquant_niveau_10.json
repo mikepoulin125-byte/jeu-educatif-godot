@@ -1,16 +1,16 @@
 {
-	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime).",
+	"_commentaire": "Phase 6 - questions scriptees (contenu genere via script d'auteur pour la coherence/volume, fige une fois ecrit - aucune generation au runtime). Phase 8 : mix addition/soustraction avec de petits chiffres (style tableaux 1-2), position du terme manquant aussi mixee (debut/milieu).",
 	"nom": "Grotte du Chiffre Cache 10",
 	"questions": [
-		{ "texte": "25 + ? = 36", "reponse": 11 },
-		{ "texte": "44 - ? = 31", "reponse": 13 },
-		{ "texte": "31 + ? = 52", "reponse": 21 },
-		{ "texte": "52 - ? = 35", "reponse": 17 },
-		{ "texte": "37 + ? = 68", "reponse": 31 },
-		{ "texte": "10 - ? = 7", "reponse": 3 },
-		{ "texte": "43 + ? = 84", "reponse": 41 },
-		{ "texte": "18 - ? = 10", "reponse": 8 },
-		{ "texte": "49 + ? = 50", "reponse": 1 },
-		{ "texte": "26 - ? = 22", "reponse": 4 }
+		{ "texte": "? + 3 = 8", "reponse": 5 },
+		{ "texte": "9 - ? = 4", "reponse": 5 },
+		{ "texte": "? - 4 = 3", "reponse": 7 },
+		{ "texte": "5 + ? = 9", "reponse": 4 },
+		{ "texte": "? + 6 = 11", "reponse": 5 },
+		{ "texte": "12 - ? = 7", "reponse": 5 },
+		{ "texte": "? - 5 = 6", "reponse": 11 },
+		{ "texte": "7 + ? = 13", "reponse": 6 },
+		{ "texte": "? + 2 = 10", "reponse": 8 },
+		{ "texte": "? - 3 = 9", "reponse": 12 }
 	]
 }
