@@ -1,56 +1,76 @@
 {
-	"_commentaire": "Phase 8 - contenu regenere pour plus de variete (voir CLAUDE.md).",
+	"_commentaire": "Phase 8 - meme mecanique que le tableau 1 (voir CLAUDE.md badge 4) : l'enfant ecrit la graduation manquante (rond rouge), aucun clic sur le plan. Nouveaute ici : l'increment des graduations varie (bonds de 2, 5 ou 10 au lieu de 1) et l'axe demande alterne entre X et Y d'une question a l'autre.",
 	"nom": "Plateau des Coordonnees 2",
 	"questions": [
 		{
-			"taille_grille": 4,
-			"x": 1,
-			"y": 2
+			"taille_grille": 5,
+			"increment": 2,
+			"axe_manquant": "x",
+			"position": 1,
+			"reponse": 4
 		},
 		{
-			"taille_grille": 4,
-			"x": 3,
-			"y": 0
+			"taille_grille": 5,
+			"increment": 5,
+			"axe_manquant": "y",
+			"position": 3,
+			"reponse": 20
 		},
 		{
-			"taille_grille": 4,
-			"x": 2,
-			"y": 0
+			"taille_grille": 5,
+			"increment": 10,
+			"axe_manquant": "x",
+			"position": 0,
+			"reponse": 10
 		},
 		{
-			"taille_grille": 4,
-			"x": 0,
-			"y": 0
+			"taille_grille": 5,
+			"increment": 2,
+			"axe_manquant": "y",
+			"position": 4,
+			"reponse": 10
 		},
 		{
-			"taille_grille": 4,
-			"x": 0,
-			"y": 3
+			"taille_grille": 5,
+			"increment": 5,
+			"axe_manquant": "x",
+			"position": 2,
+			"reponse": 15
 		},
 		{
-			"taille_grille": 4,
-			"x": 1,
-			"y": 1
+			"taille_grille": 5,
+			"increment": 10,
+			"axe_manquant": "y",
+			"position": 1,
+			"reponse": 20
 		},
 		{
-			"taille_grille": 4,
-			"x": 3,
-			"y": 1
+			"taille_grille": 5,
+			"increment": 2,
+			"axe_manquant": "x",
+			"position": 3,
+			"reponse": 8
 		},
 		{
-			"taille_grille": 4,
-			"x": 0,
-			"y": 1
+			"taille_grille": 5,
+			"increment": 5,
+			"axe_manquant": "y",
+			"position": 0,
+			"reponse": 5
 		},
 		{
-			"taille_grille": 4,
-			"x": 3,
-			"y": 3
+			"taille_grille": 5,
+			"increment": 10,
+			"axe_manquant": "x",
+			"position": 4,
+			"reponse": 50
 		},
 		{
-			"taille_grille": 4,
-			"x": 3,
-			"y": 2
+			"taille_grille": 5,
+			"increment": 2,
+			"axe_manquant": "y",
+			"position": 2,
+			"reponse": 6
 		}
 	]
 }

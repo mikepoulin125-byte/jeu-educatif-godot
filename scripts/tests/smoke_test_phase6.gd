@@ -51,27 +51,22 @@ func _initialize() -> void:
 
 	# 1bis. plan_cartesien : en cours de refonte tableau par tableau (voir
 	# CLAUDE.md badge 4), donc chaque niveau peut avoir un schema
-	# different tant que la refonte n'est pas terminee. Niveau 1 : nouveau
-	# schema (compter les graduations). Niveaux 2-10 : ancien schema
-	# (x/y/taille_grille, plus utilise par le widget actuel, en attente
-	# de refonte).
-	var data_pc1 := DataManager.load_niveau("plan_cartesien_niveau_01")
-	var questions_pc1: Array = data_pc1.get("questions", [])
-	if not _verifier(questions_pc1.size() == 10, "plan_cartesien_niveau_01 : 10 questions attendues, obtenu %d" % questions_pc1.size()):
-		return
-	for champ in ["taille_grille", "increment", "axe_manquant", "position", "reponse"]:
-		if not _verifier(questions_pc1[0].has(champ), "plan_cartesien_niveau_01 : champ '%s' manquant dans la 1ere question" % champ):
-			return
-	for n in range(2, 11):
+	# different tant que la refonte n'est pas terminee. Niveaux refaits
+	# (NIVEAUX_PC_REFAITS) : nouveau schema (compter les graduations).
+	# Les autres : ancien schema (x/y/taille_grille, plus utilise par le
+	# widget actuel, en attente de refonte).
+	var niveaux_pc_refaits := [1, 2]
+	for n in range(1, 11):
 		var niveau_id := "niveau_%02d" % n
 		var data := DataManager.load_niveau("plan_cartesien_%s" % niveau_id)
 		var questions: Array = data.get("questions", [])
 		if not _verifier(questions.size() == 10, "plan_cartesien_%s : 10 questions attendues, obtenu %d" % [niveau_id, questions.size()]):
 			return
-		for champ in ["x", "y", "taille_grille"]:
+		var champs := ["taille_grille", "increment", "axe_manquant", "position", "reponse"] if n in niveaux_pc_refaits else ["x", "y", "taille_grille"]
+		for champ in champs:
 			if not _verifier(questions[0].has(champ), "plan_cartesien_%s : champ '%s' manquant dans la 1ere question" % [niveau_id, champ]):
 				return
-	print("OK: les 10 fichiers de niveaux plan_cartesien ont le schema attendu (niveau 1 refait, 2-10 en attente)")
+	print("OK: les 10 fichiers de niveaux plan_cartesien ont le schema attendu (%d refaits, %d en attente)" % [niveaux_pc_refaits.size(), 10 - niveaux_pc_refaits.size()])
 
 	# 2. Widget pair_impair.
 	var scene_pi := preload("res://scenes/tableau/WidgetPairImpair.tscn")
